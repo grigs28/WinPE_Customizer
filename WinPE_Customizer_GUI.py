@@ -217,6 +217,15 @@ class WinPECustomizerGUI:
         ttk.Button(tools_frame, text="🔧 SDIO驱动提取", command=self.open_sdio_extractor, width=15).pack(side=tk.LEFT, padx=5)
         ttk.Button(tools_frame, text="🔍 驱动扫描工具", command=self.open_driver_scanner, width=15).pack(side=tk.LEFT, padx=5)
         
+        # 第四行：制作工具
+        make_frame = ttk.Frame(quick_frame)
+        make_frame.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(make_frame, text="制作工具:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Button(make_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(make_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=15).pack(side=tk.LEFT, padx=5)
+        
         ttk.Separator(quick_frame, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
         
         # WinPE 目录
@@ -514,6 +523,100 @@ class WinPECustomizerGUI:
             self.log("[工具] 已启动驱动扫描工具", 'SUCCESS')
         except Exception as e:
             messagebox.showerror("错误", f"启动失败:\n{e}")
+    
+    def make_iso_image(self):
+        """生成 ISO 镜像"""
+        if self.is_running:
+            messagebox.showwarning("警告", "有任务正在运行，请等待完成")
+            return
+        
+        winpe_dir = Path(self.winpe_dir.get())
+        mount_dir = winpe_dir / "mount"
+        
+        # 检查是否已挂载
+        if (mount_dir / "Windows").exists():
+            if not messagebox.askyesno("提示", "WIM 仍处于挂载状态。\n\n需要先卸载并保存 WIM 才能生成 ISO。\n\n是否现在卸载并保存？"):
+                return
+            
+            # 先卸载
+            self.log("="*60, 'CYAN')
+            self.log("[操作] 卸载并保存 WIM", 'HEADER')
+            self.log("="*60, 'CYAN')
+            
+            thread = threading.Thread(target=self._do_umount_and_make_iso, args=(True,))
+            thread.daemon = True
+            thread.start()
+        else:
+            # 直接生成ISO
+            self.log("="*60, 'CYAN')
+            self.log("[操作] 生成 ISO 镜像", 'HEADER')
+            self.log("="*60, 'CYAN')
+            
+            thread = threading.Thread(target=self._do_make_iso)
+            thread.daemon = True
+            thread.start()
+    
+    def _do_make_iso(self):
+        """执行生成ISO"""
+        self.is_running = True
+        self.root.after(0, lambda: self.progress.start(10))
+        
+        try:
+            winpe_dir = Path(self.winpe_dir.get())
+            iso_name = self.output_iso.get() if self.output_iso.get() else "MyCustomWinPE.iso"
+            iso_path = self.work_dir / iso_name
+            
+            self.output_queue.put(('INFO', f'[执行] 生成 ISO 文件...'))
+            self.output_queue.put(('INFO', f'[目标] {iso_path}'))
+            self.output_queue.put(('COMMAND', f'MakeWinPEMedia /iso "{winpe_dir}" "{iso_path}"'))
+            
+            cmd = f'MakeWinPEMedia /iso "{winpe_dir}" "{iso_path}"'
+            
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = subprocess.SW_HIDE
+            
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True, 
+                                   encoding='utf-8', errors='ignore', startupinfo=startupinfo)
+            
+            if result.returncode == 0:
+                self.output_queue.put(('SUCCESS', f'[✅ 成功] ISO 文件生成成功'))
+                self.output_queue.put(('SUCCESS', f'[路径] {iso_path}'))
+                self.root.after(0, lambda: messagebox.showinfo("成功", f"ISO 文件生成成功！\n\n{iso_path}"))
+            else:
+                self.output_queue.put(('ERROR', f'[❌ 失败] ISO 生成失败'))
+                if result.stdout:
+                    self.output_queue.put(('INFO', result.stdout))
+        except Exception as e:
+            self.output_queue.put(('ERROR', f'[异常] {e}'))
+        finally:
+            self.is_running = False
+            self.root.after(0, lambda: self.progress.stop())
+    
+    def _do_umount_and_make_iso(self, commit=True):
+        """卸载后生成ISO"""
+        # 先卸载
+        self._do_umount(commit)
+        # 再生成ISO
+        import time
+        time.sleep(2)  # 等待卸载完成
+        self._do_make_iso()
+    
+    def make_usb_disk(self):
+        """制作 USB 启动盘"""
+        if self.is_running:
+            messagebox.showwarning("警告", "有任务正在运行，请等待完成")
+            return
+        
+        winpe_dir = Path(self.winpe_dir.get())
+        
+        if not winpe_dir.exists():
+            messagebox.showerror("错误", f"WinPE 目录不存在:\n{winpe_dir}")
+            return
+        
+        # 导入USB制作对话框
+        from tools.usb_maker import show_usb_maker_dialog
+        show_usb_maker_dialog(self.root, winpe_dir)
     
     def log(self, message, tag='INFO'):
         """添加日志"""
