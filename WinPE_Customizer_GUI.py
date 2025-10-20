@@ -223,19 +223,19 @@ class WinPECustomizerGUI:
         ttk.Button(tools_frame, text="🔧 SDIO 驱动提取", command=self.open_sdio_extractor, width=btn_width).pack(side=tk.LEFT, padx=3)
         ttk.Button(tools_frame, text="🔍 驱动扫描", command=self.open_driver_scanner, width=btn_width).pack(side=tk.LEFT, padx=3)
         
-        # 第三行：清理和制作工具
-        clean_make_frame = ttk.Frame(quick_frame)
-        clean_make_frame.pack(fill=tk.X, pady=5)
+        # 第三行：制作和清理工具
+        make_clean_frame = ttk.Frame(quick_frame)
+        make_clean_frame.pack(fill=tk.X, pady=5)
         
-        # 左侧：清理工具
-        ttk.Label(clean_make_frame, text="清理工具:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
-        ttk.Button(clean_make_frame, text="🧹 清理临时文件", command=self.cleanup_temp, width=btn_width).pack(side=tk.LEFT, padx=3)
-        ttk.Button(clean_make_frame, text="🔧 清理 WIM", command=self.cleanup_wim, width=btn_width).pack(side=tk.LEFT, padx=3)
+        # 左侧：制作工具
+        ttk.Label(make_clean_frame, text="制作工具:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
+        ttk.Button(make_clean_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_clean_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=btn_width).pack(side=tk.LEFT, padx=3)
         
-        # 右侧：制作工具
-        ttk.Label(clean_make_frame, text="制作工具:", font=('Arial', 9, 'bold')).pack(side=tk.RIGHT, padx=5)
-        ttk.Button(clean_make_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=btn_width).pack(side=tk.RIGHT, padx=3)
-        ttk.Button(clean_make_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=btn_width).pack(side=tk.RIGHT, padx=3)
+        # 右侧：清理工具
+        ttk.Label(make_clean_frame, text="清理工具:", font=('Arial', 9, 'bold')).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(make_clean_frame, text="🔧 清理 WIM", command=self.cleanup_wim, width=btn_width).pack(side=tk.RIGHT, padx=3)
+        ttk.Button(make_clean_frame, text="🧹 清理临时文件", command=self.cleanup_temp, width=btn_width).pack(side=tk.RIGHT, padx=3)
         
         ttk.Separator(quick_frame, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
         
