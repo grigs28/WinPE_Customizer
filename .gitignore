@@ -70,6 +70,7 @@ test_*.py
 *_test.py
 
 # 个人配置文件（不上传）
+s.bat
 scripts/s.bat
 launch.bat
 start.bat
