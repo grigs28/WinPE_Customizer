@@ -320,7 +320,7 @@ class ExternalAppsManager:
             return
         
         try:
-            config_file = Path("../core/config.py") if Path("../core/config.py").exists() else Path("core/config.py")
+            config_file = Path("../config.py")
             
             if not config_file.exists():
                 messagebox.showerror("错误", "找不到 config.py 文件")

@@ -361,7 +361,8 @@ class WinPEToolsManager:
         ttk.Label(info_frame, text="4️⃣ 切换到'配置代码'标签页 → 点击'💾 直接保存到config.py'", foreground="gray").pack(anchor=tk.W, padx=20)
         ttk.Label(info_frame, text="5️⃣ 在主程序中启用'复制外置程序'模块并运行", foreground="gray").pack(anchor=tk.W, padx=20)
         
-        ttk.Label(info_frame, text="", height=1).pack()
+        # 空白分隔
+        ttk.Frame(info_frame, height=10).pack()
         ttk.Label(info_frame, text="💡 支持自动下载和手动下载两种方式", 
                  foreground="green", font=('Arial', 9, 'bold')).pack(anchor=tk.W)
         
@@ -709,7 +710,7 @@ class WinPEToolsManager:
             return
         
         try:
-            config_file = Path("../core/config.py") if Path("../core/config.py").exists() else Path("core/config.py")
+            config_file = Path("../config.py")
             
             if not config_file.exists():
                 messagebox.showerror("错误", "找不到 config.py 文件")

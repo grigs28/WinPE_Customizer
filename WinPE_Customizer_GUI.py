@@ -17,7 +17,7 @@ from tkinter import ttk, filedialog, scrolledtext, messagebox
 import subprocess
 
 # 导入配置和核心类
-from core import config
+import config
 from core.WinPE_Customizer import WinPECustomizer
 
 

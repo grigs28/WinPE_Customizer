@@ -6,8 +6,7 @@ WinPE Customizer 核心模块
 """
 
 from .WinPE_Customizer import WinPECustomizer
-from . import config
 
-__all__ = ['WinPECustomizer', 'config']
+__all__ = ['WinPECustomizer']
 __version__ = '3.0'
 
