@@ -93,28 +93,35 @@ WinPE_Customizer.bat
 
 ```
 WinPE_work/
-├── WinPE_Customizer_GUI.py      # 主程序（图形界面）
-├── WinPE_Customizer.py          # 核心引擎（命令行）
-├── config.py                     # 配置文件
-├── requirements.txt              # Python 依赖
+├── WinPE_Customizer_GUI.py      # 🖥️ 主程序（图形界面）
+├── WinPE_Customizer.py          # ⚙️ 核心引擎（命令行）
+├── config.py                     # 📋 配置文件
+├── requirements.txt              # 📦 Python 依赖
+├── README.md                     # 📖 项目说明
 │
-├── extract_sdio_drivers.py       # SDIO 驱动提取（CLI）
-├── extract_sdio_drivers_gui.py   # SDIO 驱动提取（GUI）
-├── scan_drivers.py               # 驱动扫描工具
+├── tools/                        # 🔧 工具集
+│   ├── extract_sdio_drivers.py       # SDIO 驱动提取（CLI）
+│   ├── extract_sdio_drivers_gui.py   # SDIO 驱动提取（GUI）
+│   └── scan_drivers.py               # 驱动扫描工具
 │
-├── umount.bat                    # WIM 卸载工具
-├── cleanup.bat                   # 清理工具
+├── scripts/                      # 📜 辅助脚本
+│   ├── s.bat.example                 # 快速启动脚本模板
+│   ├── s.bat                         # 快速启动脚本（个人配置，不上传）
+│   ├── umount.bat                    # WIM 卸载工具
+│   └── cleanup.bat                   # 清理工具
 │
 ├── docs/                         # 📚 文档目录
-│   ├── 快速参考手册.md
 │   ├── 详细使用说明.md
+│   ├── 快速参考手册.md
 │   ├── 配置说明.md
 │   └── 常见问题.md
 │
-├── 外置程序/                    # 外部工具（不上传）
+├── examples/                     # 💡 示例配置（可选）
+│
+├── 外置程序/                    # 🚫 外部工具（不上传）
 │   └── SDIO_Update/             # SDIO 驱动包
 │
-└── drive/                        # 驱动输出（不上传）
+└── drive/                        # 🚫 驱动输出（不上传）
     ├── RAID/                     # RAID 驱动
     ├── Storage/                  # 存储控制器
     └── Network/                  # 网卡驱动

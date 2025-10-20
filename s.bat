@@ -1,1 +1,0 @@
-D:\APP\miniconda3\python.exe WinPE_Customizer_GUI.py
