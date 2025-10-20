@@ -159,8 +159,11 @@ class WinPECustomizer:
                 import re
                 match = re.search(r'(\d+\.?\d*)%', line)
                 if match:
-                    percent = match.group(1)
-                    self.print_info(f"[进度] {percent}%")
+                    percent = float(match.group(1))
+                    # 只在进度变化>=10%时输出，避免刷屏
+                    if self.last_progress < 0 or abs(percent - self.last_progress) >= 10.0 or percent >= 99.0:
+                        self.print_info(f"进度: {percent:.0f}%")
+                        self.last_progress = percent
             elif line:
                 # 普通输出
                 self.print_info(line)
@@ -381,8 +384,8 @@ class WinPECustomizer:
                         match = re.search(r'(\d+\.?\d*)%', line)
                         if match:
                             percent = float(match.group(1))
-                            # 每次都输出进度，GUI会在同一行更新
-                            self.print_info(f"  进度: {percent:.1f}%")
+                            # 统一格式：进度: XX%（GUI会在同一行更新）
+                            self.print_info(f"进度: {percent:.0f}%")
                             self.last_progress = percent
                     else:
                         # 过滤不重要的输出
@@ -485,8 +488,8 @@ class WinPECustomizer:
                         match = re.search(r'(\d+\.?\d*)%', line)
                         if match:
                             percent = float(match.group(1))
-                            # 每次都输出进度，GUI会在同一行更新
-                            self.print_info(f"  进度: {percent:.1f}%")
+                            # 统一格式：进度: XX%（GUI会在同一行更新）
+                            self.print_info(f"进度: {percent:.0f}%")
                             self.last_progress = percent
                     else:
                         # 只显示重要信息
@@ -693,11 +696,20 @@ class WinPECustomizer:
                         # 统计安装的驱动数量
                         if '正在安装' in line or 'Installing' in line:
                             driver_count += 1
-                            self.print_info(f"  正在安装驱动 #{driver_count}")
+                            if driver_count % 5 == 0:  # 每5个驱动显示一次
+                                self.print_info(f"  已安装 {driver_count} 个驱动")
                         elif '操作成功' in line or 'successfully' in line:
-                            self.print_info(f"  {line}")
+                            if driver_count > 0:
+                                self.print_info(f"  共安装 {driver_count} 个驱动")
                         elif '找到' in line and '驱动' in line:
                             self.print_info(f"  {line}")
+                        elif '[' in line and '%' in line and '=' in line:
+                            # 驱动安装也可能有进度条
+                            import re
+                            match = re.search(r'(\d+\.?\d*)%', line)
+                            if match:
+                                percent = float(match.group(1))
+                                self.print_info(f"进度: {percent:.0f}%")
                     
                     process.wait()
                     exit_code = process.returncode
