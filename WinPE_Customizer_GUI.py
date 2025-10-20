@@ -198,14 +198,14 @@ class WinPECustomizerGUI:
         
         ttk.Label(mount_frame, text="映像管理:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
         
-        self.mount_btn = ttk.Button(mount_frame, text="📦 挂载 WIM", command=self.mount_wim, width=15)
-        self.mount_btn.pack(side=tk.LEFT, padx=5)
+        self.mount_btn = ttk.Button(mount_frame, text="📦 挂载 WIM", command=self.mount_wim, width=16)
+        self.mount_btn.pack(side=tk.LEFT, padx=3)
         
-        self.umount_btn = ttk.Button(mount_frame, text="💾 卸载并保存", command=self.umount_wim, width=15)
-        self.umount_btn.pack(side=tk.LEFT, padx=5)
+        self.umount_btn = ttk.Button(mount_frame, text="💾 卸载并保存", command=self.umount_wim, width=16)
+        self.umount_btn.pack(side=tk.LEFT, padx=3)
         
-        self.umount_discard_btn = ttk.Button(mount_frame, text="🗑 卸载不保存", command=self.umount_wim_discard, width=15)
-        self.umount_discard_btn.pack(side=tk.LEFT, padx=5)
+        self.umount_discard_btn = ttk.Button(mount_frame, text="🗑 卸载不保存", command=self.umount_wim_discard, width=16)
+        self.umount_discard_btn.pack(side=tk.LEFT, padx=3)
         
         # 第二行：工具管理
         tools_frame = ttk.Frame(quick_frame)
@@ -213,9 +213,10 @@ class WinPECustomizerGUI:
         
         ttk.Label(tools_frame, text="工具管理:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
         
-        ttk.Button(tools_frame, text="📦 外置程序管理器", command=self.open_apps_manager, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(tools_frame, text="🔧 SDIO驱动提取", command=self.open_sdio_extractor, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(tools_frame, text="🔍 驱动扫描工具", command=self.open_driver_scanner, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(tools_frame, text="📦 外置程序管理器", command=self.open_apps_manager, width=18).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="🛠️ WinPE工具包", command=self.open_tools_manager, width=16).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="🔧 SDIO驱动提取", command=self.open_sdio_extractor, width=16).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="🔍 驱动扫描", command=self.open_driver_scanner, width=14).pack(side=tk.LEFT, padx=3)
         
         # 第四行：制作工具
         make_frame = ttk.Frame(quick_frame)
@@ -223,8 +224,10 @@ class WinPECustomizerGUI:
         
         ttk.Label(make_frame, text="制作工具:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
         
-        ttk.Button(make_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(make_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(make_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=18).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=18).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="🧹 清理临时文件", command=self.cleanup_temp, width=16).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="🔧 清理 WIM", command=self.cleanup_wim, width=14).pack(side=tk.LEFT, padx=3)
         
         ttk.Separator(quick_frame, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
         
@@ -232,24 +235,24 @@ class WinPECustomizerGUI:
         dir_frame = ttk.Frame(quick_frame)
         dir_frame.pack(fill=tk.X, pady=5)
         ttk.Label(dir_frame, text="WinPE 目录:").pack(side=tk.LEFT, padx=5)
-        ttk.Entry(dir_frame, textvariable=self.winpe_dir, width=50).pack(side=tk.LEFT, padx=5, fill=tk.X, expand=True)
-        ttk.Button(dir_frame, text="浏览", command=lambda: self.browse_directory(self.winpe_dir)).pack(side=tk.LEFT)
-        ttk.Button(dir_frame, text="📁 打开", command=self.open_winpe_dir).pack(side=tk.LEFT, padx=2)
+        ttk.Entry(dir_frame, textvariable=self.winpe_dir, width=60).pack(side=tk.LEFT, padx=5, fill=tk.X, expand=True)
+        ttk.Button(dir_frame, text="浏览...", command=lambda: self.browse_directory(self.winpe_dir), width=10).pack(side=tk.LEFT, padx=2)
+        ttk.Button(dir_frame, text="📁 打开", command=self.open_winpe_dir, width=10).pack(side=tk.LEFT, padx=2)
         
         # ==================== 主控制按钮 ====================
         control_frame = ttk.Frame(parent)
         control_frame.grid(row=1, column=0, pady=10)
         
-        self.start_btn = ttk.Button(control_frame, text="▶ 开始定制", command=self.start_customization, width=18, style='Accent.TButton')
+        self.start_btn = ttk.Button(control_frame, text="▶ 开始定制", command=self.start_customization, width=20, style='Accent.TButton')
         self.start_btn.pack(side=tk.LEFT, padx=5)
         
-        self.stop_btn = ttk.Button(control_frame, text="⬛ 停止", command=self.stop_customization, state=tk.DISABLED, width=15)
+        self.stop_btn = ttk.Button(control_frame, text="⬛ 停止", command=self.stop_customization, state=tk.DISABLED, width=16)
         self.stop_btn.pack(side=tk.LEFT, padx=5)
         
-        self.clear_btn = ttk.Button(control_frame, text="🗑 清空日志", command=self.clear_log, width=15)
+        self.clear_btn = ttk.Button(control_frame, text="🗑 清空日志", command=self.clear_log, width=16)
         self.clear_btn.pack(side=tk.LEFT, padx=5)
         
-        self.save_log_btn = ttk.Button(control_frame, text="💾 保存日志", command=self.save_log, width=15)
+        self.save_log_btn = ttk.Button(control_frame, text="💾 保存日志", command=self.save_log, width=16)
         self.save_log_btn.pack(side=tk.LEFT, padx=5)
         
         # ==================== 输出日志 ====================
@@ -361,8 +364,8 @@ class WinPECustomizerGUI:
         # 按钮
         btn_frame = ttk.Frame(config_frame)
         btn_frame.grid(row=row, column=0, columnspan=2, pady=20)
-        ttk.Button(btn_frame, text="保存配置", command=self.save_config, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="重置为默认", command=self.reset_config, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="💾 保存路径配置", command=self.save_config, width=18).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="🔄 重置为默认", command=self.reset_config, width=18).pack(side=tk.LEFT, padx=5)
     
     def create_modules_tab(self, parent):
         """创建模块设置标签页"""
@@ -398,13 +401,13 @@ class WinPECustomizerGUI:
         # 快速选择按钮
         btn_frame = ttk.Frame(modules_frame)
         btn_frame.pack(pady=20)
-        ttk.Button(btn_frame, text="全选", command=self.select_all_modules, width=12).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="全不选", command=self.deselect_all_modules, width=12).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="推荐配置", command=self.select_recommended, width=12).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="全选", command=self.select_all_modules, width=14).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="全不选", command=self.deselect_all_modules, width=14).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="推荐配置", command=self.select_recommended, width=14).pack(side=tk.LEFT, padx=5)
         
         ttk.Separator(btn_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
         
-        ttk.Button(btn_frame, text="💾 保存模块设置", command=self.save_module_config, width=15, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="💾 保存模块设置", command=self.save_module_config, width=18, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
     
     def create_packages_tab(self, parent):
         """创建功能包说明标签页"""
@@ -440,7 +443,7 @@ class WinPECustomizerGUI:
         # 按钮栏
         btn_frame = ttk.Frame(parent)
         btn_frame.pack(pady=10)
-        ttk.Button(btn_frame, text="📂 打开文档目录", command=self.open_docs_dir, width=20).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="📂 打开文档目录", command=self.open_docs_dir, width=18).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="🌐 访问微软官方文档", command=self.open_ms_packages_docs, width=20).pack(side=tk.LEFT, padx=5)
     
     def open_docs_dir(self):
@@ -484,6 +487,22 @@ class WinPECustomizerGUI:
             # 在新进程中启动
             subprocess.Popen([sys.executable, str(script_path)])
             self.log("[工具] 已启动外置程序管理器", 'SUCCESS')
+        except Exception as e:
+            messagebox.showerror("错误", f"启动失败:\n{e}")
+    
+    def open_tools_manager(self):
+        """打开WinPE工具包管理器"""
+        import subprocess
+        import sys
+        
+        script_path = Path("tools/winpe_tools_manager.py")
+        if not script_path.exists():
+            messagebox.showerror("错误", "找不到WinPE工具包管理器\n路径: tools/winpe_tools_manager.py")
+            return
+        
+        try:
+            subprocess.Popen([sys.executable, str(script_path)])
+            self.log("[工具] 已启动WinPE工具包管理器", 'SUCCESS')
         except Exception as e:
             messagebox.showerror("错误", f"启动失败:\n{e}")
     
