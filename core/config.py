@@ -40,6 +40,7 @@ ENABLE_REGIONAL_SETTINGS = True  # 是否配置区域设置
 ENABLE_DRIVERS = True            # 是否批量安装驱动程序
 ENABLE_EXTERNAL_APPS = True      # 是否复制附加程序
 ENABLE_CREATE_DIRS = False        # 是否创建自定义目录结构
+ENABLE_CONTEXT_MENU = True       # 是否配置右键菜单（7-Zip等）
 ENABLE_MAKE_ISO = True           # 是否卸载 WIM 并生成 ISO
 
 # ============================================================================
@@ -144,6 +145,32 @@ EXTERNAL_APPS = [
     # 可以添加更多程序
     # ("备份还原/GhostExp.exe", "Tools", "Ghost 备份工具"),
 ]
+
+# ============================================================================
+# 右键菜单配置（7-Zip等工具）
+# ============================================================================
+
+# 是否启用右键菜单集成
+ENABLE_CONTEXT_MENU = True
+
+# 7-Zip 右键菜单配置
+SEVENZIP_CONTEXT_MENU = {
+    "enabled": True,
+    "install_path": "X:\\Program Files\\7-Zip",  # 7-Zip在WinPE中的路径
+    "exe_name": "7zG.exe",  # 7-Zip GUI程序名
+    "menu_items": [
+        {
+            "name": "7-Zip",
+            "items": [
+                ("打开压缩包", "open", '"{install_path}\\7zFM.exe" "%1"'),
+                ("解压到当前文件夹", "extract_here", '"{install_path}\\7zG.exe" x "%1" -o*'),
+                ("解压到 {name}\\", "extract_folder", '"{install_path}\\7zG.exe" x "%1" -o"%1\\*"'),
+                ("压缩", "compress", '"{install_path}\\7zG.exe" a'),
+                ("添加到压缩包", "add_archive", '"{install_path}\\7zG.exe" a "%1.7z" "%1"'),
+            ]
+        }
+    ]
+}
 
 # ============================================================================
 # 高级选项

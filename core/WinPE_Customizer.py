@@ -55,6 +55,7 @@ class WinPECustomizer:
         self.enable_drivers = config.ENABLE_DRIVERS
         self.enable_external_apps = config.ENABLE_EXTERNAL_APPS
         self.enable_create_dirs = config.ENABLE_CREATE_DIRS
+        self.enable_context_menu = config.ENABLE_CONTEXT_MENU
         self.enable_make_iso = config.ENABLE_MAKE_ISO
         
         # 从 config.py 加载包列表
@@ -794,6 +795,182 @@ class WinPECustomizer:
         print()
         return True
     
+    def configure_context_menu(self):
+        """配置右键菜单（7-Zip等）"""
+        if not self.enable_context_menu:
+            self.print_warning("[跳过] 右键菜单配置模块")
+            return True
+        
+        print()
+        self.print_header("步骤 9: 配置右键菜单")
+        self.print_info("[说明] 为 WinPE 添加 7-Zip 等工具的右键菜单")
+        print()
+        
+        # 检查配置
+        if not hasattr(config, 'SEVENZIP_CONTEXT_MENU'):
+            self.print_warning("[跳过] 未找到 SEVENZIP_CONTEXT_MENU 配置")
+            return True
+        
+        sevenzip_config = config.SEVENZIP_CONTEXT_MENU
+        if not sevenzip_config.get('enabled', False):
+            self.print_info("[跳过] 7-Zip 右键菜单已禁用")
+            return True
+        
+        self.print_info("[准备] 配置 7-Zip 右键菜单...")
+        
+        try:
+            # 生成注册表文件
+            reg_content = self._generate_7zip_registry(sevenzip_config)
+            
+            # 保存注册表文件到临时位置
+            temp_reg_file = self.work_dir / "temp_7zip_menu.reg"
+            with open(temp_reg_file, 'w', encoding='utf-16le') as f:
+                f.write('\ufeff')  # BOM for UTF-16LE
+                f.write(reg_content)
+            
+            self.print_success(f"[生成] 注册表文件: {temp_reg_file.name}")
+            
+            # 将注册表文件复制到 WinPE 并配置启动脚本
+            self._apply_registry_via_startnet(temp_reg_file, sevenzip_config)
+            
+            # 清理临时文件
+            temp_reg_file.unlink()
+            self.print_success("[完成] 7-Zip 右键菜单配置完成")
+            
+        except Exception as e:
+            self.print_error(f"[错误] 配置右键菜单失败: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+        
+        print()
+        return True
+    
+    def _generate_7zip_registry(self, sevenzip_config):
+        """生成 7-Zip 右键菜单的注册表内容"""
+        install_path = sevenzip_config['install_path']
+        
+        reg_lines = [
+            "Windows Registry Editor Version 5.00",
+            "",
+            "; 7-Zip 右键菜单配置 - 自动生成",
+            "; 此文件将在 WinPE 启动时自动导入",
+            ""
+        ]
+        
+        # 为文件添加右键菜单
+        reg_lines.extend([
+            "[HKEY_CLASSES_ROOT\\*\\shell\\7-Zip]",
+            '@="7-Zip"',
+            '"Icon"="' + install_path.replace('\\', '\\\\') + '\\\\7zFM.exe,0"',
+            '"MUIVerb"="7-Zip"',
+            '"SubCommands"=""',
+            "",
+            "[HKEY_CLASSES_ROOT\\*\\shell\\7-Zip\\shell]",
+            ""
+        ])
+        
+        # 添加各个菜单项
+        menu_items = sevenzip_config.get('menu_items', [{}])[0].get('items', [])
+        for display_name, key_name, command in menu_items:
+            cmd = command.replace('{install_path}', install_path).replace('\\', '\\\\')
+            reg_lines.extend([
+                f'[HKEY_CLASSES_ROOT\\*\\shell\\7-Zip\\shell\\{key_name}]',
+                f'@="{display_name}"',
+                "",
+                f'[HKEY_CLASSES_ROOT\\*\\shell\\7-Zip\\shell\\{key_name}\\command]',
+                f'@="{cmd}"',
+                ""
+            ])
+        
+        # 为文件夹添加右键菜单
+        reg_lines.extend([
+            "[HKEY_CLASSES_ROOT\\Directory\\shell\\7-Zip]",
+            '@="7-Zip"',
+            '"Icon"="' + install_path.replace('\\', '\\\\') + '\\\\7zFM.exe,0"',
+            '"MUIVerb"="7-Zip"',
+            '"SubCommands"=""',
+            "",
+            "[HKEY_CLASSES_ROOT\\Directory\\shell\\7-Zip\\shell]",
+            ""
+        ])
+        
+        # 为文件夹添加菜单项（只添加部分合适的）
+        folder_items = [
+            ("解压到此处", "extract_here", '"{install_path}\\\\7zG.exe" x "%1" -o*'),
+            ("压缩并Email", "compress", '"{install_path}\\\\7zG.exe" a'),
+            ("添加到压缩包", "add_archive", '"{install_path}\\\\7zG.exe" a "%1.7z" "%1"'),
+        ]
+        
+        for display_name, key_name, command in folder_items:
+            cmd = command.replace('{install_path}', install_path).replace('\\', '\\\\')
+            reg_lines.extend([
+                f'[HKEY_CLASSES_ROOT\\Directory\\shell\\7-Zip\\shell\\{key_name}]',
+                f'@="{display_name}"',
+                "",
+                f'[HKEY_CLASSES_ROOT\\Directory\\shell\\7-Zip\\shell\\{key_name}\\command]',
+                f'@="{cmd}"',
+                ""
+            ])
+        
+        return '\r\n'.join(reg_lines)
+    
+    def _apply_registry_via_startnet(self, reg_file, sevenzip_config):
+        """将注册表文件部署到 WinPE 并配置启动脚本"""
+        self.print_info("[部署] 部署注册表文件到 WinPE...")
+        
+        # 目标注册表文件路径
+        reg_target = self.mount_dir / "Windows" / "System32" / "7zip_menu.reg"
+        
+        # 复制注册表文件到 WinPE
+        import shutil
+        shutil.copy(reg_file, reg_target)
+        self.print_success(f"[复制] 注册表文件 → {reg_target.name}")
+        
+        # 配置启动脚本
+        startup_script = self.mount_dir / "Windows" / "System32" / "startnet.cmd"
+        
+        self.print_info(f"[修改] 配置启动脚本: {startup_script.name}")
+        
+        startup_content = []
+        if startup_script.exists():
+            with open(startup_script, 'r', encoding='utf-8', errors='ignore') as f:
+                startup_content = f.readlines()
+        
+        # 检查是否已经添加过
+        already_added = any('7zip_menu.reg' in line for line in startup_content)
+        
+        if not already_added:
+            # 在文件开头添加导入命令（在 wpeinit 之前）
+            new_content = []
+            new_content.append('@echo off\n')
+            new_content.append('REM ========================================\n')
+            new_content.append('REM 导入 7-Zip 右键菜单\n')
+            new_content.append('REM ========================================\n')
+            new_content.append('if exist X:\\Windows\\System32\\7zip_menu.reg (\n')
+            new_content.append('    echo 正在配置 7-Zip 右键菜单...\n')
+            new_content.append('    reg import X:\\Windows\\System32\\7zip_menu.reg >nul 2>&1\n')
+            new_content.append('    if %errorlevel%==0 (\n')
+            new_content.append('        echo 7-Zip 右键菜单配置成功\n')
+            new_content.append('    ) else (\n')
+            new_content.append('        echo 7-Zip 右键菜单配置失败\n')
+            new_content.append('    )\n')
+            new_content.append(')\n')
+            new_content.append('\n')
+            
+            # 添加原有内容（跳过开头的 @echo off）
+            for line in startup_content:
+                if line.strip().lower() != '@echo off':
+                    new_content.append(line)
+            
+            with open(startup_script, 'w', encoding='utf-8') as f:
+                f.writelines(new_content)
+            
+            self.print_success("[配置] startnet.cmd 已更新")
+            self.print_info("[提示] WinPE 启动时将自动导入 7-Zip 右键菜单")
+        else:
+            self.print_info("[跳过] startnet.cmd 已包含 7-Zip 配置")
+    
     def make_iso(self):
         """卸载 WIM 并生成 ISO"""
         if not self.enable_make_iso:
@@ -801,7 +978,7 @@ class WinPECustomizer:
             return True
         
         print()
-        self.print_header("步骤 9: 卸载 WIM 并生成 ISO 文件")
+        self.print_header("步骤 10: 卸载 WIM 并生成 ISO 文件")
         self.print_info("[说明] 保存所有更改并生成可启动 ISO 文件")
         print()
         
@@ -903,6 +1080,10 @@ class WinPECustomizer:
             if self.enable_create_dirs:
                 self.print_info("[模块] 执行模块: 创建自定义目录结构")
                 self.create_directories()
+            
+            if self.enable_context_menu:
+                self.print_info("[模块] 执行模块: 配置右键菜单")
+                self.configure_context_menu()
             
             if self.enable_make_iso:
                 self.print_info("[模块] 执行模块: 卸载 WIM 并生成 ISO")
