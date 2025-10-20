@@ -203,7 +203,7 @@ class WinPECustomizerGUI:
         
         btn_width = 20  # 统一按钮宽度
         
-        self.mount_btn = ttk.Button(mount_frame, text="📦 挂载 WIM", command=self.mount_wim, width=btn_width)
+        self.mount_btn = ttk.Button(mount_frame, text="📦 挂载 WIM 映像", command=self.mount_wim, width=btn_width)
         self.mount_btn.pack(side=tk.LEFT, padx=3)
         
         self.umount_btn = ttk.Button(mount_frame, text="💾 卸载并保存", command=self.umount_wim, width=btn_width)
