@@ -28,77 +28,208 @@ class WinPEToolsManager:
             'desc': '强大的 Windows 映像管理工具',
             'url': 'https://github.com/Chuyu-Team/Dism-Multi-language',
             'exe': 'Dism++x64.exe',
-            'recommended': True
+            'recommended': True,
+            'context_menu': False  # 不需要右键菜单
         },
         {
             'name': 'DiskGenius',
             'desc': '磁盘分区和数据恢复工具',
             'url': 'https://www.diskgenius.cn/',
             'exe': 'DiskGenius.exe',
-            'recommended': True
+            'recommended': True,
+            'context_menu': False
         },
         {
             'name': 'PowerShell 7',
             'desc': '跨平台的 PowerShell 版本',
             'url': 'https://github.com/PowerShell/PowerShell',
             'exe': 'pwsh.exe',
-            'recommended': False
+            'recommended': False,
+            'context_menu': False
         },
         {
             'name': 'WinNTSetup',
             'desc': 'Windows 系统安装工具',
             'url': 'https://msfn.org/board/topic/149612-winntsetup/',
             'exe': 'WinNTSetup.exe',
-            'recommended': True
+            'recommended': True,
+            'context_menu': False
         },
         {
             'name': 'CPU-Z',
             'desc': 'CPU 信息检测工具',
             'url': 'https://www.cpuid.com/softwares/cpu-z.html',
             'exe': 'cpuz.exe',
-            'recommended': False
+            'recommended': False,
+            'context_menu': False
         },
         {
             'name': 'CrystalDiskInfo',
             'desc': '硬盘健康监测工具',
             'url': 'https://crystalmark.info/',
             'exe': 'DiskInfo64.exe',
-            'recommended': False
+            'recommended': False,
+            'context_menu': False
         },
         {
             'name': 'Notepad++',
             'desc': '文本编辑器',
             'url': 'https://notepad-plus-plus.org/',
             'exe': 'notepad++.exe',
-            'recommended': True
+            'recommended': True,
+            'context_menu': False
         },
         {
             'name': '7-Zip',
-            'desc': '压缩解压工具',
+            'desc': '压缩解压工具（支持右键菜单）',
             'url': 'https://www.7-zip.org/',
             'exe': '7zFM.exe',
-            'recommended': True
+            'recommended': True,
+            'context_menu': True  # 需要配置右键菜单
         },
         {
             'name': 'GreenBrowser',
             'desc': '绿色便携浏览器',
             'url': 'http://www.morequick.com/',
             'exe': 'GreenBrowser.exe',
-            'recommended': True
+            'recommended': True,
+            'context_menu': False
         },
         {
             'name': 'Firefox Portable',
             'desc': 'Firefox 便携版浏览器',
             'url': 'https://portableapps.com/apps/internet/firefox_portable',
             'exe': 'FirefoxPortable.exe',
-            'recommended': False
+            'recommended': False,
+            'context_menu': False
         },
         {
             'name': 'VSCode Portable',
             'desc': 'Visual Studio Code 便携版',
             'url': 'https://code.visualstudio.com/docs/editor/portable',
             'exe': 'Code.exe',
-            'recommended': False
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'HWiNFO',
+            'desc': '硬件信息检测工具',
+            'url': 'https://www.hwinfo.com/',
+            'exe': 'HWiNFO64.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'MemTest86',
+            'desc': '内存测试工具',
+            'url': 'https://www.memtest86.com/',
+            'exe': 'MemTest86.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'Rufus',
+            'desc': 'USB启动盘制作工具',
+            'url': 'https://rufus.ie/',
+            'exe': 'rufus.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'HDTune',
+            'desc': '硬盘检测工具',
+            'url': 'https://www.hdtune.com/',
+            'exe': 'HDTune.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'TreeSize Free',
+            'desc': '磁盘空间分析工具',
+            'url': 'https://www.jam-software.com/treesize_free',
+            'exe': 'TreeSizeFree.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'PuTTY',
+            'desc': 'SSH/Telnet 客户端',
+            'url': 'https://www.putty.org/',
+            'exe': 'putty.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'WinSCP',
+            'desc': 'SFTP/FTP 客户端',
+            'url': 'https://winscp.net/',
+            'exe': 'WinSCP.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'Recuva',
+            'desc': '文件恢复工具',
+            'url': 'https://www.ccleaner.com/recuva',
+            'exe': 'Recuva64.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'FastCopy',
+            'desc': '快速文件复制工具',
+            'url': 'https://fastcopy.jp/',
+            'exe': 'FastCopy.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'CPU-X Portable',
+            'desc': 'CPU信息检测工具（开源，类似CPU-Z）',
+            'url': 'https://github.com/TheTumultuousUnicornOfDarkness/CPU-X/releases',
+            'exe': 'CPU-X_win64.exe',
+            'recommended': True,
+            'context_menu': False
+        },
+        {
+            'name': 'Ventoy',
+            'desc': '多启动U盘制作工具（支持直接引导ISO）',
+            'url': 'https://www.ventoy.net/',
+            'exe': 'Ventoy2Disk.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'Speccy',
+            'desc': '系统信息查看工具',
+            'url': 'https://www.ccleaner.com/speccy',
+            'exe': 'Speccy64.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'GPU-Z',
+            'desc': '显卡信息检测工具',
+            'url': 'https://www.techpowerup.com/gpuz/',
+            'exe': 'GPU-Z.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'AS SSD Benchmark',
+            'desc': 'SSD 性能测试工具',
+            'url': 'https://www.alex-is.de/',
+            'exe': 'AS SSD Benchmark.exe',
+            'recommended': False,
+            'context_menu': False
+        },
+        {
+            'name': 'Victoria HDD',
+            'desc': '硬盘诊断和修复工具',
+            'url': 'https://hdd.by/victoria/',
+            'exe': 'victoria.exe',
+            'recommended': False,
+            'context_menu': False
         },
     ]
     
@@ -114,6 +245,10 @@ class WinPEToolsManager:
         # 数据
         self.tools_data = []
         self.config_file = Path("winpe_tools_config.json")
+        
+        # 工具变量字典 - 存储每个工具的勾选和桌面选项
+        self.tool_vars = {}  # {tool_name: BooleanVar()}
+        self.desktop_vars = {}  # {tool_name: BooleanVar()}
         
         # 创建界面
         self.create_widgets()
@@ -216,17 +351,35 @@ class WinPEToolsManager:
         
         # 工具列表
         self.tool_vars = {}
+        self.desktop_vars = {}
         for tool in self.COMMON_TOOLS:
             tool_frame = ttk.LabelFrame(scrollable_frame, text=tool['name'], padding="10")
             tool_frame.pack(fill=tk.X, padx=10, pady=5)
+            
+            # 上半部分：复选框和桌面选项
+            top_frame = ttk.Frame(tool_frame)
+            top_frame.pack(fill=tk.X, anchor=tk.W)
             
             # 复选框
             var = tk.BooleanVar(value=tool['recommended'])
             self.tool_vars[tool['name']] = var
             
-            cb = ttk.Checkbutton(tool_frame, text=f"集成此工具 {' (推荐)' if tool['recommended'] else ''}", 
+            cb = ttk.Checkbutton(top_frame, text=f"✓ 集成此工具 {' (推荐)' if tool['recommended'] else ''}", 
                                variable=var)
-            cb.pack(anchor=tk.W)
+            cb.pack(side=tk.LEFT)
+            
+            # 桌面选项
+            desktop_var = tk.BooleanVar(value=tool['recommended'])  # 推荐的工具默认添加到桌面
+            self.desktop_vars[tool['name']] = desktop_var
+            
+            desktop_cb = ttk.Checkbutton(top_frame, text="📌 添加到桌面", 
+                                        variable=desktop_var)
+            desktop_cb.pack(side=tk.LEFT, padx=(20, 0))
+            
+            # 右键菜单标识（仅7-Zip）
+            if tool.get('context_menu', False):
+                ttk.Label(top_frame, text="🖱️ 支持右键菜单", 
+                         foreground="purple", font=('Arial', 8, 'bold')).pack(side=tk.LEFT, padx=(20, 0))
             
             # 说明
             ttk.Label(tool_frame, text=f"说明: {tool['desc']}", foreground="gray").pack(anchor=tk.W, pady=(5, 0))
@@ -426,7 +579,7 @@ class WinPEToolsManager:
     
     def save_to_config(self):
         """直接保存到config.py"""
-        if not messagebox.askyesno("确认", "确定要将工具配置保存到 core/config.py 吗？\n\n这将覆盖现有的 EXTERNAL_APPS 配置。"):
+        if not messagebox.askyesno("确认", "确定要将工具配置保存到 core/config.py 吗？\n\n这将覆盖现有的 EXTERNAL_APPS 和 7-Zip 右键菜单配置。"):
             return
         
         try:
@@ -436,6 +589,9 @@ class WinPEToolsManager:
                 messagebox.showerror("错误", "找不到 config.py 文件")
                 return
             
+            # 检查是否选择了7-Zip
+            sevenzip_selected = self.tool_vars.get('7-Zip', tk.BooleanVar()).get()
+            
             # 读取现有配置
             with open(config_file, 'r', encoding='utf-8') as f:
                 lines = f.readlines()
@@ -444,28 +600,58 @@ class WinPEToolsManager:
             new_apps = []
             for tool in self.COMMON_TOOLS:
                 if self.tool_vars[tool['name']].get():
-                    new_apps.append(f"    (\"{tool['name']}/{tool['exe']}\", \"Windows/System32\", \"{tool['name']}\"),\n")
+                    desktop = self.desktop_vars[tool['name']].get()
+                    placement = []
+                    if desktop:
+                        placement.append("desktop")
+                    
+                    # 格式：(源文件路径, 目标路径, 描述, 放置选项)
+                    placement_str = str(placement).replace("'", '"')
+                    new_apps.append(f"    (\"{tool['name']}/{tool['exe']}\", \"Windows/System32\", \"{tool['name']}\", {placement_str}),\n")
             
-            # 替换 EXTERNAL_APPS 部分
+            # 替换配置
             new_lines = []
             in_external_apps = False
+            in_sevenzip_config = False
             skip_until_bracket = False
+            skip_until_brace = False
             
             for line in lines:
+                # 处理 EXTERNAL_APPS
                 if 'EXTERNAL_APPS = [' in line:
                     in_external_apps = True
                     new_lines.append(line)
-                    # 添加新配置
                     new_lines.extend(new_apps)
                     skip_until_bracket = True
                     continue
                 
-                if skip_until_bracket:
-                    if ']' in line and in_external_apps:
+                if skip_until_bracket and in_external_apps:
+                    if ']' in line:
                         new_lines.append(line)
                         in_external_apps = False
                         skip_until_bracket = False
-                    # 跳过旧的配置
+                    continue
+                
+                # 处理 SEVENZIP_CONTEXT_MENU
+                if 'SEVENZIP_CONTEXT_MENU = {' in line:
+                    in_sevenzip_config = True
+                    # 根据是否选择了7-Zip来设置enabled
+                    new_lines.append('SEVENZIP_CONTEXT_MENU = {\n')
+                    new_lines.append(f'    "enabled": {str(sevenzip_selected)},\n')
+                    skip_until_brace = True
+                    continue
+                
+                if skip_until_brace and in_sevenzip_config:
+                    if line.strip().startswith('"enabled"'):
+                        # 跳过旧的enabled行
+                        continue
+                    if '}' in line:
+                        new_lines.append(line)
+                        in_sevenzip_config = False
+                        skip_until_brace = False
+                        continue
+                    # 保留其他配置行
+                    new_lines.append(line)
                     continue
                 
                 new_lines.append(line)
@@ -474,7 +660,15 @@ class WinPEToolsManager:
             with open(config_file, 'w', encoding='utf-8') as f:
                 f.writelines(new_lines)
             
-            messagebox.showinfo("成功", "工具配置已保存到 core/config.py！\n\n请确保将工具文件放到对应的目录中。")
+            msg = "工具配置已保存到 core/config.py！\n\n"
+            msg += f"已配置 {len([t for t in self.COMMON_TOOLS if self.tool_vars[t['name']].get()])} 个工具\n"
+            if sevenzip_selected:
+                msg += "\n✓ 7-Zip 右键菜单已启用"
+            else:
+                msg += "\n✗ 7-Zip 右键菜单已禁用"
+            msg += "\n\n请确保将工具文件放到对应的目录中。"
+            
+            messagebox.showinfo("成功", msg)
             
         except Exception as e:
             messagebox.showerror("错误", f"保存失败:\n{e}")
@@ -489,6 +683,10 @@ class WinPEToolsManager:
                     for tool_name, selected in data.get('selected_tools', {}).items():
                         if tool_name in self.tool_vars:
                             self.tool_vars[tool_name].set(selected)
+                    # 恢复桌面选项
+                    for tool_name, desktop in data.get('desktop_options', {}).items():
+                        if tool_name in self.desktop_vars:
+                            self.desktop_vars[tool_name].set(desktop)
             except:
                 pass
     
@@ -496,6 +694,7 @@ class WinPEToolsManager:
         """保存配置"""
         data = {
             'selected_tools': {name: var.get() for name, var in self.tool_vars.items()},
+            'desktop_options': {name: var.get() for name, var in self.desktop_vars.items()},
             'updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
         
