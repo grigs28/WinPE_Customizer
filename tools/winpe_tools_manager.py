@@ -90,6 +90,13 @@ class WinPEToolsManager:
             'exe': 'FirefoxPortable.exe',
             'recommended': False
         },
+        {
+            'name': 'VSCode Portable',
+            'desc': 'Visual Studio Code 便携版',
+            'url': 'https://code.visualstudio.com/docs/editor/portable',
+            'exe': 'Code.exe',
+            'recommended': False
+        },
     ]
     
     def __init__(self, root):
@@ -153,10 +160,22 @@ class WinPEToolsManager:
         header_frame.pack(fill=tk.X)
         
         ttk.Label(header_frame, text="WinPE 常用工具推荐", font=('Arial', 12, 'bold')).pack(anchor=tk.W, pady=(0, 5))
-        ttk.Label(header_frame, text="⚠️ 注意：工具需要手动下载，程序不会自动下载", 
-                 foreground="red", font=('Arial', 9, 'bold')).pack(anchor=tk.W, pady=(0, 5))
-        ttk.Label(header_frame, text="勾选要集成的工具 → 点击下载链接获取工具 → 放到对应目录 → 生成配置", 
-                 foreground="gray").pack(anchor=tk.W, pady=(0, 10))
+        
+        # 使用说明
+        info_frame = ttk.Frame(header_frame, relief=tk.SOLID, borderwidth=1, padding="10")
+        info_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(info_frame, text="📋 使用步骤：", font=('Arial', 9, 'bold'), foreground='blue').pack(anchor=tk.W)
+        ttk.Label(info_frame, text="1️⃣ 勾选要集成的工具（推荐工具已预选）", foreground="gray").pack(anchor=tk.W, padx=20)
+        ttk.Label(info_frame, text="2️⃣ 点击蓝色'点击下载'链接，下载工具程序", foreground="gray").pack(anchor=tk.W, padx=20)
+        ttk.Label(info_frame, text="3️⃣ 下载后放到：外置程序/Tools/[工具名]/ 目录", foreground="orange", font=('Arial', 9, 'bold')).pack(anchor=tk.W, padx=20)
+        ttk.Label(info_frame, text="   例如：外置程序/Tools/Dism++/Dism++x64.exe", foreground="gray", font=('Consolas', 8)).pack(anchor=tk.W, padx=40)
+        ttk.Label(info_frame, text="4️⃣ 切换到'配置代码'标签页 → 点击'💾 直接保存到config.py'", foreground="gray").pack(anchor=tk.W, padx=20)
+        ttk.Label(info_frame, text="5️⃣ 在主程序中启用'复制外置程序'模块并运行", foreground="gray").pack(anchor=tk.W, padx=20)
+        
+        ttk.Label(info_frame, text="", height=1).pack()
+        ttk.Label(info_frame, text="⚠️ 注意：工具不会自动下载，需要手动下载并放到指定目录", 
+                 foreground="red", font=('Arial', 9, 'bold')).pack(anchor=tk.W)
         
         # 滚动区域
         scroll_container = ttk.Frame(parent)
@@ -200,6 +219,11 @@ class WinPEToolsManager:
             ttk.Label(tool_frame, text=f"说明: {tool['desc']}", foreground="gray").pack(anchor=tk.W, pady=(5, 0))
             ttk.Label(tool_frame, text=f"可执行文件: {tool['exe']}", foreground="blue", font=('Consolas', 9)).pack(anchor=tk.W)
             
+            # 保存位置
+            save_path = f"外置程序/Tools/{tool['name']}/{tool['exe']}"
+            ttk.Label(tool_frame, text=f"📁 保存位置: {save_path}", 
+                     foreground="orange", font=('Consolas', 8)).pack(anchor=tk.W, pady=(2, 0))
+            
             # 下载链接
             link_frame = ttk.Frame(tool_frame)
             link_frame.pack(anchor=tk.W, pady=(5, 0))
@@ -216,6 +240,11 @@ class WinPEToolsManager:
         btn_frame.pack(fill=tk.X)
         ttk.Button(btn_frame, text="✅ 全选推荐", command=self.select_recommended_tools, width=16).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="❌ 全不选", command=self.deselect_all_tools, width=16).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Separator(btn_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
+        
+        ttk.Label(btn_frame, text="→", font=('Arial', 14)).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="📂 打开外置程序目录", command=self.open_external_dir, width=20).pack(side=tk.LEFT, padx=5)
     
     def create_custom_tab(self, parent):
         """创建自定义工具标签页"""
@@ -265,12 +294,21 @@ class WinPEToolsManager:
         self.code_text = scrolledtext.ScrolledText(frame, wrap=tk.WORD, font=('Consolas', 9), height=25)
         self.code_text.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
         
+        # 说明
+        tip_frame = ttk.Frame(frame)
+        tip_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(tip_frame, text="💡 提示：", font=('Arial', 9, 'bold'), foreground='green').pack(anchor=tk.W)
+        ttk.Label(tip_frame, text="• 点击'生成配置'查看代码", foreground="gray").pack(anchor=tk.W, padx=20)
+        ttk.Label(tip_frame, text="• 点击'复制代码'复制到剪贴板，手动粘贴到 core/config.py", foreground="gray").pack(anchor=tk.W, padx=20)
+        ttk.Label(tip_frame, text="• 点击'直接保存到config.py'自动写入配置文件（推荐）", foreground="green", font=('Arial', 9, 'bold')).pack(anchor=tk.W, padx=20)
+        
         # 按钮
         btn_frame = ttk.Frame(frame)
         btn_frame.pack()
         ttk.Button(btn_frame, text="📝 生成配置", command=self.generate_config, width=16).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="📋 复制代码", command=self.copy_config, width=16).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="💾 直接保存到config.py", command=self.save_to_config, width=22).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="💾 直接保存到config.py", command=self.save_to_config, width=22, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
     
     def open_url(self, url):
         """打开URL"""
@@ -453,6 +491,26 @@ class WinPEToolsManager:
         
         with open(self.config_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
+    
+    def open_external_dir(self):
+        """打开外置程序目录"""
+        external_dir = Path("../外置程序") if Path("../外置程序").exists() else Path("外置程序")
+        tools_dir = external_dir / "Tools"
+        
+        # 如果Tools目录不存在，创建它
+        if not tools_dir.exists():
+            try:
+                tools_dir.mkdir(parents=True)
+            except:
+                pass
+        
+        # 打开目录
+        if tools_dir.exists():
+            os.startfile(tools_dir)
+        elif external_dir.exists():
+            os.startfile(external_dir)
+        else:
+            messagebox.showinfo("提示", f"外置程序目录不存在\n\n建议创建：{external_dir.absolute()}")
 
 
 def main():
