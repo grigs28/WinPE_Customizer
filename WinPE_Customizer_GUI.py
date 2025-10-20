@@ -696,7 +696,18 @@ class WinPECustomizerGUI:
     
     def open_driver_scanner(self):
         """打开驱动扫描工具"""
-        messagebox.showinfo("提示", "驱动扫描功能开发中...\n\n将提供：\n- 自动扫描系统驱动\n- 导出驱动到指定目录\n- 驱动分类整理")
+        try:
+            import subprocess
+            python_exe = sys.executable
+            scanner_path = self.work_dir / "tools" / "driver_scanner.py"
+            
+            if scanner_path.exists():
+                subprocess.Popen([python_exe, str(scanner_path)])
+                self.log("已启动驱动扫描工具", "INFO")
+            else:
+                messagebox.showerror("错误", f"找不到驱动扫描工具\n\n{scanner_path}")
+        except Exception as e:
+            messagebox.showerror("错误", f"启动驱动扫描工具失败:\n{e}")
     
     def make_usb_disk(self):
         """制作 USB 启动盘"""
