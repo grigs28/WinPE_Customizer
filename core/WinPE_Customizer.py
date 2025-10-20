@@ -94,23 +94,67 @@ class WinPECustomizer:
     
     def run_command(self, cmd):
         """执行命令并显示输出"""
-        print()
-        self.print_cyan("[命令执行] 准备执行命令:")
-        self.print_info(f"   {cmd}")
-        self.print_cyan("=" * 56)
-        print()
-        
-        result = subprocess.run(cmd, shell=True)
-        
-        print()
-        self.print_cyan("=" * 56)
-        if result.returncode == 0:
-            self.print_success("[命令结果] 命令执行成功 (Exit Code: 0)")
+        if not self.silent_mode:
+            print()
+            self.print_cyan("[命令执行] 准备执行命令:")
+            self.print_info(f"   {cmd}")
+            self.print_cyan("=" * 56)
+            print()
+            
+            result = subprocess.run(cmd, shell=True)
+            
+            print()
+            self.print_cyan("=" * 56)
+            if result.returncode == 0:
+                self.print_success("[命令结果] 命令执行成功 (Exit Code: 0)")
+            else:
+                self.print_error(f"[命令结果] 命令执行失败 (Exit Code: {result.returncode})")
+            print()
         else:
-            self.print_error(f"[命令结果] 命令执行失败 (Exit Code: {result.returncode})")
-        print()
+            # 静默模式：捕获输出，不显示在控制台
+            self.print_cyan("[命令执行] 准备执行命令:")
+            self.print_info(f"   {cmd}")
+            
+            result = subprocess.run(
+                cmd, 
+                shell=True,
+                capture_output=True,
+                text=True,
+                encoding='utf-8',
+                errors='ignore'
+            )
+            
+            # 处理输出（发送到日志队列）
+            if result.stdout:
+                self._process_command_output(result.stdout)
+            
+            if result.returncode == 0:
+                self.print_success("[命令结果] 命令执行成功")
+            else:
+                self.print_error(f"[命令结果] 命令执行失败 (Exit Code: {result.returncode})")
+                if result.stderr:
+                    self.print_error(result.stderr)
         
         return result.returncode
+    
+    def _process_command_output(self, output):
+        """处理命令输出"""
+        for line in output.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+            
+            # 检测进度条
+            if '[' in line and '%' in line and '=' in line:
+                # 提取百分比
+                import re
+                match = re.search(r'(\d+\.?\d*)%', line)
+                if match:
+                    percent = match.group(1)
+                    self.print_info(f"[进度] {percent}%")
+            elif line:
+                # 普通输出
+                self.print_info(line)
     
     def show_config(self):
         """显示配置信息"""
@@ -239,7 +283,8 @@ class WinPECustomizer:
         """安装单个功能包"""
         pkg_file = self.cab_path / f"{pkg_name}.cab"
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_cyan("=" * 42)
         
         if pkg_file.exists():
@@ -248,49 +293,86 @@ class WinPECustomizer:
             
             cmd = f'dism /image:"{self.mount_dir}" /add-package /packagepath:"{pkg_file}"'
             
-            # 显示命令
-            print()
-            self.print_info(f"[命令] {cmd}")
-            print()
-            
-            # 执行命令并实时过滤输出
-            process = subprocess.Popen(
-                cmd,
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                encoding='utf-8',
-                errors='ignore',
-                bufsize=1
-            )
-            
-            # 逐行读取输出并过滤
-            last_was_progress = False
-            for line in process.stdout:
-                line = line.rstrip()
-                # 检测进度条
-                if '[' in line and '%' in line and '=' in line:
-                    # 在同一行显示进度条
-                    print(f"\r{line}", end='', flush=True)
-                    last_was_progress = True
-                    continue
-                # 显示其他输出
-                if line.strip():
-                    # 如果上一行是进度条，先换行
-                    if last_was_progress:
-                        print()
-                        last_was_progress = False
-                    print(line)
-            
-            # 如果最后一行是进度条，换行
-            if last_was_progress:
+            if not self.silent_mode:
+                # 命令行模式：显示命令和实时输出
                 print()
+                self.print_info(f"[命令] {cmd}")
+                print()
+                
+                # 执行命令并实时过滤输出
+                process = subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    encoding='utf-8',
+                    errors='ignore',
+                    bufsize=1
+                )
+                
+                # 逐行读取输出并过滤
+                last_was_progress = False
+                for line in process.stdout:
+                    line = line.rstrip()
+                    # 检测进度条
+                    if '[' in line and '%' in line and '=' in line:
+                        # 在同一行显示进度条
+                        print(f"\r{line}", end='', flush=True)
+                        last_was_progress = True
+                        continue
+                    # 显示其他输出
+                    if line.strip():
+                        # 如果上一行是进度条，先换行
+                        if last_was_progress:
+                            print()
+                            last_was_progress = False
+                        print(line)
+                
+                # 如果最后一行是进度条，换行
+                if last_was_progress:
+                    print()
+                
+                process.wait()
+                exit_code = process.returncode
+                
+                print()
+            else:
+                # 静默模式：捕获输出，发送到日志队列
+                self.print_info(f"[命令] 正在执行 DISM...")
+                
+                process = subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    encoding='utf-8',
+                    errors='ignore',
+                    bufsize=1
+                )
+                
+                # 逐行读取并发送到日志
+                for line in process.stdout:
+                    line = line.rstrip()
+                    if not line.strip():
+                        continue
+                    
+                    # 检测进度条
+                    if '[' in line and '%' in line and '=' in line:
+                        import re
+                        match = re.search(r'(\d+\.?\d*)%', line)
+                        if match:
+                            percent = match.group(1)
+                            self.print_info(f"  进度: {percent}%")
+                    else:
+                        # 过滤不重要的输出
+                        if any(keyword in line for keyword in ['版本:', 'Processing', 'Image Version']):
+                            self.print_info(f"  {line}")
+                
+                process.wait()
+                exit_code = process.returncode
             
-            process.wait()
-            exit_code = process.returncode
-            
-            print()
             if exit_code != 0:
                 self.print_error(f"==== [失败] {pkg_desc} 安装失败 ====")
             else:
@@ -304,7 +386,8 @@ class WinPECustomizer:
         """安装单个语言包"""
         pkg_file = self.cab_path / "zh-cn" / f"{pkg_name}.cab"
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_cyan("=" * 42)
         
         if pkg_file.exists():
@@ -313,49 +396,77 @@ class WinPECustomizer:
             
             cmd = f'dism /image:"{self.mount_dir}" /add-package /packagepath:"{pkg_file}"'
             
-            # 显示命令
-            print()
-            self.print_info(f"[命令] {cmd}")
-            print()
-            
-            # 执行命令并实时过滤输出
-            process = subprocess.Popen(
-                cmd,
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                encoding='utf-8',
-                errors='ignore',
-                bufsize=1
-            )
-            
-            # 逐行读取输出并过滤
-            last_was_progress = False
-            for line in process.stdout:
-                line = line.rstrip()
-                # 检测进度条
-                if '[' in line and '%' in line and '=' in line:
-                    # 在同一行显示进度条
-                    print(f"\r{line}", end='', flush=True)
-                    last_was_progress = True
-                    continue
-                # 显示其他输出
-                if line.strip():
-                    # 如果上一行是进度条，先换行
-                    if last_was_progress:
-                        print()
-                        last_was_progress = False
-                    print(line)
-            
-            # 如果最后一行是进度条，换行
-            if last_was_progress:
+            if not self.silent_mode:
+                # 命令行模式：实时显示
                 print()
+                self.print_info(f"[命令] {cmd}")
+                print()
+                
+                process = subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    encoding='utf-8',
+                    errors='ignore',
+                    bufsize=1
+                )
+                
+                last_was_progress = False
+                for line in process.stdout:
+                    line = line.rstrip()
+                    if '[' in line and '%' in line and '=' in line:
+                        print(f"\r{line}", end='', flush=True)
+                        last_was_progress = True
+                        continue
+                    if line.strip():
+                        if last_was_progress:
+                            print()
+                            last_was_progress = False
+                        print(line)
+                
+                if last_was_progress:
+                    print()
+                
+                process.wait()
+                exit_code = process.returncode
+                print()
+            else:
+                # 静默模式：捕获输出到日志
+                self.print_info(f"[命令] 正在执行 DISM...")
+                
+                process = subprocess.Popen(
+                    cmd,
+                    shell=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    encoding='utf-8',
+                    errors='ignore',
+                    bufsize=1
+                )
+                
+                for line in process.stdout:
+                    line = line.rstrip()
+                    if not line.strip():
+                        continue
+                    
+                    # 进度条
+                    if '[' in line and '%' in line and '=' in line:
+                        import re
+                        match = re.search(r'(\d+\.?\d*)%', line)
+                        if match:
+                            percent = match.group(1)
+                            self.print_info(f"  进度: {percent}%")
+                    else:
+                        # 只显示重要信息
+                        if any(keyword in line for keyword in ['版本:', 'Processing', 'Image Version', '操作成功', '错误']):
+                            self.print_info(f"  {line}")
+                
+                process.wait()
+                exit_code = process.returncode
             
-            process.wait()
-            exit_code = process.returncode
-            
-            print()
             if exit_code != 0:
                 self.print_error(f"==== [失败] {pkg_desc} 安装失败 ====")
             else:
