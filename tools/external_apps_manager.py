@@ -58,7 +58,7 @@ class ExternalAppsManager:
                     pass
         
         # 回退到默认图标
-        icon_files = ['../winpe_customizer.ico', '../winpe_simple.ico', 'winpe_customizer.ico', 'winpe_simple.ico']
+        icon_files = ['../ico/winpe_customizer.ico', '../ico/winpe_simple.ico', 'winpe_customizer.ico', 'winpe_simple.ico']
         for icon_file in icon_files:
             icon_path = Path(icon_file)
             if icon_path.exists():

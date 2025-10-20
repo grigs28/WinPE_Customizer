@@ -117,7 +117,7 @@ class WinPECustomizerGUI:
                         pass
         
         # 如果ico目录没有图片，使用默认图标
-        icon_files = ['winpe_customizer.ico', 'winpe_simple.ico', 'icon.ico']
+        icon_files = ['ico/winpe_customizer.ico', 'ico/winpe_simple.ico', 'winpe_customizer.ico', 'icon.ico']
         
         for icon_file in icon_files:
             icon_path = Path(icon_file)

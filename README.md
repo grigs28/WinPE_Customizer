@@ -67,7 +67,11 @@ WinPE Customizer 是一款专业的 Windows PE 定制工具套件，提供图形
 
 5. **生成程序图标**（可选）
    ```bash
+   # 方式1: 使用Python脚本
    python tools/create_icon.py
+   
+   # 方式2: 使用批处理
+   tools\generate_icon.bat
    ```
 
 ### 启动程序
@@ -127,6 +131,11 @@ WinPE_work/
 │
 ├── examples/                     # 💡 示例配置（可选）
 │   └── config_example.py
+│
+├── ico/                          # 🎨 图标资源
+│   ├── winpe_customizer.ico          # 默认图标
+│   ├── winpe_simple.ico              # 简洁图标
+│   └── *.png                         # 其他图片（随机选择）
 │
 ├── 外置程序/                    # 🚫 外部工具（不上传）
 │   └── SDIO_Update/             # SDIO 驱动包

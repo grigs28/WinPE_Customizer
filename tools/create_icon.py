@@ -65,8 +65,12 @@ def create_winpe_icon():
         
         images.append(img)
     
+    # 确保ico目录存在
+    ico_dir = Path('ico')
+    ico_dir.mkdir(exist_ok=True)
+    
     # 保存为 ICO 文件
-    output_path = 'winpe_customizer.ico'
+    output_path = ico_dir / 'winpe_customizer.ico'
     images[0].save(output_path, format='ICO', sizes=[(img.width, img.height) for img in images])
     
     print(f"✅ 图标已生成: {output_path}")
@@ -131,8 +135,12 @@ def create_simple_icon():
         
         images.append(img)
     
+    # 确保ico目录存在
+    ico_dir = Path('ico')
+    ico_dir.mkdir(exist_ok=True)
+    
     # 保存为 ICO 文件
-    output_path = 'winpe_simple.ico'
+    output_path = ico_dir / 'winpe_simple.ico'
     images[0].save(output_path, format='ICO', sizes=[(img.width, img.height) for img in images])
     
     print(f"✅ 简洁图标已生成: {output_path}")
