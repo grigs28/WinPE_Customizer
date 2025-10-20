@@ -498,34 +498,30 @@ class WinPECustomizerGUI:
     
     def open_tools_manager(self):
         """打开WinPE工具包管理器"""
-        import subprocess
-        import sys
-        
-        script_path = Path("tools/winpe_tools_manager.py")
-        if not script_path.exists():
-            messagebox.showerror("错误", "找不到WinPE工具包管理器\n路径: tools/winpe_tools_manager.py")
-            return
-        
         try:
-            subprocess.Popen([sys.executable, str(script_path)])
+            script_path = self.work_dir / "tools" / "winpe_tools_manager.py"
+            if not script_path.exists():
+                messagebox.showerror("错误", f"找不到WinPE工具包管理器\n路径: {script_path}")
+                return
+            
+            subprocess.Popen([sys.executable, str(script_path)], cwd=str(self.work_dir / "tools"))
             self.log("[工具] 已启动WinPE工具包管理器", 'SUCCESS')
         except Exception as e:
+            self.log(f"[错误] 启动工具包管理器失败: {e}", 'ERROR')
             messagebox.showerror("错误", f"启动失败:\n{e}")
     
     def open_sdio_extractor(self):
         """打开SDIO驱动提取工具"""
-        import subprocess
-        import sys
-        
-        script_path = Path("tools/extract_sdio_drivers_gui.py")
-        if not script_path.exists():
-            messagebox.showerror("错误", "找不到SDIO驱动提取工具\n路径: tools/extract_sdio_drivers_gui.py")
-            return
-        
         try:
-            subprocess.Popen([sys.executable, str(script_path)])
+            script_path = self.work_dir / "tools" / "extract_sdio_drivers_gui.py"
+            if not script_path.exists():
+                messagebox.showerror("错误", f"找不到SDIO驱动提取工具\n路径: {script_path}")
+                return
+            
+            subprocess.Popen([sys.executable, str(script_path)], cwd=str(self.work_dir / "tools"))
             self.log("[工具] 已启动SDIO驱动提取工具", 'SUCCESS')
         except Exception as e:
+            self.log(f"[错误] 启动SDIO驱动提取工具失败: {e}", 'ERROR')
             messagebox.showerror("错误", f"启动失败:\n{e}")
     
     def open_driver_scanner(self):

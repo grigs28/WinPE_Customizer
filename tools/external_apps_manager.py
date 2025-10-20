@@ -29,7 +29,8 @@ class ExternalAppsManager:
         # 数据
         self.apps_data = []  # [{"path": "", "name": "", "desktop": False, "startmenu": False, "path_env": False, "target": ""}]
         self.external_dir = Path("外置程序")
-        self.config_file = Path("external_apps_config.json")
+        # 配置文件保存在根目录（不上传到Git）
+        self.config_file = Path("../external_apps_config.json") if Path("../external_apps_config.json").exists() else Path("external_apps_config.json")
         
         # 创建界面
         self.create_widgets()
