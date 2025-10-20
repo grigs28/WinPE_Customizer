@@ -16,7 +16,7 @@ from pathlib import Path
 from colorama import init, Fore, Style
 
 # 导入配置
-import config
+from . import config
 
 # 初始化 colorama（Windows 彩色输出支持）
 init(autoreset=True)

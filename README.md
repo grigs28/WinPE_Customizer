@@ -89,14 +89,11 @@ D:\APP\miniconda3\python.exe WinPE_Customizer_GUI.py
 #### 方式 2: 命令行
 
 ```bash
-python WinPE_Customizer.py [WinPE工作目录]
-```
+# 使用批处理文件
+WinPE_Customizer.bat [WinPE工作目录]
 
-#### 方式 3: 批处理文件
-
-```bash
-# 双击运行（需管理员权限）
-WinPE_Customizer.bat
+# 或直接使用Python模块
+python -m core.WinPE_Customizer [WinPE工作目录]
 ```
 
 ## 📁 项目结构
@@ -104,10 +101,15 @@ WinPE_Customizer.bat
 ```
 WinPE_work/
 ├── WinPE_Customizer_GUI.py      # 🖥️ 主程序（图形界面）
-├── WinPE_Customizer.py          # ⚙️ 核心引擎（命令行）
-├── config.py                     # 📋 配置文件
+├── WinPE_Customizer.bat          # 🎯 命令行版本启动脚本
 ├── requirements.txt              # 📦 Python 依赖
 ├── README.md                     # 📖 项目说明
+├── s.bat                         # 🚫 个人启动脚本（不上传）
+│
+├── core/                         # ⚙️ 核心模块
+│   ├── WinPE_Customizer.py           # 核心引擎
+│   ├── config.py                     # 配置文件
+│   └── __init__.py                   # 模块初始化
 │
 ├── tools/                        # 🔧 工具集
 │   ├── extract_sdio_drivers.py       # SDIO 驱动提取（CLI）
@@ -150,9 +152,12 @@ WinPE_work/
 
 ### 1. 一键创建中文 WinPE
 
-```python
-# 启动 WinPE Customizer
+```bash
+# 启动图形界面
 python WinPE_Customizer_GUI.py
+
+# 或使用命令行
+WinPE_Customizer.bat D:\WinPE_amd64
 
 # 在图形界面中:
 # 1. 配置 WinPE 工作目录
@@ -183,7 +188,7 @@ python tools/extract_sdio_drivers_gui.py
 
 ## ⚙️ 配置说明
 
-编辑 `config.py` 自定义设置：
+编辑 `core/config.py` 自定义设置：
 
 ```python
 # 路径配置
@@ -353,7 +358,7 @@ python WinPE_Customizer.py
 
 ### ⚙️ Configuration
 
-Edit `config.py` to customize settings:
+Edit `core/config.py` to customize settings:
 - Work directory paths
 - Module enable/disable switches
 - Feature package lists
