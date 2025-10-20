@@ -30,6 +30,7 @@ class WinPECustomizer:
         # work_dir 是项目根目录（core的父目录）
         self.work_dir = Path(__file__).parent.parent.absolute()
         self.silent_mode = silent_mode  # 静默模式（不输出到控制台）
+        self.last_progress = -1  # 上次显示的进度（用于去重）
         
         # 从 config.py 加载路径配置
         if winpe_dir:
@@ -363,8 +364,11 @@ class WinPECustomizer:
                         import re
                         match = re.search(r'(\d+\.?\d*)%', line)
                         if match:
-                            percent = match.group(1)
-                            self.print_info(f"  进度: {percent}%")
+                            percent = float(match.group(1))
+                            # 只在进度变化>=5%时显示，避免刷屏
+                            if self.last_progress < 0 or abs(percent - self.last_progress) >= 5.0 or percent >= 99.0:
+                                self.print_info(f"  进度: {percent:.1f}%")
+                                self.last_progress = percent
                     else:
                         # 过滤不重要的输出
                         if any(keyword in line for keyword in ['版本:', 'Processing', 'Image Version']):
@@ -457,8 +461,11 @@ class WinPECustomizer:
                         import re
                         match = re.search(r'(\d+\.?\d*)%', line)
                         if match:
-                            percent = match.group(1)
-                            self.print_info(f"  进度: {percent}%")
+                            percent = float(match.group(1))
+                            # 只在进度变化>=5%时显示，避免刷屏
+                            if self.last_progress < 0 or abs(percent - self.last_progress) >= 5.0 or percent >= 99.0:
+                                self.print_info(f"  进度: {percent:.1f}%")
+                                self.last_progress = percent
                     else:
                         # 只显示重要信息
                         if any(keyword in line for keyword in ['版本:', 'Processing', 'Image Version', '操作成功', '错误']):
@@ -482,16 +489,20 @@ class WinPECustomizer:
             self.print_warning("[跳过] 功能包安装模块")
             return True
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_header("步骤 2: 安装 WinPE 功能包")
         self.print_info("[说明] 将安装 WinPE 可选功能组件")
         
         for pkg_name, pkg_desc in self.feature_packages:
+            self.last_progress = -1  # 重置进度计数器
             self.install_package(pkg_name, pkg_desc)
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_success("[总结] 功能包安装流程已完成")
-        print()
+        if not self.silent_mode:
+            print()
         return True
     
     def install_language_packs(self):
@@ -500,16 +511,20 @@ class WinPECustomizer:
             self.print_warning("[跳过] 语言包安装模块")
             return True
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_header("步骤 3: 安装中文语言包")
         self.print_info("[说明] 为已安装的功能包添加中文界面支持")
         
         for pkg_name, pkg_desc in self.language_packages:
+            self.last_progress = -1  # 重置进度计数器
             self.install_language_package(pkg_name, pkg_desc)
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_success("[总结] 中文语言包安装流程已完成")
-        print()
+        if not self.silent_mode:
+            print()
         return True
     
     def install_fonts_and_lp(self):
