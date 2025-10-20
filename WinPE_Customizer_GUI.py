@@ -672,6 +672,32 @@ class WinPECustomizerGUI:
             self.log(f"清理临时文件时出错: {e}", "ERROR")
             messagebox.showerror("错误", f"清理失败: {e}")
     
+    def cleanup_wim(self):
+        """清理 WIM 挂载（DISM /Cleanup-Wim）"""
+        if messagebox.askyesno("确认", "此操作将清理所有未正常卸载的 WIM 挂载。\n\n这可能会丢失未保存的更改。\n\n是否继续？"):
+            self.log("开始清理 WIM 挂载...", "INFO")
+            
+            try:
+                cmd = "dism /Cleanup-Wim"
+                self.log(f"执行命令: {cmd}", "INFO")
+                
+                result = subprocess.run(cmd, shell=True, capture_output=True, text=True, encoding='utf-8', errors='ignore')
+                
+                if result.returncode == 0:
+                    self.log("WIM 清理成功", "SUCCESS")
+                    messagebox.showinfo("成功", "WIM 挂载已清理完成")
+                else:
+                    self.log(f"清理失败: {result.stderr}", "ERROR")
+                    messagebox.showerror("失败", "WIM 清理失败，请查看日志")
+                    
+            except Exception as e:
+                self.log(f"清理 WIM 时出错: {e}", "ERROR")
+                messagebox.showerror("错误", str(e))
+    
+    def open_driver_scanner(self):
+        """打开驱动扫描工具"""
+        messagebox.showinfo("提示", "驱动扫描功能开发中...\n\n将提供：\n- 自动扫描系统驱动\n- 导出驱动到指定目录\n- 驱动分类整理")
+    
     def make_usb_disk(self):
         """制作 USB 启动盘"""
         if self.is_running:
