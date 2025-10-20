@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+temp_extract/
+*.tmp
+*.temp
+
+# 外置程序目录 (External programs - not uploaded)
+外置程序/
+
+# 驱动输出目录 (Driver output - not uploaded)
+drive/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# WinPE specific
+*.wim
+*.iso
+
+# Archives (if any test files)
+*.7z
+*.zip
+*.rar
+*.tar.gz
+
+# Testing files
+test_*.py
+*_test.py
+
