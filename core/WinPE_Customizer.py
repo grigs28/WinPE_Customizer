@@ -608,20 +608,30 @@ class WinPECustomizer:
         return True
     
     def install_drivers(self):
-        """批量安装驱动程序"""
+        """批量安装驱动程序 - 按子目录分步执行"""
         if not self.enable_drivers:
             self.print_warning("[跳过] 驱动程序安装模块")
             return True
         
-        print()
+        if not self.silent_mode:
+            print()
         self.print_header("步骤 6: 批量安装硬件驱动程序")
         self.print_info("[说明] 扫描并安装驱动程序目录中的所有驱动")
         self.print_info(f"[路径] 驱动程序目录: {self.driver_path}")
-        print()
         
-        if self.driver_path.exists():
-            self.print_info("[扫描] 正在递归扫描驱动程序目录...")
-            self.print_info("[安装] 正在批量安装驱动程序...")
+        if not self.driver_path.exists():
+            self.print_warning("[警告] 驱动程序目录不存在，跳过驱动安装")
+            self.print_warning(f"[警告] 请确认路径: {self.driver_path}")
+            if not self.silent_mode:
+                print()
+            return True
+        
+        # 扫描子目录
+        subdirs = [d for d in self.driver_path.iterdir() if d.is_dir() and not d.name.startswith('.')]
+        
+        if not subdirs:
+            # 如果没有子目录，直接递归安装整个目录
+            self.print_info("[扫描] 未发现子目录，将递归安装整个目录...")
             cmd = f'dism /image:"{self.mount_dir}" /add-driver /driver:"{self.driver_path}" /recurse'
             exit_code = self.run_command(cmd)
             
@@ -630,10 +640,84 @@ class WinPECustomizer:
             else:
                 self.print_success("[完成] 驱动程序批量安装成功")
         else:
-            self.print_warning("[警告] 驱动程序目录不存在，跳过驱动安装")
-            self.print_warning(f"[警告] 请确认路径: {self.driver_path}")
+            # 按子目录分步安装
+            total_dirs = len(subdirs)
+            self.print_info(f"[扫描] 发现 {total_dirs} 个驱动子目录")
+            
+            for i, subdir in enumerate(subdirs, 1):
+                percent = int((i / total_dirs) * 100)
+                
+                if not self.silent_mode:
+                    print()
+                self.print_cyan("=" * 50)
+                self.print_info(f"[{i}/{total_dirs}] 正在安装: {subdir.name}")
+                self.print_info(f"[进度] 总体进度: {i}/{total_dirs} ({percent}%)")
+                self.print_cyan("=" * 50)
+                
+                # 检查是否应该停止
+                if hasattr(self, 'gui_instance') and self.gui_instance and self.gui_instance.stop_requested:
+                    self.print_warning("[停止] 检测到停止请求")
+                    break
+                
+                # 安装此子目录的驱动
+                cmd = f'dism /image:"{self.mount_dir}" /add-driver /driver:"{subdir}" /recurse'
+                
+                if self.silent_mode:
+                    # 静默模式：捕获输出
+                    self.print_info(f"[命令] 正在执行 DISM...")
+                    
+                    startupinfo = None
+                    if sys.platform == 'win32':
+                        startupinfo = subprocess.STARTUPINFO()
+                        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                        startupinfo.wShowWindow = subprocess.SW_HIDE
+                    
+                    process = subprocess.Popen(
+                        cmd,
+                        shell=True,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.STDOUT,
+                        text=True,
+                        encoding='utf-8',
+                        errors='ignore',
+                        bufsize=1,
+                        startupinfo=startupinfo
+                    )
+                    
+                    driver_count = 0
+                    for line in process.stdout:
+                        line = line.rstrip()
+                        if not line.strip():
+                            continue
+                        
+                        # 统计安装的驱动数量
+                        if '正在安装' in line or 'Installing' in line:
+                            driver_count += 1
+                            self.print_info(f"  正在安装驱动 #{driver_count}")
+                        elif '操作成功' in line or 'successfully' in line:
+                            self.print_info(f"  {line}")
+                        elif '找到' in line and '驱动' in line:
+                            self.print_info(f"  {line}")
+                    
+                    process.wait()
+                    exit_code = process.returncode
+                    
+                    if exit_code == 0:
+                        self.print_success(f"[✅ 完成] {subdir.name} - 安装成功")
+                    else:
+                        self.print_error(f"[❌ 失败] {subdir.name} - 安装失败")
+                else:
+                    # 命令行模式
+                    exit_code = self.run_command(cmd)
+                    if exit_code == 0:
+                        self.print_success(f"[完成] {subdir.name} 安装成功")
+                    else:
+                        self.print_error(f"[失败] {subdir.name} 安装失败")
+            
+            self.print_success(f"[总计] 已处理 {total_dirs} 个驱动目录")
         
-        print()
+        if not self.silent_mode:
+            print()
         return True
     
     def copy_external_apps(self):
