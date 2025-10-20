@@ -25,10 +25,11 @@ init(autoreset=True)
 class WinPECustomizer:
     """WinPE 定制工具类"""
     
-    def __init__(self, winpe_dir=None):
+    def __init__(self, winpe_dir=None, silent_mode=False):
         """初始化配置"""
         # work_dir 是项目根目录（core的父目录）
         self.work_dir = Path(__file__).parent.parent.absolute()
+        self.silent_mode = silent_mode  # 静默模式（不输出到控制台）
         
         # 从 config.py 加载路径配置
         if winpe_dir:
@@ -61,29 +62,35 @@ class WinPECustomizer:
     
     def print_header(self, text):
         """打印标题"""
-        print(f"\n{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
-        print(f"{Fore.CYAN}{text:^50}{Style.RESET_ALL}")
-        print(f"{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
+        if not self.silent_mode:
+            print(f"\n{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}{text:^50}{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
     
     def print_info(self, text):
         """打印普通信息（白色）"""
-        print(f"{Fore.WHITE}{text}{Style.RESET_ALL}")
+        if not self.silent_mode:
+            print(f"{Fore.WHITE}{text}{Style.RESET_ALL}")
     
     def print_success(self, text):
         """打印成功信息（绿色）"""
-        print(f"{Fore.GREEN}{text}{Style.RESET_ALL}")
+        if not self.silent_mode:
+            print(f"{Fore.GREEN}{text}{Style.RESET_ALL}")
     
     def print_error(self, text):
         """打印错误信息（红色）"""
-        print(f"{Fore.RED}{text}{Style.RESET_ALL}")
+        if not self.silent_mode:
+            print(f"{Fore.RED}{text}{Style.RESET_ALL}")
     
     def print_warning(self, text):
         """打印警告信息（黄色）"""
-        print(f"{Fore.YELLOW}{text}{Style.RESET_ALL}")
+        if not self.silent_mode:
+            print(f"{Fore.YELLOW}{text}{Style.RESET_ALL}")
     
     def print_cyan(self, text):
         """打印青色信息"""
-        print(f"{Fore.CYAN}{text}{Style.RESET_ALL}")
+        if not self.silent_mode:
+            print(f"{Fore.CYAN}{text}{Style.RESET_ALL}")
     
     def run_command(self, cmd):
         """执行命令并显示输出"""
@@ -107,26 +114,27 @@ class WinPECustomizer:
     
     def show_config(self):
         """显示配置信息"""
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print()
-        self.print_cyan("=" * 40)
-        self.print_cyan("    WinPE 定制脚本 v3.0 (Python)    ")
-        self.print_cyan("=" * 40)
-        print()
-        
-        self.print_info(f"[系统信息] Python 版本: {sys.version.split()[0]}")
-        self.print_info(f"[时间信息] 脚本启动时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print()
-        
-        self.print_info(f"[路径配置] 工作目录: {self.work_dir}")
-        self.print_info(f"[路径配置] WinPE 目录: {self.winpe_dir}")
-        self.print_info(f"[路径配置] 挂载目录: {self.mount_dir}")
-        self.print_info(f"[路径配置] Windows ADK 路径:")
-        self.print_info(f"             {self.cab_path}")
-        self.print_info(f"[路径配置] 驱动程序目录: {self.driver_path}")
-        self.print_info(f"[路径配置] 附加程序目录: {self.external_apps}")
-        self.print_info(f"[路径配置] 输出 ISO 文件: {self.final_iso}")
-        print()
+        if not self.silent_mode:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print()
+            self.print_cyan("=" * 40)
+            self.print_cyan("    WinPE 定制脚本 v3.0 (Python)    ")
+            self.print_cyan("=" * 40)
+            print()
+            
+            self.print_info(f"[系统信息] Python 版本: {sys.version.split()[0]}")
+            self.print_info(f"[时间信息] 脚本启动时间: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            print()
+            
+            self.print_info(f"[路径配置] 工作目录: {self.work_dir}")
+            self.print_info(f"[路径配置] WinPE 目录: {self.winpe_dir}")
+            self.print_info(f"[路径配置] 挂载目录: {self.mount_dir}")
+            self.print_info(f"[路径配置] Windows ADK 路径:")
+            self.print_info(f"             {self.cab_path}")
+            self.print_info(f"[路径配置] 驱动程序目录: {self.driver_path}")
+            self.print_info(f"[路径配置] 附加程序目录: {self.external_apps}")
+            self.print_info(f"[路径配置] 输出 ISO 文件: {self.final_iso}")
+            print()
     
     def check_adk_path(self):
         """检查 Windows ADK 路径"""

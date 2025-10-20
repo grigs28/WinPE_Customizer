@@ -875,7 +875,7 @@ class CustomWinPECustomizer(WinPECustomizer):
     """自定义的定制器，输出重定向到队列"""
     
     def __init__(self, winpe_dir, output_queue, gui_instance=None):
-        super().__init__(winpe_dir)
+        super().__init__(winpe_dir, silent_mode=True)  # 启用静默模式，不输出到控制台
         self.output_queue = output_queue
         self.gui_instance = gui_instance
         self.total_steps = 0

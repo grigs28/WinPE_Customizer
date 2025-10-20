@@ -79,3 +79,6 @@ generate_icon.bat
 # 临时图标文件
 temp_icon.ico
 
+# 外置程序配置（个人配置）
+external_apps_config.json
+
