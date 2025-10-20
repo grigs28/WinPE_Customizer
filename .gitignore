@@ -79,6 +79,8 @@ generate_icon.bat
 # 临时图标文件
 temp_icon.ico
 
-# 外置程序配置（个人配置）
+# 外置程序配置（个人配置，不上传）
 external_apps_config.json
+external_apps_config.py
+winpe_tools_config.json
 
