@@ -172,6 +172,36 @@ SEVENZIP_CONTEXT_MENU = {
     ]
 }
 
+# Notepad++ 右键菜单配置
+NOTEPADPP_CONTEXT_MENU = {
+    "enabled": False,  # 默认禁用，需要在工具管理器中启用
+    "install_path": "X:\\Program Files\\Notepad++",
+    "menu_items": [
+        {
+            "name": "Notepad++",
+            "items": [
+                ("用 Notepad++ 编辑", "edit", '"{install_path}\\notepad++.exe" "%1"'),
+                ("用 Notepad++ 以管理员身份打开", "edit_admin", '"{install_path}\\notepad++.exe" "%1"'),
+            ]
+        }
+    ]
+}
+
+# SumatraPDF 右键菜单配置
+SUMATRAPDF_CONTEXT_MENU = {
+    "enabled": False,  # 默认禁用，需要在工具管理器中启用
+    "install_path": "X:\\Program Files\\SumatraPDF",
+    "menu_items": [
+        {
+            "name": "SumatraPDF",
+            "items": [
+                ("用 SumatraPDF 打开", "open", '"{install_path}\\SumatraPDF.exe" "%1"'),
+                ("用 SumatraPDF 打印", "print", '"{install_path}\\SumatraPDF.exe" -print-to-default "%1"'),
+            ]
+        }
+    ]
+}
+
 # ============================================================================
 # 高级选项
 # ============================================================================

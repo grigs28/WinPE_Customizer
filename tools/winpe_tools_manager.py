@@ -21,6 +21,21 @@ import threading
 class WinPEToolsManager:
     """WinPE 工具包管理器"""
     
+    # 工具分类
+    TOOL_CATEGORIES = {
+        'system': '系统管理',
+        'disk': '磁盘工具',
+        'compress': '压缩工具',
+        'editor': '文本编辑',
+        'browser': '浏览器',
+        'hardware': '硬件检测',
+        'network': '网络工具',
+        'recovery': '数据恢复',
+        'file': '文件管理',
+        'bootable': '启动盘制作',
+        'viewer': '文档查看',
+    }
+    
     # 常用WinPE工具列表
     COMMON_TOOLS = [
         {
@@ -29,7 +44,8 @@ class WinPEToolsManager:
             'url': 'https://github.com/Chuyu-Team/Dism-Multi-language',
             'exe': 'Dism++x64.exe',
             'recommended': True,
-            'context_menu': False  # 不需要右键菜单
+            'context_menu': False,
+            'category': 'system'
         },
         {
             'name': 'DiskGenius',
@@ -37,7 +53,8 @@ class WinPEToolsManager:
             'url': 'https://www.diskgenius.cn/',
             'exe': 'DiskGenius.exe',
             'recommended': True,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'disk'
         },
         {
             'name': 'PowerShell 7',
@@ -45,7 +62,8 @@ class WinPEToolsManager:
             'url': 'https://github.com/PowerShell/PowerShell',
             'exe': 'pwsh.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'system'
         },
         {
             'name': 'WinNTSetup',
@@ -53,7 +71,8 @@ class WinPEToolsManager:
             'url': 'https://msfn.org/board/topic/149612-winntsetup/',
             'exe': 'WinNTSetup.exe',
             'recommended': True,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'system'
         },
         {
             'name': 'CPU-Z',
@@ -61,7 +80,8 @@ class WinPEToolsManager:
             'url': 'https://www.cpuid.com/softwares/cpu-z.html',
             'exe': 'cpuz.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'CrystalDiskInfo',
@@ -69,15 +89,17 @@ class WinPEToolsManager:
             'url': 'https://crystalmark.info/',
             'exe': 'DiskInfo64.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'Notepad++',
-            'desc': '文本编辑器',
+            'desc': '文本编辑器（支持右键菜单）',
             'url': 'https://notepad-plus-plus.org/',
             'exe': 'notepad++.exe',
             'recommended': True,
-            'context_menu': False
+            'context_menu': True,
+            'category': 'editor'
         },
         {
             'name': '7-Zip',
@@ -85,7 +107,17 @@ class WinPEToolsManager:
             'url': 'https://www.7-zip.org/',
             'exe': '7zFM.exe',
             'recommended': True,
-            'context_menu': True  # 需要配置右键菜单
+            'context_menu': True,
+            'category': 'compress'
+        },
+        {
+            'name': 'SumatraPDF',
+            'desc': 'PDF阅读器（支持右键菜单，轻量开源）',
+            'url': 'https://www.sumatrapdfreader.org/',
+            'exe': 'SumatraPDF.exe',
+            'recommended': True,
+            'context_menu': True,
+            'category': 'viewer'
         },
         {
             'name': 'GreenBrowser',
@@ -93,7 +125,8 @@ class WinPEToolsManager:
             'url': 'http://www.morequick.com/',
             'exe': 'GreenBrowser.exe',
             'recommended': True,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'browser'
         },
         {
             'name': 'Firefox Portable',
@@ -101,7 +134,8 @@ class WinPEToolsManager:
             'url': 'https://portableapps.com/apps/internet/firefox_portable',
             'exe': 'FirefoxPortable.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'browser'
         },
         {
             'name': 'VSCode Portable',
@@ -109,7 +143,8 @@ class WinPEToolsManager:
             'url': 'https://code.visualstudio.com/docs/editor/portable',
             'exe': 'Code.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'editor'
         },
         {
             'name': 'HWiNFO',
@@ -117,7 +152,8 @@ class WinPEToolsManager:
             'url': 'https://www.hwinfo.com/',
             'exe': 'HWiNFO64.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'MemTest86',
@@ -125,7 +161,8 @@ class WinPEToolsManager:
             'url': 'https://www.memtest86.com/',
             'exe': 'MemTest86.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'Rufus',
@@ -133,7 +170,8 @@ class WinPEToolsManager:
             'url': 'https://rufus.ie/',
             'exe': 'rufus.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'bootable'
         },
         {
             'name': 'HDTune',
@@ -141,7 +179,8 @@ class WinPEToolsManager:
             'url': 'https://www.hdtune.com/',
             'exe': 'HDTune.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'TreeSize Free',
@@ -149,7 +188,8 @@ class WinPEToolsManager:
             'url': 'https://www.jam-software.com/treesize_free',
             'exe': 'TreeSizeFree.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'file'
         },
         {
             'name': 'PuTTY',
@@ -157,7 +197,8 @@ class WinPEToolsManager:
             'url': 'https://www.putty.org/',
             'exe': 'putty.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'network'
         },
         {
             'name': 'WinSCP',
@@ -165,7 +206,8 @@ class WinPEToolsManager:
             'url': 'https://winscp.net/',
             'exe': 'WinSCP.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'network'
         },
         {
             'name': 'Recuva',
@@ -173,7 +215,8 @@ class WinPEToolsManager:
             'url': 'https://www.ccleaner.com/recuva',
             'exe': 'Recuva64.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'recovery'
         },
         {
             'name': 'FastCopy',
@@ -181,7 +224,8 @@ class WinPEToolsManager:
             'url': 'https://fastcopy.jp/',
             'exe': 'FastCopy.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'file'
         },
         {
             'name': 'CPU-X Portable',
@@ -189,7 +233,8 @@ class WinPEToolsManager:
             'url': 'https://github.com/TheTumultuousUnicornOfDarkness/CPU-X/releases',
             'exe': 'CPU-X_win64.exe',
             'recommended': True,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'Ventoy',
@@ -197,7 +242,8 @@ class WinPEToolsManager:
             'url': 'https://www.ventoy.net/',
             'exe': 'Ventoy2Disk.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'bootable'
         },
         {
             'name': 'Speccy',
@@ -205,7 +251,8 @@ class WinPEToolsManager:
             'url': 'https://www.ccleaner.com/speccy',
             'exe': 'Speccy64.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'GPU-Z',
@@ -213,7 +260,8 @@ class WinPEToolsManager:
             'url': 'https://www.techpowerup.com/gpuz/',
             'exe': 'GPU-Z.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'hardware'
         },
         {
             'name': 'AS SSD Benchmark',
@@ -221,7 +269,8 @@ class WinPEToolsManager:
             'url': 'https://www.alex-is.de/',
             'exe': 'AS SSD Benchmark.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'disk'
         },
         {
             'name': 'Victoria HDD',
@@ -229,7 +278,8 @@ class WinPEToolsManager:
             'url': 'https://hdd.by/victoria/',
             'exe': 'victoria.exe',
             'recommended': False,
-            'context_menu': False
+            'context_menu': False,
+            'category': 'disk'
         },
     ]
     
@@ -349,64 +399,140 @@ class WinPEToolsManager:
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
-        # 工具列表
+        # 按分类组织工具
         self.tool_vars = {}
         self.desktop_vars = {}
+        
+        # 按分类分组
+        tools_by_category = {}
         for tool in self.COMMON_TOOLS:
-            tool_frame = ttk.LabelFrame(scrollable_frame, text=tool['name'], padding="10")
-            tool_frame.pack(fill=tk.X, padx=10, pady=5)
+            category = tool.get('category', 'other')
+            if category not in tools_by_category:
+                tools_by_category[category] = []
+            tools_by_category[category].append(tool)
+        
+        # 按分类显示
+        for category_id, category_name in self.TOOL_CATEGORIES.items():
+            if category_id not in tools_by_category:
+                continue
             
-            # 上半部分：复选框和桌面选项
-            top_frame = ttk.Frame(tool_frame)
-            top_frame.pack(fill=tk.X, anchor=tk.W)
+            tools = tools_by_category[category_id]
             
-            # 复选框
-            var = tk.BooleanVar(value=tool['recommended'])
-            self.tool_vars[tool['name']] = var
+            # 分类标题
+            category_frame = ttk.LabelFrame(scrollable_frame, text=f"📂 {category_name}", 
+                                          padding="10", relief=tk.GROOVE)
+            category_frame.pack(fill=tk.X, padx=10, pady=(10, 5))
             
-            cb = ttk.Checkbutton(top_frame, text=f"✓ 集成此工具 {' (推荐)' if tool['recommended'] else ''}", 
-                               variable=var)
-            cb.pack(side=tk.LEFT)
-            
-            # 桌面选项
-            desktop_var = tk.BooleanVar(value=tool['recommended'])  # 推荐的工具默认添加到桌面
-            self.desktop_vars[tool['name']] = desktop_var
-            
-            desktop_cb = ttk.Checkbutton(top_frame, text="📌 添加到桌面", 
-                                        variable=desktop_var)
-            desktop_cb.pack(side=tk.LEFT, padx=(20, 0))
-            
-            # 右键菜单标识（仅7-Zip）
-            if tool.get('context_menu', False):
-                ttk.Label(top_frame, text="🖱️ 支持右键菜单", 
-                         foreground="purple", font=('Arial', 8, 'bold')).pack(side=tk.LEFT, padx=(20, 0))
-            
-            # 说明
-            ttk.Label(tool_frame, text=f"说明: {tool['desc']}", foreground="gray").pack(anchor=tk.W, pady=(5, 0))
-            ttk.Label(tool_frame, text=f"可执行文件: {tool['exe']}", foreground="blue", font=('Consolas', 9)).pack(anchor=tk.W)
-            
-            # 保存位置
-            save_path = f"外置程序/Tools/{tool['name']}/{tool['exe']}"
-            ttk.Label(tool_frame, text=f"📁 保存位置: {save_path}", 
-                     foreground="orange", font=('Consolas', 8)).pack(anchor=tk.W, pady=(2, 0))
-            
-            # 下载链接和按钮
-            link_frame = ttk.Frame(tool_frame)
-            link_frame.pack(anchor=tk.W, pady=(5, 0))
-            
-            # 自动下载按钮（如果有直接下载链接）
-            if 'download_url' in tool and tool['download_url']:
-                ttk.Button(link_frame, text="⬇️ 自动下载", 
-                          command=lambda t=tool: self.auto_download_tool(t), width=12).pack(side=tk.LEFT, padx=(0, 10))
-            
-            # 手动下载链接
-            ttk.Label(link_frame, text="🌐 ").pack(side=tk.LEFT)
-            link_label = ttk.Label(link_frame, text="访问官网", foreground="blue", cursor="hand2", 
-                                  font=('Arial', 9, 'underline'))
-            link_label.pack(side=tk.LEFT)
-            link_label.bind("<Button-1>", lambda e, url=tool['url']: self.open_url(url))
-            
-            ttk.Label(link_frame, text=f"  ({tool['url']})", foreground="gray", font=('Arial', 8)).pack(side=tk.LEFT)
+            # 分类下的工具
+            for tool in tools:
+                self._create_tool_item(category_frame, tool)
+    
+    def _create_tool_item(self, parent, tool):
+        """创建单个工具项"""
+        # 检查工具是否已下载
+        is_downloaded = self._check_tool_downloaded(tool)
+        
+        # 工具框架，根据下载状态使用不同颜色
+        tool_frame = ttk.Frame(parent, relief=tk.RIDGE, borderwidth=1, padding="8")
+        tool_frame.pack(fill=tk.X, padx=5, pady=3)
+        
+        # 如果已下载，添加绿色边框效果
+        if is_downloaded:
+            tool_frame.configure(relief=tk.SOLID, borderwidth=2)
+        
+        # 上半部分：工具名称和状态
+        header_frame = ttk.Frame(tool_frame)
+        header_frame.pack(fill=tk.X, anchor=tk.W)
+        
+        # 工具名称和下载状态
+        name_frame = ttk.Frame(header_frame)
+        name_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        
+        # 状态标识
+        if is_downloaded:
+            status_icon = "✅"
+            status_text = "已下载"
+            status_color = "green"
+        else:
+            status_icon = "📦"
+            status_text = "未下载"
+            status_color = "orange"
+        
+        ttk.Label(name_frame, text=f"{status_icon} {tool['name']}", 
+                 font=('Arial', 10, 'bold'), foreground=status_color).pack(side=tk.LEFT)
+        ttk.Label(name_frame, text=f"[{status_text}]", 
+                 foreground=status_color, font=('Arial', 8)).pack(side=tk.LEFT, padx=(5, 0))
+        
+        # 推荐标识
+        if tool.get('recommended', False):
+            ttk.Label(name_frame, text="⭐ 推荐", 
+                     foreground="blue", font=('Arial', 8, 'bold')).pack(side=tk.LEFT, padx=(10, 0))
+        
+        # 右键菜单标识
+        if tool.get('context_menu', False):
+            ttk.Label(name_frame, text="🖱️ 右键菜单", 
+                     foreground="purple", font=('Arial', 8, 'bold')).pack(side=tk.LEFT, padx=(10, 0))
+        
+        # 选项框架
+        option_frame = ttk.Frame(tool_frame)
+        option_frame.pack(fill=tk.X, anchor=tk.W, pady=(5, 0))
+        
+        # 复选框
+        var = tk.BooleanVar(value=tool['recommended'])
+        self.tool_vars[tool['name']] = var
+        
+        cb = ttk.Checkbutton(option_frame, text="✓ 集成此工具", variable=var)
+        cb.pack(side=tk.LEFT)
+        
+        # 桌面选项
+        desktop_var = tk.BooleanVar(value=tool['recommended'])
+        self.desktop_vars[tool['name']] = desktop_var
+        
+        desktop_cb = ttk.Checkbutton(option_frame, text="📌 添加到桌面", variable=desktop_var)
+        desktop_cb.pack(side=tk.LEFT, padx=(20, 0))
+        
+        # 说明
+        ttk.Label(tool_frame, text=f"📝 {tool['desc']}", 
+                 foreground="gray", font=('Arial', 9)).pack(anchor=tk.W, pady=(5, 0))
+        
+        # 文件信息
+        info_frame = ttk.Frame(tool_frame)
+        info_frame.pack(fill=tk.X, anchor=tk.W, pady=(3, 0))
+        
+        ttk.Label(info_frame, text=f"📄 可执行文件: {tool['exe']}", 
+                 foreground="blue", font=('Consolas', 8)).pack(side=tk.LEFT)
+        
+        # 保存位置
+        save_path = f"外置程序/Tools/{tool['name']}/{tool['exe']}"
+        ttk.Label(tool_frame, text=f"📁 保存位置: {save_path}", 
+                 foreground="orange", font=('Consolas', 8)).pack(anchor=tk.W, pady=(2, 0))
+        
+        # 下载链接和按钮
+        link_frame = ttk.Frame(tool_frame)
+        link_frame.pack(anchor=tk.W, pady=(5, 0))
+        
+        if not is_downloaded:
+            # 未下载时显示下载按钮
+            ttk.Label(link_frame, text="⚠️ ", foreground="orange").pack(side=tk.LEFT)
+            ttk.Label(link_frame, text="需要下载:", foreground="orange", 
+                     font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=(0, 10))
+        
+        # 手动下载链接
+        ttk.Label(link_frame, text="🌐 ").pack(side=tk.LEFT)
+        link_label = ttk.Label(link_frame, text="访问官网下载", foreground="blue", cursor="hand2", 
+                              font=('Arial', 9, 'underline'))
+        link_label.pack(side=tk.LEFT)
+        link_label.bind("<Button-1>", lambda e, url=tool['url']: self.open_url(url))
+        
+        ttk.Label(link_frame, text=f"  ({tool['url']})", foreground="gray", font=('Arial', 8)).pack(side=tk.LEFT)
+    
+    def _check_tool_downloaded(self, tool):
+        """检查工具是否已下载"""
+        # 检查外置程序目录
+        external_dir = Path("../外置程序") if Path("../外置程序").exists() else Path("外置程序")
+        tool_path = external_dir / "Tools" / tool['name'] / tool['exe']
+        
+        return tool_path.exists()
         
     
     def create_custom_tab(self, parent):
