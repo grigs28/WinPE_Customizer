@@ -13,6 +13,9 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog, scrolledtext
 from datetime import datetime
+import urllib.request
+import zipfile
+import threading
 
 
 class WinPEToolsManager:
@@ -174,8 +177,18 @@ class WinPEToolsManager:
         ttk.Label(info_frame, text="5️⃣ 在主程序中启用'复制外置程序'模块并运行", foreground="gray").pack(anchor=tk.W, padx=20)
         
         ttk.Label(info_frame, text="", height=1).pack()
-        ttk.Label(info_frame, text="⚠️ 注意：工具不会自动下载，需要手动下载并放到指定目录", 
-                 foreground="red", font=('Arial', 9, 'bold')).pack(anchor=tk.W)
+        ttk.Label(info_frame, text="💡 支持自动下载和手动下载两种方式", 
+                 foreground="green", font=('Arial', 9, 'bold')).pack(anchor=tk.W)
+        
+        # 快速操作按钮
+        quick_btn_frame = ttk.Frame(header_frame)
+        quick_btn_frame.pack(fill=tk.X, pady=(10, 0))
+        
+        ttk.Button(quick_btn_frame, text="✅ 全选推荐", command=self.select_recommended_tools, width=16).pack(side=tk.LEFT, padx=5)
+        ttk.Button(quick_btn_frame, text="❌ 全不选", command=self.deselect_all_tools, width=16).pack(side=tk.LEFT, padx=5)
+        ttk.Separator(quick_btn_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
+        ttk.Button(quick_btn_frame, text="⬇️ 批量自动下载", command=self.batch_download, width=18, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
+        ttk.Button(quick_btn_frame, text="📂 打开外置程序目录", command=self.open_external_dir, width=20).pack(side=tk.LEFT, padx=5)
         
         # 滚动区域
         scroll_container = ttk.Frame(parent)
@@ -224,27 +237,24 @@ class WinPEToolsManager:
             ttk.Label(tool_frame, text=f"📁 保存位置: {save_path}", 
                      foreground="orange", font=('Consolas', 8)).pack(anchor=tk.W, pady=(2, 0))
             
-            # 下载链接
+            # 下载链接和按钮
             link_frame = ttk.Frame(tool_frame)
             link_frame.pack(anchor=tk.W, pady=(5, 0))
-            ttk.Label(link_frame, text="📥 ").pack(side=tk.LEFT)
-            link_label = ttk.Label(link_frame, text="点击下载", foreground="blue", cursor="hand2", 
+            
+            # 自动下载按钮（如果有直接下载链接）
+            if 'download_url' in tool and tool['download_url']:
+                ttk.Button(link_frame, text="⬇️ 自动下载", 
+                          command=lambda t=tool: self.auto_download_tool(t), width=12).pack(side=tk.LEFT, padx=(0, 10))
+            
+            # 手动下载链接
+            ttk.Label(link_frame, text="🌐 ").pack(side=tk.LEFT)
+            link_label = ttk.Label(link_frame, text="访问官网", foreground="blue", cursor="hand2", 
                                   font=('Arial', 9, 'underline'))
             link_label.pack(side=tk.LEFT)
             link_label.bind("<Button-1>", lambda e, url=tool['url']: self.open_url(url))
             
             ttk.Label(link_frame, text=f"  ({tool['url']})", foreground="gray", font=('Arial', 8)).pack(side=tk.LEFT)
         
-        # 底部按钮
-        btn_frame = ttk.Frame(parent, padding="10")
-        btn_frame.pack(fill=tk.X)
-        ttk.Button(btn_frame, text="✅ 全选推荐", command=self.select_recommended_tools, width=16).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="❌ 全不选", command=self.deselect_all_tools, width=16).pack(side=tk.LEFT, padx=5)
-        
-        ttk.Separator(btn_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
-        
-        ttk.Label(btn_frame, text="→", font=('Arial', 14)).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="📂 打开外置程序目录", command=self.open_external_dir, width=20).pack(side=tk.LEFT, padx=5)
     
     def create_custom_tab(self, parent):
         """创建自定义工具标签页"""
@@ -511,6 +521,76 @@ class WinPEToolsManager:
             os.startfile(external_dir)
         else:
             messagebox.showinfo("提示", f"外置程序目录不存在\n\n建议创建：{external_dir.absolute()}")
+    
+    def batch_download(self):
+        """批量自动下载选中的工具"""
+        # 获取勾选的工具
+        selected_tools = [tool for tool in self.COMMON_TOOLS if self.tool_vars[tool['name']].get()]
+        
+        if not selected_tools:
+            messagebox.showwarning("提示", "请先勾选要下载的工具")
+            return
+        
+        # 过滤有直接下载链接的工具
+        downloadable = [t for t in selected_tools if 'download_url' in t and t['download_url']]
+        
+        if not downloadable:
+            messagebox.showinfo("提示", 
+                              f"已勾选 {len(selected_tools)} 个工具\n\n"
+                              "这些工具暂不支持自动下载，请手动下载：\n\n" +
+                              "\n".join([f"• {t['name']}: {t['url']}" for t in selected_tools]))
+            return
+        
+        msg = f"将自动下载以下工具：\n\n"
+        msg += "\n".join([f"• {t['name']}" for t in downloadable])
+        msg += f"\n\n共 {len(downloadable)} 个工具"
+        
+        if messagebox.askyesno("确认下载", msg):
+            self.start_batch_download(downloadable)
+    
+    def start_batch_download(self, tools):
+        """开始批量下载"""
+        # 创建下载对话框
+        DownloadDialog(self.root, tools)
+    
+    def auto_download_tool(self, tool):
+        """自动下载单个工具"""
+        if 'download_url' not in tool or not tool['download_url']:
+            messagebox.showinfo("提示", 
+                              f"{tool['name']} 暂不支持自动下载\n\n"
+                              f"请访问官网手动下载：\n{tool['url']}")
+            return
+        
+        # 创建下载对话框
+        from download_dialog import DownloadDialog
+        DownloadDialog(self.root, [tool])
+    
+    def batch_download(self):
+        """批量下载工具"""
+        # 获取勾选的工具
+        selected_tools = [tool for tool in self.COMMON_TOOLS if self.tool_vars[tool['name']].get()]
+        
+        if not selected_tools:
+            messagebox.showwarning("提示", "请先勾选要下载的工具")
+            return
+        
+        # 提示
+        msg = f"⚠️ 自动下载功能说明：\n\n"
+        msg += "由于大多数工具没有直接下载链接，\n"
+        msg += "程序会打开每个工具的官网，请手动下载。\n\n"
+        msg += f"已勾选 {len(selected_tools)} 个工具：\n\n"
+        msg += "\n".join([f"• {t['name']}" for t in selected_tools[:5]])
+        if len(selected_tools) > 5:
+            msg += f"\n... 等 {len(selected_tools)} 个工具"
+        msg += "\n\n建议使用浏览器批量下载后，放到对应目录。"
+        
+        if messagebox.askyesno("批量下载", msg):
+            # 依次打开官网
+            for tool in selected_tools:
+                self.open_url(tool['url'])
+            
+            # 打开目标目录
+            self.open_external_dir()
 
 
 def main():
