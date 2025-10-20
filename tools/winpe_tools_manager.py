@@ -76,6 +76,20 @@ class WinPEToolsManager:
             'exe': '7zFM.exe',
             'recommended': True
         },
+        {
+            'name': 'GreenBrowser',
+            'desc': '绿色便携浏览器',
+            'url': 'http://www.morequick.com/',
+            'exe': 'GreenBrowser.exe',
+            'recommended': True
+        },
+        {
+            'name': 'Firefox Portable',
+            'desc': 'Firefox 便携版浏览器',
+            'url': 'https://portableapps.com/apps/internet/firefox_portable',
+            'exe': 'FirefoxPortable.exe',
+            'recommended': False
+        },
     ]
     
     def __init__(self, root):
@@ -134,15 +148,22 @@ class WinPEToolsManager:
     
     def create_recommended_tab(self, parent):
         """创建推荐工具标签页"""
-        frame = ttk.Frame(parent, padding="20")
-        frame.pack(fill=tk.BOTH, expand=True)
+        # 顶部说明
+        header_frame = ttk.Frame(parent, padding="20")
+        header_frame.pack(fill=tk.X)
         
-        ttk.Label(frame, text="WinPE 常用工具推荐", font=('Arial', 12, 'bold')).pack(anchor=tk.W, pady=(0, 10))
-        ttk.Label(frame, text="勾选要集成的工具，然后生成配置代码", foreground="gray").pack(anchor=tk.W, pady=(0, 15))
+        ttk.Label(header_frame, text="WinPE 常用工具推荐", font=('Arial', 12, 'bold')).pack(anchor=tk.W, pady=(0, 5))
+        ttk.Label(header_frame, text="⚠️ 注意：工具需要手动下载，程序不会自动下载", 
+                 foreground="red", font=('Arial', 9, 'bold')).pack(anchor=tk.W, pady=(0, 5))
+        ttk.Label(header_frame, text="勾选要集成的工具 → 点击下载链接获取工具 → 放到对应目录 → 生成配置", 
+                 foreground="gray").pack(anchor=tk.W, pady=(0, 10))
         
         # 滚动区域
-        canvas = tk.Canvas(frame, bg='white')
-        scrollbar = ttk.Scrollbar(frame, orient="vertical", command=canvas.yview)
+        scroll_container = ttk.Frame(parent)
+        scroll_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=(0, 10))
+        
+        canvas = tk.Canvas(scroll_container, bg='white')
+        scrollbar = ttk.Scrollbar(scroll_container, orient="vertical", command=canvas.yview)
         scrollable_frame = ttk.Frame(canvas)
         
         scrollable_frame.bind(
@@ -152,6 +173,11 @@ class WinPEToolsManager:
         
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
+        
+        # 鼠标滚轮支持
+        def on_mousewheel(event):
+            canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        canvas.bind_all("<MouseWheel>", on_mousewheel)
         
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -177,16 +203,19 @@ class WinPEToolsManager:
             # 下载链接
             link_frame = ttk.Frame(tool_frame)
             link_frame.pack(anchor=tk.W, pady=(5, 0))
-            ttk.Label(link_frame, text="下载: ").pack(side=tk.LEFT)
-            link_label = ttk.Label(link_frame, text=tool['url'], foreground="blue", cursor="hand2")
+            ttk.Label(link_frame, text="📥 ").pack(side=tk.LEFT)
+            link_label = ttk.Label(link_frame, text="点击下载", foreground="blue", cursor="hand2", 
+                                  font=('Arial', 9, 'underline'))
             link_label.pack(side=tk.LEFT)
             link_label.bind("<Button-1>", lambda e, url=tool['url']: self.open_url(url))
+            
+            ttk.Label(link_frame, text=f"  ({tool['url']})", foreground="gray", font=('Arial', 8)).pack(side=tk.LEFT)
         
         # 底部按钮
-        btn_frame = ttk.Frame(frame)
-        btn_frame.pack(pady=15)
-        ttk.Button(btn_frame, text="全选推荐", command=self.select_recommended_tools, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="全不选", command=self.deselect_all_tools, width=15).pack(side=tk.LEFT, padx=5)
+        btn_frame = ttk.Frame(parent, padding="10")
+        btn_frame.pack(fill=tk.X)
+        ttk.Button(btn_frame, text="✅ 全选推荐", command=self.select_recommended_tools, width=16).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="❌ 全不选", command=self.deselect_all_tools, width=16).pack(side=tk.LEFT, padx=5)
     
     def create_custom_tab(self, parent):
         """创建自定义工具标签页"""
@@ -223,7 +252,7 @@ class WinPEToolsManager:
         
         btn_frame = ttk.Frame(list_frame)
         btn_frame.pack(pady=5)
-        ttk.Button(btn_frame, text="删除选中", command=self.remove_custom_tool, width=12).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="🗑️ 删除选中", command=self.remove_custom_tool, width=16).pack(side=tk.LEFT, padx=5)
     
     def create_config_tab(self, parent):
         """创建配置代码标签页"""
@@ -239,9 +268,9 @@ class WinPEToolsManager:
         # 按钮
         btn_frame = ttk.Frame(frame)
         btn_frame.pack()
-        ttk.Button(btn_frame, text="生成配置", command=self.generate_config, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="复制代码", command=self.copy_config, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="💾 直接保存到config.py", command=self.save_to_config, width=20).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="📝 生成配置", command=self.generate_config, width=16).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="📋 复制代码", command=self.copy_config, width=16).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="💾 直接保存到config.py", command=self.save_to_config, width=22).pack(side=tk.LEFT, padx=5)
     
     def open_url(self, url):
         """打开URL"""
