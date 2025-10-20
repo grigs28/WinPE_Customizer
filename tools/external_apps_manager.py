@@ -29,8 +29,8 @@ class ExternalAppsManager:
         # 数据
         self.apps_data = []  # [{"path": "", "name": "", "desktop": False, "startmenu": False, "path_env": False, "target": ""}]
         self.external_dir = Path("外置程序")
-        # 配置文件保存在根目录（不上传到Git）
-        self.config_file = Path("../external_apps_config.json") if Path("../external_apps_config.json").exists() else Path("external_apps_config.json")
+        # 配置文件保存在 tools 目录（不上传到Git）
+        self.config_file = Path("external_apps_config.json")
         
         # 创建界面
         self.create_widgets()
@@ -42,32 +42,22 @@ class ExternalAppsManager:
         """设置窗口图标 - 随机从ico目录选择"""
         import random
         
-        # 首先检查ico目录
+        # 检查ico目录（支持相对路径）
         ico_dir = Path("../ico") if Path("../ico").exists() else Path("ico")
         
         if ico_dir.exists():
-            # 扫描ico目录中的所有ico文件
-            ico_files = list(ico_dir.glob("*.ico"))
+            # 扫描所有图标文件
+            ico_files = list(ico_dir.glob("*.ico")) + list(ico_dir.glob("*.png"))
             
             if ico_files:
                 # 随机选择一个
-                random_ico = random.choice(ico_files)
+                random_icon = random.choice(ico_files)
                 try:
-                    self.root.iconbitmap(str(random_ico))
+                    if random_icon.suffix.lower() == '.ico':
+                        self.root.iconbitmap(str(random_icon))
                     return
                 except:
                     pass
-        
-        # 回退到默认图标
-        icon_files = ['../ico/winpe_customizer.ico', '../ico/winpe_simple.ico', 'winpe_customizer.ico', 'winpe_simple.ico']
-        for icon_file in icon_files:
-            icon_path = Path(icon_file)
-            if icon_path.exists():
-                try:
-                    self.root.iconbitmap(str(icon_path))
-                    break
-                except:
-                    continue
     
     def create_widgets(self):
         """创建界面"""
@@ -149,7 +139,7 @@ class ExternalAppsManager:
         
         ttk.Button(button_frame, text="💾 保存配置", command=self.save_config, width=15).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="📂 加载配置", command=self.load_config, width=15).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="📝 生成config.py", command=self.generate_config_py, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="💾 保存到config.py", command=self.save_to_config, width=18, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="ℹ️ 帮助", command=self.show_help, width=15).pack(side=tk.LEFT, padx=5)
         
         # 统计信息
@@ -313,47 +303,77 @@ class ExternalAppsManager:
         except Exception as e:
             messagebox.showerror("错误", f"加载失败:\n{e}")
     
-    def generate_config_py(self):
-        """生成 config.py 配置代码"""
+    def save_to_config(self):
+        """直接保存到core/config.py"""
         if not self.apps_data:
             messagebox.showwarning("警告", "没有程序数据，请先扫描程序")
             return
         
-        # 生成代码
-        code_lines = [
-            "# ============================================================================",
-            "# 外置程序配置 - 由外置程序管理器自动生成",
-            f"# 生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-            "# ============================================================================",
-            "",
-            "EXTERNAL_APPS = ["
-        ]
+        # 统计要保存的程序
+        apps_to_save = [app for app in self.apps_data if app['desktop'] or app['startmenu'] or app['path_env']]
         
-        for app in self.apps_data:
-            if app['desktop'] or app['startmenu'] or app['path_env']:
-                code_lines.append(f"    # {app['name']}")
-                code_lines.append(f"    (")
-                code_lines.append(f"        \"{app['path']}\",")
-                code_lines.append(f"        \"{app['target']}\",")
-                code_lines.append(f"        \"{app['name']}\",")
-                
+        if not apps_to_save:
+            messagebox.showwarning("警告", "没有勾选任何程序的放置选项")
+            return
+        
+        if not messagebox.askyesno("确认", f"确定要将 {len(apps_to_save)} 个程序的配置保存到 core/config.py 吗？\n\n这将覆盖现有的 EXTERNAL_APPS 配置。"):
+            return
+        
+        try:
+            config_file = Path("../core/config.py") if Path("../core/config.py").exists() else Path("core/config.py")
+            
+            if not config_file.exists():
+                messagebox.showerror("错误", "找不到 config.py 文件")
+                return
+            
+            # 读取现有配置
+            with open(config_file, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+            
+            # 生成新的 EXTERNAL_APPS 配置
+            new_apps = []
+            for app in apps_to_save:
                 options = []
                 if app['desktop']:
-                    options.append('desktop')
+                    options.append('"desktop"')
                 if app['startmenu']:
-                    options.append('startmenu')
+                    options.append('"startmenu"')
                 if app['path_env']:
-                    options.append('path')
+                    options.append('"path"')
                 
-                code_lines.append(f"        # 放置: {', '.join(options)}")
-                code_lines.append(f"    ),")
-                code_lines.append("")
-        
-        code_lines.append("]")
-        code_lines.append("")
-        
-        # 显示对话框
-        ShowCodeDialog(self.root, "\n".join(code_lines))
+                options_str = f"[{', '.join(options)}]" if options else "[]"
+                new_apps.append(f'    ("{app["path"]}", "{app["target"]}", "{app["name"]}", {options_str}),\n')
+            
+            # 替换 EXTERNAL_APPS 部分
+            new_lines = []
+            in_external_apps = False
+            skip_until_bracket = False
+            
+            for line in lines:
+                if 'EXTERNAL_APPS = [' in line:
+                    in_external_apps = True
+                    new_lines.append(line)
+                    new_lines.extend(new_apps)
+                    skip_until_bracket = True
+                    continue
+                
+                if skip_until_bracket and in_external_apps:
+                    if ']' in line and not line.strip().startswith('#'):
+                        new_lines.append(line)
+                        in_external_apps = False
+                        skip_until_bracket = False
+                    continue
+                
+                new_lines.append(line)
+            
+            # 写回文件
+            with open(config_file, 'w', encoding='utf-8') as f:
+                f.writelines(new_lines)
+            
+            messagebox.showinfo("成功", f"配置已保存到 core/config.py！\n\n共配置 {len(apps_to_save)} 个程序")
+            
+        except Exception as e:
+            messagebox.showerror("错误", f"保存失败:\n{e}")
     
     def show_help(self):
         """显示帮助"""
@@ -505,57 +525,6 @@ class EditDialog:
         self.dialog.destroy()
 
 
-class ShowCodeDialog:
-    """显示代码对话框"""
-    
-    def __init__(self, parent, code):
-        self.dialog = tk.Toplevel(parent)
-        self.dialog.title("生成的 config.py 代码")
-        self.dialog.geometry("700x600")
-        self.dialog.transient(parent)
-        
-        # 说明
-        info_frame = ttk.Frame(self.dialog, padding="10")
-        info_frame.pack(fill=tk.X)
-        ttk.Label(info_frame, text="将以下代码复制到 config.py 中的 EXTERNAL_APPS 部分:", 
-                 font=('Arial', 10, 'bold')).pack(anchor=tk.W)
-        
-        # 代码区域
-        from tkinter import scrolledtext
-        self.text = scrolledtext.ScrolledText(self.dialog, wrap=tk.NONE, font=('Consolas', 9))
-        self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        self.text.insert(1.0, code)
-        
-        # 按钮
-        btn_frame = ttk.Frame(self.dialog, padding="10")
-        btn_frame.pack(fill=tk.X)
-        
-        ttk.Button(btn_frame, text="📋 复制到剪贴板", command=self.copy_code).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="💾 保存到文件", command=self.save_file).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="关闭", command=self.dialog.destroy).pack(side=tk.RIGHT, padx=5)
-        
-        self.code = code
-    
-    def copy_code(self):
-        """复制到剪贴板"""
-        self.dialog.clipboard_clear()
-        self.dialog.clipboard_append(self.code)
-        messagebox.showinfo("成功", "已复制到剪贴板")
-    
-    def save_file(self):
-        """保存到文件"""
-        filename = filedialog.asksaveasfilename(
-            defaultextension=".py",
-            filetypes=[("Python文件", "*.py"), ("文本文件", "*.txt"), ("所有文件", "*.*")],
-            initialfile="external_apps_config.py"
-        )
-        if filename:
-            try:
-                with open(filename, 'w', encoding='utf-8') as f:
-                    f.write(self.code)
-                messagebox.showinfo("成功", f"已保存到:\n{filename}")
-            except Exception as e:
-                messagebox.showerror("错误", f"保存失败:\n{e}")
 
 
 def main():
