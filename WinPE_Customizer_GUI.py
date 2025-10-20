@@ -43,6 +43,9 @@ class WinPECustomizerGUI:
         self.output_queue = queue.Queue()
         self.customizer = None
         
+        # 工作目录
+        self.work_dir = Path(__file__).parent.absolute()
+        
         # 配置变量
         self.winpe_dir = tk.StringVar(value=config.WINPE_DIR)
         self.cab_path = tk.StringVar(value=config.CAB_PATH)
