@@ -392,6 +392,10 @@ class WinPECustomizerGUI:
         ttk.Button(btn_frame, text="全选", command=self.select_all_modules, width=12).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="全不选", command=self.deselect_all_modules, width=12).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="推荐配置", command=self.select_recommended, width=12).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Separator(btn_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
+        
+        ttk.Button(btn_frame, text="💾 保存模块设置", command=self.save_module_config, width=15, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
     
     def create_packages_tab(self, parent):
         """创建功能包说明标签页"""
@@ -872,6 +876,50 @@ class WinPECustomizerGUI:
         self.enable_make_iso.set(False)
         
         self.log("[系统] 已选择推荐配置", 'SUCCESS')
+    
+    def save_module_config(self):
+        """保存模块配置到 config.py"""
+        if not messagebox.askyesno("确认", "确定要保存当前模块设置到配置文件吗？\n这将修改 core/config.py"):
+            return
+        
+        try:
+            config_file = Path("core/config.py")
+            
+            # 读取现有配置
+            with open(config_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # 更新模块开关
+            import re
+            
+            replacements = [
+                ('ENABLE_COPYPE_SETUP', self.enable_copype.get()),
+                ('ENABLE_AUTO_MOUNT', self.enable_auto_mount.get()),
+                ('ENABLE_FEATURE_PACKS', self.enable_feature_packs.get()),
+                ('ENABLE_LANGUAGE_PACKS', self.enable_language_packs.get()),
+                ('ENABLE_FONTS_LP', self.enable_fonts.get()),
+                ('ENABLE_REGIONAL_SETTINGS', self.enable_regional.get()),
+                ('ENABLE_DRIVERS', self.enable_drivers.get()),
+                ('ENABLE_EXTERNAL_APPS', self.enable_external_apps.get()),
+                ('ENABLE_CREATE_DIRS', self.enable_create_dirs.get()),
+                ('ENABLE_MAKE_ISO', self.enable_make_iso.get()),
+            ]
+            
+            for var_name, value in replacements:
+                pattern = f'{var_name}\\s*=\\s*(True|False)'
+                replacement = f'{var_name} = {value}'
+                content = re.sub(pattern, replacement, content)
+            
+            # 写回文件
+            with open(config_file, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            self.log("[✅ 成功] 模块设置已保存到 core/config.py", 'SUCCESS')
+            messagebox.showinfo("成功", "模块设置已保存到配置文件！\n\n下次启动程序时将使用新配置。")
+            
+        except Exception as e:
+            self.log(f"[❌ 错误] 保存失败: {e}", 'ERROR')
+            messagebox.showerror("错误", f"保存配置文件失败:\n{e}")
     
     def monitor_output(self):
         """监控输出队列"""
