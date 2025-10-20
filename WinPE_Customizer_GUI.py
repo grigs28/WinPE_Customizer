@@ -166,6 +166,16 @@ class WinPECustomizerGUI:
         self.umount_discard_btn = ttk.Button(mount_frame, text="🗑 卸载不保存", command=self.umount_wim_discard, width=15)
         self.umount_discard_btn.pack(side=tk.LEFT, padx=5)
         
+        # 第二行：工具管理
+        tools_frame = ttk.Frame(quick_frame)
+        tools_frame.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(tools_frame, text="工具管理:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Button(tools_frame, text="📦 外置程序管理器", command=self.open_apps_manager, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(tools_frame, text="🔧 SDIO驱动提取", command=self.open_sdio_extractor, width=15).pack(side=tk.LEFT, padx=5)
+        ttk.Button(tools_frame, text="🔍 驱动扫描工具", command=self.open_driver_scanner, width=15).pack(side=tk.LEFT, padx=5)
+        
         ttk.Separator(quick_frame, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
         
         # WinPE 目录
