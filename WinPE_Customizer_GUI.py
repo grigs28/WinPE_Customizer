@@ -233,11 +233,24 @@ class WinPECustomizerGUI:
         status_frame = ttk.Frame(parent)
         status_frame.grid(row=3, column=0, sticky=(tk.W, tk.E), padx=10, pady=(0, 10))
         
+        # 状态信息
+        ttk.Label(status_frame, text="状态:").pack(side=tk.LEFT, padx=5)
         self.status_label = ttk.Label(status_frame, text="就绪", foreground="green", font=('Arial', 9, 'bold'))
         self.status_label.pack(side=tk.LEFT, padx=5)
         
-        self.progress = ttk.Progressbar(status_frame, mode='indeterminate')
-        self.progress.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        ttk.Separator(status_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
+        
+        # 进度信息
+        ttk.Label(status_frame, text="进度:").pack(side=tk.LEFT, padx=5)
+        self.progress_label = ttk.Label(status_frame, text="0/0", font=('Arial', 9))
+        self.progress_label.pack(side=tk.LEFT, padx=5)
+        
+        # 进度条
+        self.progress = ttk.Progressbar(status_frame, mode='determinate', length=300)
+        self.progress.pack(side=tk.LEFT, padx=5)
+        
+        self.progress_percent = ttk.Label(status_frame, text="0%", font=('Arial', 9))
+        self.progress_percent.pack(side=tk.LEFT, padx=5)
     
     def create_config_tab(self, parent):
         """创建路径配置标签页"""
@@ -463,6 +476,44 @@ class WinPECustomizerGUI:
         full_message = f"[{timestamp}] {message}\n"
         self.log_text.insert(tk.END, full_message, tag)
         self.log_text.see(tk.END)
+        
+        # 解析进度信息
+        self.parse_progress(message)
+    
+    def parse_progress(self, message):
+        """解析进度信息"""
+        import re
+        
+        # 解析百分比进度 (例: [50%], 50%, Progress: 50%)
+        percent_match = re.search(r'(\d+)%', message)
+        if percent_match:
+            percent = int(percent_match.group(1))
+            self.update_progress(percent, percent)
+        
+        # 解析步骤进度 (例: [3/10], 3/10, Step 3 of 10)
+        step_match = re.search(r'(\d+)[/\s]+(\d+)', message)
+        if step_match:
+            current = int(step_match.group(1))
+            total = int(step_match.group(2))
+            self.update_progress(current, total)
+    
+    def update_progress(self, current, total=100):
+        """更新进度条"""
+        if total > 0:
+            percent = int((current / total) * 100)
+            self.progress['value'] = percent
+            self.progress_percent.config(text=f"{percent}%")
+            
+            if total != 100:  # 如果不是百分比，显示步骤
+                self.progress_label.config(text=f"{current}/{total}")
+            else:
+                self.progress_label.config(text=f"{percent}%")
+    
+    def reset_progress(self):
+        """重置进度条"""
+        self.progress['value'] = 0
+        self.progress_percent.config(text="0%")
+        self.progress_label.config(text="0/0")
     
     def clear_log(self):
         """清空日志"""
@@ -623,7 +674,7 @@ class WinPECustomizerGUI:
         self.is_running = True
         self.start_btn.config(state=tk.DISABLED)
         self.stop_btn.config(state=tk.NORMAL)
-        self.progress.start(10)
+        self.reset_progress()
         self.status_label.config(text="运行中...", foreground="orange")
         
         self.log("="*60, 'CYAN')
@@ -650,12 +701,19 @@ class WinPECustomizerGUI:
             # 运行
             exit_code = customizer.run()
             
+            # 设置进度为100%
+            self.root.after(0, lambda: self.update_progress(100, 100))
+            
             if exit_code == 0:
-                self.output_queue.put(('SUCCESS', '[完成] WinPE 定制流程全部完成！'))
-                self.root.after(0, lambda: self.status_label.config(text="完成", foreground="green"))
+                self.output_queue.put(('SUCCESS', '='*60))
+                self.output_queue.put(('SUCCESS', '[✅ 完成] WinPE 定制流程全部完成！'))
+                self.output_queue.put(('SUCCESS', '='*60))
+                self.root.after(0, lambda: self.status_label.config(text="✅ 完成", foreground="green"))
             else:
-                self.output_queue.put(('ERROR', '[失败] WinPE 定制流程未完成'))
-                self.root.after(0, lambda: self.status_label.config(text="失败", foreground="red"))
+                self.output_queue.put(('ERROR', '='*60))
+                self.output_queue.put(('ERROR', '[❌ 失败] WinPE 定制流程未完成'))
+                self.output_queue.put(('ERROR', '='*60))
+                self.root.after(0, lambda: self.status_label.config(text="❌ 失败", foreground="red"))
                 
         except Exception as e:
             self.output_queue.put(('ERROR', f'[异常] {str(e)}'))
@@ -668,7 +726,6 @@ class WinPECustomizerGUI:
         self.is_running = False
         self.start_btn.config(state=tk.NORMAL)
         self.stop_btn.config(state=tk.DISABLED)
-        self.progress.stop()
     
     def update_config_from_ui(self):
         """从UI更新配置"""
@@ -770,6 +827,39 @@ class CustomWinPECustomizer(WinPECustomizer):
     def __init__(self, winpe_dir, output_queue):
         super().__init__(winpe_dir)
         self.output_queue = output_queue
+        self.total_steps = 0
+        self.current_step = 0
+        
+        # 统计启用的模块数量
+        self.count_enabled_modules()
+    
+    def count_enabled_modules(self):
+        """统计启用的模块数量"""
+        modules = [
+            self.enable_copype_setup,
+            self.enable_auto_mount,
+            self.enable_feature_packs,
+            self.enable_language_packs,
+            self.enable_fonts_lp,
+            self.enable_regional_settings,
+            self.enable_drivers,
+            self.enable_external_apps,
+            self.enable_create_dirs,
+            self.enable_make_iso,
+        ]
+        self.total_steps = sum(modules)
+    
+    def report_step_start(self, step_name):
+        """报告步骤开始"""
+        self.current_step += 1
+        self.output_queue.put(('CYAN', f"[进度 {self.current_step}/{self.total_steps}] 开始: {step_name}"))
+    
+    def report_step_end(self, step_name, success=True):
+        """报告步骤结束"""
+        if success:
+            self.output_queue.put(('SUCCESS', f"[✅ 完成] {step_name}"))
+        else:
+            self.output_queue.put(('ERROR', f"[❌ 失败] {step_name}"))
     
     def print_header(self, text):
         """打印标题"""
@@ -796,6 +886,92 @@ class CustomWinPECustomizer(WinPECustomizer):
     def print_cyan(self, text):
         """打印青色信息"""
         self.output_queue.put(('CYAN', text))
+    
+    def run(self):
+        """主流程（重写以添加进度报告）"""
+        try:
+            # 显示配置
+            self.print_cyan("="*40)
+            self.print_cyan(f"总计 {self.total_steps} 个模块将被执行")
+            self.print_cyan("="*40)
+            
+            # 检查 ADK
+            if not self.check_adk_path():
+                return 1
+            
+            # 创建 WinPE 环境
+            if self.enable_copype_setup:
+                self.report_step_start("创建 WinPE 工作环境")
+                result = self.create_winpe_environment()
+                self.report_step_end("创建 WinPE 工作环境", result)
+                if not result:
+                    return 1
+            
+            # 挂载 WIM
+            if self.enable_auto_mount:
+                self.report_step_start("挂载 boot.wim")
+                result = self.check_and_mount_wim()
+                self.report_step_end("挂载 boot.wim", result)
+                if not result:
+                    return 1
+            
+            # 执行定制流程
+            if self.enable_feature_packs:
+                self.report_step_start("安装功能包")
+                result = self.install_feature_packs()
+                self.report_step_end("安装功能包", result)
+            
+            if self.enable_language_packs:
+                self.report_step_start("安装中文语言包")
+                result = self.install_language_packs()
+                self.report_step_end("安装中文语言包", result)
+            
+            if self.enable_fonts_lp:
+                self.report_step_start("安装字体支持")
+                result = self.install_fonts_and_lp()
+                self.report_step_end("安装字体支持", result)
+            
+            if self.enable_regional_settings:
+                self.report_step_start("配置区域设置")
+                result = self.set_regional_settings()
+                self.report_step_end("配置区域设置", result)
+            
+            if self.enable_drivers:
+                self.report_step_start("批量安装驱动程序")
+                result = self.install_drivers()
+                self.report_step_end("批量安装驱动程序", result)
+            
+            if self.enable_external_apps:
+                self.report_step_start("复制附加程序")
+                result = self.copy_external_apps()
+                self.report_step_end("复制附加程序", result)
+            
+            if self.enable_create_dirs:
+                self.report_step_start("创建自定义目录结构")
+                result = self.create_directories()
+                self.report_step_end("创建自定义目录结构", result)
+            
+            if self.enable_make_iso:
+                self.report_step_start("卸载 WIM 并生成 ISO")
+                result = self.make_iso()
+                self.report_step_end("卸载 WIM 并生成 ISO", result)
+            
+            # 显示摘要
+            self.print_cyan("="*40)
+            self.print_cyan("WinPE 定制流程已全部完成")
+            self.print_cyan("="*40)
+            self.show_summary()
+            
+            return 0
+            
+        except KeyboardInterrupt:
+            self.print_warning("\n[中断] 用户中断执行")
+            return 1
+        except Exception as e:
+            self.print_error(f"\n[异常] 发生错误: {e}")
+            import traceback
+            traceback.print_exc()
+            return 1
 
 
 def main():
