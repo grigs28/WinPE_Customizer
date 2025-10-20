@@ -9,14 +9,14 @@ cd /d "%~dp0.."
 
 REM 修改下面的路径为您的 Python 实际路径
 REM 示例路径：
-REM   D:\APP\miniconda3\python.exe
-REM   C:\Python310\python.exe
-REM   python.exe (如果已添加到系统PATH)
+REM   D:\APP\miniconda3\pythonw.exe  （无控制台窗口）
+REM   C:\Python310\pythonw.exe
+REM   pythonw.exe (如果已添加到系统PATH)
 
-D:\APP\miniconda3\python.exe WinPE_Customizer_GUI.py
+REM 使用 pythonw.exe 启动（无控制台窗口，推荐）
+start "" D:\APP\miniconda3\pythonw.exe WinPE_Customizer_GUI.py
 
-REM 如果使用系统 Python，可以直接用：
-REM python WinPE_Customizer_GUI.py
-
-pause
+REM 如果需要看控制台输出（调试用），使用 python.exe：
+REM D:\APP\miniconda3\python.exe WinPE_Customizer_GUI.py
+REM pause
 

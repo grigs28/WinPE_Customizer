@@ -116,13 +116,21 @@ class WinPECustomizer:
             self.print_cyan("[命令执行] 准备执行命令:")
             self.print_info(f"   {cmd}")
             
+            # Windows: 隐藏窗口
+            startupinfo = None
+            if sys.platform == 'win32':
+                startupinfo = subprocess.STARTUPINFO()
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                startupinfo.wShowWindow = subprocess.SW_HIDE
+            
             result = subprocess.run(
                 cmd, 
                 shell=True,
                 capture_output=True,
                 text=True,
                 encoding='utf-8',
-                errors='ignore'
+                errors='ignore',
+                startupinfo=startupinfo
             )
             
             # 处理输出（发送到日志队列）
@@ -342,6 +350,13 @@ class WinPECustomizer:
                 # 静默模式：捕获输出，发送到日志队列
                 self.print_info(f"[命令] 正在执行 DISM...")
                 
+                # Windows: 隐藏窗口
+                startupinfo = None
+                if sys.platform == 'win32':
+                    startupinfo = subprocess.STARTUPINFO()
+                    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                    startupinfo.wShowWindow = subprocess.SW_HIDE
+                
                 process = subprocess.Popen(
                     cmd,
                     shell=True,
@@ -350,7 +365,8 @@ class WinPECustomizer:
                     text=True,
                     encoding='utf-8',
                     errors='ignore',
-                    bufsize=1
+                    bufsize=1,
+                    startupinfo=startupinfo
                 )
                 
                 # 逐行读取并发送到日志
@@ -439,6 +455,13 @@ class WinPECustomizer:
                 # 静默模式：捕获输出到日志
                 self.print_info(f"[命令] 正在执行 DISM...")
                 
+                # Windows: 隐藏窗口
+                startupinfo = None
+                if sys.platform == 'win32':
+                    startupinfo = subprocess.STARTUPINFO()
+                    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                    startupinfo.wShowWindow = subprocess.SW_HIDE
+                
                 process = subprocess.Popen(
                     cmd,
                     shell=True,
@@ -447,7 +470,8 @@ class WinPECustomizer:
                     text=True,
                     encoding='utf-8',
                     errors='ignore',
-                    bufsize=1
+                    bufsize=1,
+                    startupinfo=startupinfo
                 )
                 
                 for line in process.stdout:

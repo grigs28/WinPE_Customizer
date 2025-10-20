@@ -38,9 +38,9 @@ ENABLE_LANGUAGE_PACKS = True     # 是否安装中文语言包
 ENABLE_FONTS_LP = True           # 是否安装中文字体支持
 ENABLE_REGIONAL_SETTINGS = True  # 是否配置区域设置
 ENABLE_DRIVERS = True            # 是否批量安装驱动程序
-ENABLE_EXTERNAL_APPS = False      # 是否复制附加程序
+ENABLE_EXTERNAL_APPS = True      # 是否复制附加程序
 ENABLE_CREATE_DIRS = False        # 是否创建自定义目录结构
-ENABLE_MAKE_ISO = False           # 是否卸载 WIM 并生成 ISO
+ENABLE_MAKE_ISO = True           # 是否卸载 WIM 并生成 ISO
 
 # ============================================================================
 # 功能包列表
