@@ -39,6 +39,7 @@ class WinPECustomizerGUI:
         
         # 状态变量
         self.is_running = False
+        self.stop_requested = False
         self.output_queue = queue.Queue()
         self.customizer = None
         
@@ -74,8 +75,48 @@ class WinPECustomizerGUI:
         self.log("[提示] 请确保以管理员身份运行 '部署和映像工具环境'", 'WARNING')
     
     def set_window_icon(self):
-        """设置窗口图标"""
-        # 尝试加载图标文件
+        """设置窗口图标 - 随机从ico目录选择"""
+        import random
+        
+        # 首先检查ico目录
+        ico_dir = Path("ico")
+        random_icon = None
+        
+        if ico_dir.exists():
+            # 扫描ico目录中的所有图片
+            image_files = []
+            for ext in ['*.ico', '*.png', '*.jpg', '*.jpeg', '*.bmp']:
+                image_files.extend(ico_dir.glob(ext))
+            
+            if image_files:
+                # 随机选择一个
+                random_image = random.choice(image_files)
+                
+                # 如果是ico文件，直接使用
+                if random_image.suffix.lower() == '.ico':
+                    try:
+                        self.root.iconbitmap(str(random_image))
+                        self.log(f"[图标] 使用随机图标: {random_image.name}", 'INFO')
+                        return
+                    except:
+                        pass
+                else:
+                    # 如果是其他图片格式，转换为ico
+                    try:
+                        from PIL import Image
+                        img = Image.open(random_image)
+                        # 调整大小为标准图标尺寸
+                        img = img.resize((32, 32), Image.Resampling.LANCZOS)
+                        # 保存为临时ico文件
+                        temp_ico = Path("temp_icon.ico")
+                        img.save(temp_ico, format='ICO')
+                        self.root.iconbitmap(str(temp_ico))
+                        self.log(f"[图标] 使用随机图标: {random_image.name}", 'INFO')
+                        return
+                    except:
+                        pass
+        
+        # 如果ico目录没有图片，使用默认图标
         icon_files = ['winpe_customizer.ico', 'winpe_simple.ico', 'icon.ico']
         
         for icon_file in icon_files:
@@ -689,14 +730,18 @@ class WinPECustomizerGUI:
     def stop_customization(self):
         """停止定制"""
         if messagebox.askyesno("确认", "确定要停止吗？\n当前操作会继续完成。"):
-            self.log("[警告] 用户请求停止", 'WARNING')
-            self.is_running = False
+            self.log("[⚠️ 警告] 用户请求停止，等待当前操作完成...", 'WARNING')
+            self.stop_requested = True
+            self.status_label.config(text="正在停止...", foreground="orange")
     
     def run_customization(self):
         """运行定制流程"""
         try:
+            # 重置停止标志
+            self.stop_requested = False
+            
             # 创建自定义的 Customizer
-            customizer = CustomWinPECustomizer(self.winpe_dir.get(), self.output_queue)
+            customizer = CustomWinPECustomizer(self.winpe_dir.get(), self.output_queue, self)
             
             # 运行
             exit_code = customizer.run()
@@ -704,7 +749,12 @@ class WinPECustomizerGUI:
             # 设置进度为100%
             self.root.after(0, lambda: self.update_progress(100, 100))
             
-            if exit_code == 0:
+            if exit_code == 2 or self.stop_requested:
+                self.output_queue.put(('WARNING', '='*60))
+                self.output_queue.put(('WARNING', '[⚠️ 已停止] 用户中断执行'))
+                self.output_queue.put(('WARNING', '='*60))
+                self.root.after(0, lambda: self.status_label.config(text="⚠️ 已停止", foreground="orange"))
+            elif exit_code == 0:
                 self.output_queue.put(('SUCCESS', '='*60))
                 self.output_queue.put(('SUCCESS', '[✅ 完成] WinPE 定制流程全部完成！'))
                 self.output_queue.put(('SUCCESS', '='*60))
@@ -824,14 +874,22 @@ class WinPECustomizerGUI:
 class CustomWinPECustomizer(WinPECustomizer):
     """自定义的定制器，输出重定向到队列"""
     
-    def __init__(self, winpe_dir, output_queue):
+    def __init__(self, winpe_dir, output_queue, gui_instance=None):
         super().__init__(winpe_dir)
         self.output_queue = output_queue
+        self.gui_instance = gui_instance
         self.total_steps = 0
         self.current_step = 0
         
         # 统计启用的模块数量
         self.count_enabled_modules()
+    
+    def should_stop(self):
+        """检查是否应该停止"""
+        if self.gui_instance and self.gui_instance.stop_requested:
+            self.print_warning("[⚠️ 停止] 检测到停止请求，当前操作完成后将停止")
+            return True
+        return False
     
     def count_enabled_modules(self):
         """统计启用的模块数量"""
@@ -917,41 +975,57 @@ class CustomWinPECustomizer(WinPECustomizer):
             
             # 执行定制流程
             if self.enable_feature_packs:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("安装功能包")
                 result = self.install_feature_packs()
                 self.report_step_end("安装功能包", result)
             
             if self.enable_language_packs:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("安装中文语言包")
                 result = self.install_language_packs()
                 self.report_step_end("安装中文语言包", result)
             
             if self.enable_fonts_lp:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("安装字体支持")
                 result = self.install_fonts_and_lp()
                 self.report_step_end("安装字体支持", result)
             
             if self.enable_regional_settings:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("配置区域设置")
                 result = self.set_regional_settings()
                 self.report_step_end("配置区域设置", result)
             
             if self.enable_drivers:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("批量安装驱动程序")
                 result = self.install_drivers()
                 self.report_step_end("批量安装驱动程序", result)
             
             if self.enable_external_apps:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("复制附加程序")
                 result = self.copy_external_apps()
                 self.report_step_end("复制附加程序", result)
             
             if self.enable_create_dirs:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("创建自定义目录结构")
                 result = self.create_directories()
                 self.report_step_end("创建自定义目录结构", result)
             
             if self.enable_make_iso:
+                if self.should_stop():
+                    return 2
                 self.report_step_start("卸载 WIM 并生成 ISO")
                 result = self.make_iso()
                 self.report_step_end("卸载 WIM 并生成 ISO", result)

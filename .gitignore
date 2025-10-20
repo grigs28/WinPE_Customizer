@@ -80,3 +80,6 @@ generate_icon.bat
 # winpe_customizer.ico
 # winpe_simple.ico
 
+# 临时图标文件
+temp_icon.ico
+

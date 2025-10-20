@@ -38,7 +38,26 @@ class ExternalAppsManager:
         self.load_config()
     
     def set_icon(self):
-        """设置窗口图标"""
+        """设置窗口图标 - 随机从ico目录选择"""
+        import random
+        
+        # 首先检查ico目录
+        ico_dir = Path("../ico") if Path("../ico").exists() else Path("ico")
+        
+        if ico_dir.exists():
+            # 扫描ico目录中的所有ico文件
+            ico_files = list(ico_dir.glob("*.ico"))
+            
+            if ico_files:
+                # 随机选择一个
+                random_ico = random.choice(ico_files)
+                try:
+                    self.root.iconbitmap(str(random_ico))
+                    return
+                except:
+                    pass
+        
+        # 回退到默认图标
         icon_files = ['../winpe_customizer.ico', '../winpe_simple.ico', 'winpe_customizer.ico', 'winpe_simple.ico']
         for icon_file in icon_files:
             icon_path = Path(icon_file)
