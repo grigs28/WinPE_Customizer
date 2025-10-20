@@ -1,0 +1,2662 @@
+{
+  "external_dir": "外置程序",
+  "apps": [
+    {
+      "name": "dotnetfx35(1).exe",
+      "path": "dotnetfx35(1).exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FINALDATA.EXE",
+      "path": "FINALDATA\\FINALDATA.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FREEWB.EXE",
+      "path": "FREEWB\\FREEWB.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOST32_1102.EXE",
+      "path": "GHOST\\GHOST32_1102.EXE",
+      "desktop": true,
+      "startmenu": true,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOSTEXP_1102.EXE",
+      "path": "GHOST\\GHOSTEXP_1102.EXE",
+      "desktop": false,
+      "startmenu": true,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INFCACHEBUILD.EXE",
+      "path": "PE_OUTERPART\\INFCACHEBUILD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "OUTER_BASE.EXE",
+      "path": "PE_OUTERPART\\OUTER_BASE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "OUTER_COMMON.EXE",
+      "path": "PE_OUTERPART\\OUTER_COMMON.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "重启shell.exe",
+      "path": "PE_OUTERPART\\重启shell.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PTDD3.0.EXE",
+      "path": "PTDD3.0\\PTDD3.0.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIOTranslationTool.exe",
+      "path": "SDIO_Update\\SDIOTranslationTool.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIO_R817.exe",
+      "path": "SDIO_Update\\SDIO_R817.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIO_x64_R817.exe",
+      "path": "SDIO_Update\\SDIO_x64_R817.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ULTRAISO.EXE",
+      "path": "ULTRAISO\\ULTRAISO.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "VDM1.EXE",
+      "path": "VDM\\VDM1.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WBInstall32.exe",
+      "path": "wb5\\WBInstall32.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "wbload.exe",
+      "path": "wb5\\wbload.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PASSWDRENEW.EXE",
+      "path": "WINPE_TOOLS\\PASSWDRENEW.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SETPAGEFILE.EXE",
+      "path": "WINPE_TOOLS\\SETPAGEFILE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SYSTEMRESTORE.EXE",
+      "path": "WINPE_TOOLS\\SYSTEMRESTORE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINRAR.EXE",
+      "path": "WINRAR\\WINRAR.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ColorStorm.exe",
+      "path": "图形娱乐\\ColorStorm.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IcoFX.exe",
+      "path": "图形娱乐\\IcoFX.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "KMPlayer.exe",
+      "path": "图形娱乐\\KMPlayer.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "picpick.exe",
+      "path": "图形娱乐\\picpick.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Screen2Exe.exe",
+      "path": "图形娱乐\\Screen2Exe.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "uu.exe",
+      "path": "图形娱乐\\uu.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GhostExp.exe",
+      "path": "备份还原\\GhostExp.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MAXNGS.exe",
+      "path": "备份还原\\MAXNGS.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "OneKey.exe",
+      "path": "备份还原\\OneKey.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "snapshot.exe",
+      "path": "备份还原\\snapshot.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "AltSearch.exe",
+      "path": "文件工具\\AltSearch.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FastCopy.exe",
+      "path": "文件工具\\FastCopy.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Recuva.exe",
+      "path": "文件工具\\Recuva.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SUPERDELETE.EXE",
+      "path": "文件工具\\SUPERDELETE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TOTALCMD.exe",
+      "path": "文件工具\\TOTALCMD.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "wywz.exe",
+      "path": "文件工具\\wywz.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "XCAB.exe",
+      "path": "文件工具\\XCAB.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "易我数据恢复V2.1.0.exe",
+      "path": "文件工具\\易我数据恢复V2.1.0.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "暴力删除.exe",
+      "path": "文件工具\\暴力删除.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Defraggler.exe",
+      "path": "磁盘光盘\\Defraggler.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DiskGenius.exe",
+      "path": "磁盘光盘\\DiskGenius.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOST硬盘快速分区.exe",
+      "path": "磁盘光盘\\GHOST硬盘快速分区.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "meise_UGenius.exe",
+      "path": "磁盘光盘\\meise_UGenius.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NDD2006.EXE",
+      "path": "磁盘光盘\\NDD2006.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "UltraISO.exe",
+      "path": "磁盘光盘\\UltraISO.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "U盘百宝箱.exe",
+      "path": "磁盘光盘\\U盘百宝箱.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "VrDrvMan虚拟驱动器专家.exe",
+      "path": "磁盘光盘\\VrDrvMan虚拟驱动器专家.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINPM.exe",
+      "path": "磁盘光盘\\WINPM.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ChipGenius.exe",
+      "path": "系统检测\\ChipGenius.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MyDiskTest.exe",
+      "path": "系统检测\\MyDiskTest.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "CCleaner.exe",
+      "path": "系统维护\\CCleaner.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DriverAssist.exe",
+      "path": "系统维护\\DriverAssist.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PasswordChanger.exe",
+      "path": "系统维护\\PasswordChanger.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "powerrmv彻底删除.exe",
+      "path": "系统维护\\powerrmv彻底删除.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PrvDisk.exe",
+      "path": "系统维护\\PrvDisk.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RegSnap.exe",
+      "path": "系统维护\\RegSnap.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RegWorkshop.exe",
+      "path": "系统维护\\RegWorkshop.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Simlock.exe",
+      "path": "系统维护\\Simlock.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "sre.exe",
+      "path": "系统维护\\sre.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WinsockxpFix(专治不能上网但能上QQ).exe",
+      "path": "系统维护\\WinsockxpFix(专治不能上网但能上QQ).exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Wsyscheck.exe",
+      "path": "系统维护\\Wsyscheck.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "hfs.exe",
+      "path": "网络工具\\hfs.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IPMSG.exe",
+      "path": "网络工具\\IPMSG.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "QQ2009.exe",
+      "path": "网络工具\\QQ2009.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TheWorld.exe",
+      "path": "网络工具\\TheWorld.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Thunder.exe",
+      "path": "网络工具\\THUNDER\\Thunder.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "update.exe",
+      "path": "系统维护\\Avira\\update.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NTPWEDIT.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\NTPWEDIT.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ScanVirus.exe",
+      "path": "系统维护\\WINPE_TOOLS\\ScanVirus.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SERVICESPE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\SERVICESPE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SETUPXP.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\SETUPXP.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINDOWS引导修复.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\WINDOWS引导修复.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "备份系统驱动.exe",
+      "path": "系统维护\\WINPE_TOOLS\\备份系统驱动.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "addpass.exe",
+      "path": "系统维护\\移动加密\\addpass.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISKWIPE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\DISKWIPE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HOTFIXUNINSTALL.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\HOTFIXUNINSTALL.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "LOCKSMITH.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\LOCKSMITH.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SFCSCAN.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\SFCSCAN.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SYSTEMCOMPARE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\SYSTEMCOMPARE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SYSTEMRESTORE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\SYSTEMRESTORE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISK_BENCH32.EXE",
+      "path": "系统检测\\ATTO\\DISK_BENCH32.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISPLAYX.EXE",
+      "path": "系统检测\\DISPLAYX\\DISPLAYX.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "EVEREST.EXE",
+      "path": "系统检测\\EVEREST\\EVEREST.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "soft2cn汉化说明.exe",
+      "path": "系统检测\\WinFlash\\soft2cn汉化说明.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISKDIRECTOR.EXE",
+      "path": "磁盘光盘\\adds\\DISKDIRECTOR.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Unlocker.exe",
+      "path": "文件工具\\Unlocker\\Unlocker.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WimFltr.EXE",
+      "path": "文件工具\\WIMTOOL\\WimFltr.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WinCMD.EXE",
+      "path": "文件工具\\WIMTOOL\\WinCMD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Rar.exe",
+      "path": "文件工具\\WINRAR\\Rar.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RarExtLoader.exe",
+      "path": "文件工具\\WINRAR\\RarExtLoader.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINRAR.exe",
+      "path": "文件工具\\WINRAR\\WINRAR.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TRUEIMAGE.EXE",
+      "path": "备份还原\\ACRONIS\\TRUEIMAGE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOST32.EXE",
+      "path": "备份还原\\oneghost\\GHOST32.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WinCMD.EXE",
+      "path": "备份还原\\oneghost\\WinCMD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "BTRScfg.exe",
+      "path": "备份还原\\虚拟保护\\BTRScfg.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "imagex.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64\\imagex.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "intlcfg.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64\\intlcfg.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "bootsect.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\bootsect.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FIND.EXE",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\FIND.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PECMD.EXE",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\PECMD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "imagex.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x86\\imagex.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "intlcfg.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x86\\intlcfg.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "wmplayer.exe",
+      "path": "图形娱乐\\WMP10\\wmplayer.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "STRRPC.EXE",
+      "path": "XP资源\\innerUtil\\STRRPC.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DEVCON.EXE",
+      "path": "XP资源\\Util\\DEVCON.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INFCACHEBUILD.EXE",
+      "path": "XP资源\\Util\\INFCACHEBUILD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setX.exe",
+      "path": "XP资源\\Util\\setX.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "XCOPY.EXE",
+      "path": "XP资源\\Util\\XCOPY.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "E314318056EF0F352A79DC61FF9122D6A7135FBD.exe",
+      "path": "XP资源\\XP资源\\上网聊天\\QQ\\E314318056EF0F352A79DC61FF9122D6A7135FBD.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setX.exe",
+      "path": "PE_OUTERPART\\DX9\\setX.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GETPEDRIVER.EXE",
+      "path": "PE_OUTERPART\\GETPEDRIVER\\GETPEDRIVER.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HH.EXE",
+      "path": "PE_OUTERPART\\IE6\\HH.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IEXPLORE.EXE",
+      "path": "PE_OUTERPART\\IE6\\IEXPLORE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DFRGFAT.EXE",
+      "path": "PE_OUTERPART\\MMC\\DFRGFAT.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DFRGNTFS.EXE",
+      "path": "PE_OUTERPART\\MMC\\DFRGNTFS.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DMADMIN.EXE",
+      "path": "PE_OUTERPART\\MMC\\DMADMIN.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DMREMOTE.EXE",
+      "path": "PE_OUTERPART\\MMC\\DMREMOTE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MMC.EXE",
+      "path": "PE_OUTERPART\\MMC\\MMC.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ImDisk.exe",
+      "path": "PE_OUTERPART\\OUTERPART\\ImDisk.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dplaysvr.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dplaysvr.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dpnsvr.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dpnsvr.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dpvsetup.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dpvsetup.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dxdiag.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dxdiag.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HOSTNAME.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\HOSTNAME.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IPCONFIG.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\IPCONFIG.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NET.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\NET.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NET1.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\NET1.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NETCFG.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\NETCFG.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PING.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\PING.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RASDIAL.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\RASDIAL.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "rasphone.exe",
+      "path": "PE_OUTERPART\\all_part\\System32\\rasphone.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ROUTE.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\ROUTE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "sndvol32.exe",
+      "path": "PE_OUTERPART\\all_part\\System32\\sndvol32.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TELNET.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\TELNET.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dotnetfx35(1).exe",
+      "path": "dotnetfx35(1).exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FINALDATA.EXE",
+      "path": "FINALDATA\\FINALDATA.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FREEWB.EXE",
+      "path": "FREEWB\\FREEWB.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOST32_1102.EXE",
+      "path": "GHOST\\GHOST32_1102.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOSTEXP_1102.EXE",
+      "path": "GHOST\\GHOSTEXP_1102.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INFCACHEBUILD.EXE",
+      "path": "PE_OUTERPART\\INFCACHEBUILD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "OUTER_BASE.EXE",
+      "path": "PE_OUTERPART\\OUTER_BASE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "OUTER_COMMON.EXE",
+      "path": "PE_OUTERPART\\OUTER_COMMON.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "重启shell.exe",
+      "path": "PE_OUTERPART\\重启shell.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PTDD3.0.EXE",
+      "path": "PTDD3.0\\PTDD3.0.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIOTranslationTool.exe",
+      "path": "SDIO_Update\\SDIOTranslationTool.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIO_R817.exe",
+      "path": "SDIO_Update\\SDIO_R817.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIO_x64_R817.exe",
+      "path": "SDIO_Update\\SDIO_x64_R817.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ULTRAISO.EXE",
+      "path": "ULTRAISO\\ULTRAISO.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "VDM1.EXE",
+      "path": "VDM\\VDM1.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WBInstall32.exe",
+      "path": "wb5\\WBInstall32.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "wbload.exe",
+      "path": "wb5\\wbload.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PASSWDRENEW.EXE",
+      "path": "WINPE_TOOLS\\PASSWDRENEW.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SETPAGEFILE.EXE",
+      "path": "WINPE_TOOLS\\SETPAGEFILE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SYSTEMRESTORE.EXE",
+      "path": "WINPE_TOOLS\\SYSTEMRESTORE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINRAR.EXE",
+      "path": "WINRAR\\WINRAR.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ColorStorm.exe",
+      "path": "图形娱乐\\ColorStorm.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IcoFX.exe",
+      "path": "图形娱乐\\IcoFX.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "KMPlayer.exe",
+      "path": "图形娱乐\\KMPlayer.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "picpick.exe",
+      "path": "图形娱乐\\picpick.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Screen2Exe.exe",
+      "path": "图形娱乐\\Screen2Exe.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "uu.exe",
+      "path": "图形娱乐\\uu.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GhostExp.exe",
+      "path": "备份还原\\GhostExp.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MAXNGS.exe",
+      "path": "备份还原\\MAXNGS.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "OneKey.exe",
+      "path": "备份还原\\OneKey.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "snapshot.exe",
+      "path": "备份还原\\snapshot.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "AltSearch.exe",
+      "path": "文件工具\\AltSearch.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FastCopy.exe",
+      "path": "文件工具\\FastCopy.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Recuva.exe",
+      "path": "文件工具\\Recuva.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SUPERDELETE.EXE",
+      "path": "文件工具\\SUPERDELETE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TOTALCMD.exe",
+      "path": "文件工具\\TOTALCMD.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "wywz.exe",
+      "path": "文件工具\\wywz.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "XCAB.exe",
+      "path": "文件工具\\XCAB.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "易我数据恢复V2.1.0.exe",
+      "path": "文件工具\\易我数据恢复V2.1.0.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "暴力删除.exe",
+      "path": "文件工具\\暴力删除.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Defraggler.exe",
+      "path": "磁盘光盘\\Defraggler.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DiskGenius.exe",
+      "path": "磁盘光盘\\DiskGenius.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOST硬盘快速分区.exe",
+      "path": "磁盘光盘\\GHOST硬盘快速分区.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "meise_UGenius.exe",
+      "path": "磁盘光盘\\meise_UGenius.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NDD2006.EXE",
+      "path": "磁盘光盘\\NDD2006.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "UltraISO.exe",
+      "path": "磁盘光盘\\UltraISO.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "U盘百宝箱.exe",
+      "path": "磁盘光盘\\U盘百宝箱.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "VrDrvMan虚拟驱动器专家.exe",
+      "path": "磁盘光盘\\VrDrvMan虚拟驱动器专家.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINPM.exe",
+      "path": "磁盘光盘\\WINPM.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ChipGenius.exe",
+      "path": "系统检测\\ChipGenius.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MyDiskTest.exe",
+      "path": "系统检测\\MyDiskTest.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "CCleaner.exe",
+      "path": "系统维护\\CCleaner.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DriverAssist.exe",
+      "path": "系统维护\\DriverAssist.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PasswordChanger.exe",
+      "path": "系统维护\\PasswordChanger.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "powerrmv彻底删除.exe",
+      "path": "系统维护\\powerrmv彻底删除.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PrvDisk.exe",
+      "path": "系统维护\\PrvDisk.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RegSnap.exe",
+      "path": "系统维护\\RegSnap.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RegWorkshop.exe",
+      "path": "系统维护\\RegWorkshop.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Simlock.exe",
+      "path": "系统维护\\Simlock.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "sre.exe",
+      "path": "系统维护\\sre.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WinsockxpFix(专治不能上网但能上QQ).exe",
+      "path": "系统维护\\WinsockxpFix(专治不能上网但能上QQ).exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Wsyscheck.exe",
+      "path": "系统维护\\Wsyscheck.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "hfs.exe",
+      "path": "网络工具\\hfs.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IPMSG.exe",
+      "path": "网络工具\\IPMSG.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "QQ2009.exe",
+      "path": "网络工具\\QQ2009.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TheWorld.exe",
+      "path": "网络工具\\TheWorld.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Thunder.exe",
+      "path": "网络工具\\THUNDER\\Thunder.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "update.exe",
+      "path": "系统维护\\Avira\\update.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NTPWEDIT.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\NTPWEDIT.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ScanVirus.exe",
+      "path": "系统维护\\WINPE_TOOLS\\ScanVirus.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SERVICESPE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\SERVICESPE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SETUPXP.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\SETUPXP.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINDOWS引导修复.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\WINDOWS引导修复.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "备份系统驱动.exe",
+      "path": "系统维护\\WINPE_TOOLS\\备份系统驱动.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "addpass.exe",
+      "path": "系统维护\\移动加密\\addpass.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISKWIPE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\DISKWIPE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HOTFIXUNINSTALL.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\HOTFIXUNINSTALL.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "LOCKSMITH.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\LOCKSMITH.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SFCSCAN.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\SFCSCAN.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SYSTEMCOMPARE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\SYSTEMCOMPARE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SYSTEMRESTORE.EXE",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\SYSTEMRESTORE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISK_BENCH32.EXE",
+      "path": "系统检测\\ATTO\\DISK_BENCH32.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISPLAYX.EXE",
+      "path": "系统检测\\DISPLAYX\\DISPLAYX.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "EVEREST.EXE",
+      "path": "系统检测\\EVEREST\\EVEREST.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "soft2cn汉化说明.exe",
+      "path": "系统检测\\WinFlash\\soft2cn汉化说明.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DISKDIRECTOR.EXE",
+      "path": "磁盘光盘\\adds\\DISKDIRECTOR.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Unlocker.exe",
+      "path": "文件工具\\Unlocker\\Unlocker.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WimFltr.EXE",
+      "path": "文件工具\\WIMTOOL\\WimFltr.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WinCMD.EXE",
+      "path": "文件工具\\WIMTOOL\\WinCMD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Rar.exe",
+      "path": "文件工具\\WINRAR\\Rar.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RarExtLoader.exe",
+      "path": "文件工具\\WINRAR\\RarExtLoader.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WINRAR.exe",
+      "path": "文件工具\\WINRAR\\WINRAR.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TRUEIMAGE.EXE",
+      "path": "备份还原\\ACRONIS\\TRUEIMAGE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GHOST32.EXE",
+      "path": "备份还原\\oneghost\\GHOST32.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WinCMD.EXE",
+      "path": "备份还原\\oneghost\\WinCMD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "BTRScfg.exe",
+      "path": "备份还原\\虚拟保护\\BTRScfg.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "imagex.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64\\imagex.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "intlcfg.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64\\intlcfg.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "bootsect.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\bootsect.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "FIND.EXE",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\FIND.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PECMD.EXE",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\PECMD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "imagex.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x86\\imagex.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "intlcfg.exe",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x86\\intlcfg.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "wmplayer.exe",
+      "path": "图形娱乐\\WMP10\\wmplayer.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "STRRPC.EXE",
+      "path": "XP资源\\innerUtil\\STRRPC.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DEVCON.EXE",
+      "path": "XP资源\\Util\\DEVCON.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INFCACHEBUILD.EXE",
+      "path": "XP资源\\Util\\INFCACHEBUILD.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setX.exe",
+      "path": "XP资源\\Util\\setX.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "XCOPY.EXE",
+      "path": "XP资源\\Util\\XCOPY.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "E314318056EF0F352A79DC61FF9122D6A7135FBD.exe",
+      "path": "XP资源\\XP资源\\上网聊天\\QQ\\E314318056EF0F352A79DC61FF9122D6A7135FBD.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setX.exe",
+      "path": "PE_OUTERPART\\DX9\\setX.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "GETPEDRIVER.EXE",
+      "path": "PE_OUTERPART\\GETPEDRIVER\\GETPEDRIVER.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HH.EXE",
+      "path": "PE_OUTERPART\\IE6\\HH.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IEXPLORE.EXE",
+      "path": "PE_OUTERPART\\IE6\\IEXPLORE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DFRGFAT.EXE",
+      "path": "PE_OUTERPART\\MMC\\DFRGFAT.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DFRGNTFS.EXE",
+      "path": "PE_OUTERPART\\MMC\\DFRGNTFS.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DMADMIN.EXE",
+      "path": "PE_OUTERPART\\MMC\\DMADMIN.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "DMREMOTE.EXE",
+      "path": "PE_OUTERPART\\MMC\\DMREMOTE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MMC.EXE",
+      "path": "PE_OUTERPART\\MMC\\MMC.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ImDisk.exe",
+      "path": "PE_OUTERPART\\OUTERPART\\ImDisk.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dplaysvr.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dplaysvr.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dpnsvr.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dpnsvr.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dpvsetup.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dpvsetup.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "dxdiag.exe",
+      "path": "PE_OUTERPART\\DX9\\DX9\\dxdiag.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HOSTNAME.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\HOSTNAME.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IPCONFIG.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\IPCONFIG.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NET.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\NET.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NET1.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\NET1.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "NETCFG.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\NETCFG.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PING.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\PING.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "RASDIAL.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\RASDIAL.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "rasphone.exe",
+      "path": "PE_OUTERPART\\all_part\\System32\\rasphone.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "ROUTE.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\ROUTE.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "sndvol32.exe",
+      "path": "PE_OUTERPART\\all_part\\System32\\sndvol32.exe",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "TELNET.EXE",
+      "path": "PE_OUTERPART\\all_part\\System32\\TELNET.EXE",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "del_old_driverpacks.bat",
+      "path": "SDIO_Update\\del_old_driverpacks.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SDIO_auto.bat",
+      "path": "SDIO_Update\\SDIO_auto.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "1全能驱动.bat",
+      "path": "XP资源\\1全能驱动.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "2全能应用.bat",
+      "path": "XP资源\\2全能应用.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setup.bat",
+      "path": "文件工具\\Unlocker\\setup.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "LOADNETSERVICE.bat",
+      "path": "XP资源\\Drivers\\LOADNETSERVICE.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "PEDRIVERS.bat",
+      "path": "XP资源\\Drivers\\PEDRIVERS.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "启用显声网支持.bat",
+      "path": "XP资源\\Drivers\\启用显声网支持.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "搜索硬盘绿软.bat",
+      "path": "XP资源\\GreenSoft\\搜索硬盘绿软.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "autoupdate.bat",
+      "path": "SDIO_Update\\scripts\\autoupdate.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "prep_unpacked.bat",
+      "path": "SDIO_Update\\scripts\\prep_unpacked.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "remote.bat",
+      "path": "SDIO_Update\\scripts\\remote.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "scan_driver_packs.bat",
+      "path": "SDIO_Update\\scripts\\scan_driver_packs.bat",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "LOADKJ.CMD",
+      "path": "LOADKJ.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "REGDOC.CMD",
+      "path": "REGDOC.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INST_DRIVE.cmd",
+      "path": "PE_OUTERPART\\INST_DRIVE.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "net_serv.cmd",
+      "path": "PE_OUTERPART\\net_serv.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setup.cmd",
+      "path": "PE_OUTERPART\\setup.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "set_display.cmd",
+      "path": "PE_OUTERPART\\set_display.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "万能显卡驱动.cmd",
+      "path": "PE_OUTERPART\\万能显卡驱动.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "WB5.cmd",
+      "path": "wb5\\WB5.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "XP资源快捷方式.cmd",
+      "path": "XP资源\\XP资源快捷方式.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "qq2009.CMD",
+      "path": "网络工具\\qq2009.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "THUNDER.CMD",
+      "path": "网络工具\\THUNDER\\THUNDER.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setup.CMD",
+      "path": "系统维护\\WINPE_TOOLS\\ERD2005\\setup.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "find_wim.cmd",
+      "path": "文件工具\\WIMTOOL\\find_wim.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "步步为营.cmd",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\步步为营.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "bbwy.cmd",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\LINK\\bbwy.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IMAGEX_YS_FS.cmd",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64\\IMAGEX_YS_FS.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "为wim文件添加关联.cmd",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x64x86\\为wim文件添加关联.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "IMAGEX_YS_FS.cmd",
+      "path": "备份还原\\步步为营IMAGEX备份还原工具\\imagex_6001\\x86\\IMAGEX_YS_FS.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INSWMP.CMD",
+      "path": "图形娱乐\\WMP10\\INSWMP.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "diagDx.CMD",
+      "path": "XP资源\\DirectX9\\diagDx.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装DX9.CMD",
+      "path": "XP资源\\DirectX9\\安装DX9.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INIFILE.CMD",
+      "path": "XP资源\\Drivers\\INIFILE.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "mcab.CMD",
+      "path": "XP资源\\Drivers\\mcab.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装驱动包.CMD",
+      "path": "XP资源\\Drivers\\安装驱动包.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "设置IP.CMD",
+      "path": "XP资源\\Drivers\\设置IP.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "重启Shell.CMD",
+      "path": "XP资源\\Drivers\\重启Shell.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "保存恢复绿软.cmd",
+      "path": "XP资源\\GreenSoft\\保存恢复绿软.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装IE6.CMD",
+      "path": "XP资源\\IE6\\安装IE6.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "微软拼音.CMD",
+      "path": "XP资源\\IME\\微软拼音.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "BROWX.CMD",
+      "path": "XP资源\\innerUtil\\BROWX.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "CheckUtil.cmd",
+      "path": "XP资源\\innerUtil\\CheckUtil.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "copyFiles.cmd",
+      "path": "XP资源\\innerUtil\\copyFiles.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "MESSX.CMD",
+      "path": "XP资源\\innerUtil\\MESSX.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装MSI.CMD",
+      "path": "XP资源\\MSI\\安装MSI.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装OFFICE.CMD",
+      "path": "XP资源\\Office2003\\安装OFFICE.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装字体.CMD",
+      "path": "XP资源\\Office2003\\安装字体.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "标准版补丁.CMD",
+      "path": "XP资源\\Office2003\\标准版补丁.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "卸载WMP.CMD",
+      "path": "XP资源\\WMP\\卸载WMP.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "安装WMP.CMD",
+      "path": "XP资源\\WMP\\安装WMP.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "setup.CMD",
+      "path": "PE_OUTERPART\\DX9\\setup.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "自动收集DX9文件.CMD",
+      "path": "PE_OUTERPART\\DX9\\自动收集DX9文件.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "A_PART.cmd",
+      "path": "PE_OUTERPART\\GETPEDRIVER\\A_PART.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "gpd.cmd",
+      "path": "PE_OUTERPART\\GETPEDRIVER\\gpd.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "Setup_gpd.cmd",
+      "path": "PE_OUTERPART\\GETPEDRIVER\\Setup_gpd.cmd",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "INSMMC.CMD",
+      "path": "PE_OUTERPART\\MMC\\INSMMC.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "QQ.CMD",
+      "path": "PE_OUTERPART\\QQ\\QQ.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "HANGUP.CMD",
+      "path": "PE_OUTERPART\\all_part\\System32\\HANGUP.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SHAREPWD.CMD",
+      "path": "PE_OUTERPART\\all_part\\System32\\SHAREPWD.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    },
+    {
+      "name": "SHOW_NET_ICO.CMD",
+      "path": "PE_OUTERPART\\all_part\\System32\\SHOW_NET_ICO.CMD",
+      "desktop": false,
+      "startmenu": false,
+      "path_env": false,
+      "target": "Windows/System32"
+    }
+  ],
+  "updated": "2025-10-20 21:15:10"
+}

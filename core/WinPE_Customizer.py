@@ -27,7 +27,8 @@ class WinPECustomizer:
     
     def __init__(self, winpe_dir=None):
         """初始化配置"""
-        self.work_dir = Path(__file__).parent.absolute()
+        # work_dir 是项目根目录（core的父目录）
+        self.work_dir = Path(__file__).parent.parent.absolute()
         
         # 从 config.py 加载路径配置
         if winpe_dir:
