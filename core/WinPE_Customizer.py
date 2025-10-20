@@ -365,10 +365,9 @@ class WinPECustomizer:
                         match = re.search(r'(\d+\.?\d*)%', line)
                         if match:
                             percent = float(match.group(1))
-                            # 只在进度变化>=5%时显示，避免刷屏
-                            if self.last_progress < 0 or abs(percent - self.last_progress) >= 5.0 or percent >= 99.0:
-                                self.print_info(f"  进度: {percent:.1f}%")
-                                self.last_progress = percent
+                            # 每次都输出进度，GUI会在同一行更新
+                            self.print_info(f"  进度: {percent:.1f}%")
+                            self.last_progress = percent
                     else:
                         # 过滤不重要的输出
                         if any(keyword in line for keyword in ['版本:', 'Processing', 'Image Version']):
@@ -462,10 +461,9 @@ class WinPECustomizer:
                         match = re.search(r'(\d+\.?\d*)%', line)
                         if match:
                             percent = float(match.group(1))
-                            # 只在进度变化>=5%时显示，避免刷屏
-                            if self.last_progress < 0 or abs(percent - self.last_progress) >= 5.0 or percent >= 99.0:
-                                self.print_info(f"  进度: {percent:.1f}%")
-                                self.last_progress = percent
+                            # 每次都输出进度，GUI会在同一行更新
+                            self.print_info(f"  进度: {percent:.1f}%")
+                            self.last_progress = percent
                     else:
                         # 只显示重要信息
                         if any(keyword in line for keyword in ['版本:', 'Processing', 'Image Version', '操作成功', '错误']):

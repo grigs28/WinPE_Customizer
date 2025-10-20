@@ -514,8 +514,23 @@ class WinPECustomizerGUI:
     def log(self, message, tag='INFO'):
         """添加日志"""
         timestamp = datetime.now().strftime("%H:%M:%S")
-        full_message = f"[{timestamp}] {message}\n"
-        self.log_text.insert(tk.END, full_message, tag)
+        
+        # 检测进度信息（格式：  进度: 50.0%）
+        if message.strip().startswith('进度:'):
+            # 检查最后一行是否也是进度信息
+            last_line = self.log_text.get("end-2l", "end-1l").strip()
+            if '进度:' in last_line:
+                # 删除最后一行（之前的进度）
+                self.log_text.delete("end-2l", "end-1l")
+            
+            # 插入新的进度（同一行更新）
+            full_message = f"[{timestamp}] {message}\n"
+            self.log_text.insert(tk.END, full_message, tag)
+        else:
+            # 普通消息，正常插入
+            full_message = f"[{timestamp}] {message}\n"
+            self.log_text.insert(tk.END, full_message, tag)
+        
         self.log_text.see(tk.END)
         
         # 解析进度信息
