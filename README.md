@@ -37,6 +37,7 @@ WinPE Customizer 是一款专业的 Windows PE 定制工具套件，提供图形
 | **WinPE_Customizer_GUI.py** | 主程序（图形界面） | WinPE 定制和管理 |
 | **WinPE_Customizer.py** | 核心引擎（命令行） | 自动化脚本集成 |
 | **extract_sdio_drivers_gui.py** | SDIO 驱动提取工具 | 从 SDIO 包提取驱动 |
+| **external_apps_manager.py** | 外置程序管理器 | 配置程序放置位置 |
 | **scan_drivers.py** | 驱动扫描工具 | 分析驱动兼容性 |
 
 ## 🚀 快速开始
@@ -63,6 +64,11 @@ WinPE Customizer 是一款专业的 Windows PE 定制工具套件，提供图形
 4. **解压工具** (任选其一)
    - WinRAR: https://www.winrar.com/
    - 7-Zip: https://www.7-zip.org/
+
+5. **生成程序图标**（可选）
+   ```bash
+   python tools/create_icon.py
+   ```
 
 ### 启动程序
 
@@ -102,7 +108,9 @@ WinPE_work/
 ├── tools/                        # 🔧 工具集
 │   ├── extract_sdio_drivers.py       # SDIO 驱动提取（CLI）
 │   ├── extract_sdio_drivers_gui.py   # SDIO 驱动提取（GUI）
-│   └── scan_drivers.py               # 驱动扫描工具
+│   ├── external_apps_manager.py      # 外置程序管理器
+│   ├── scan_drivers.py               # 驱动扫描工具
+│   └── create_icon.py                # 图标生成工具
 │
 ├── scripts/                      # 📜 辅助脚本
 │   ├── s.bat.example                 # 快速启动脚本模板
@@ -112,11 +120,13 @@ WinPE_work/
 │
 ├── docs/                         # 📚 文档目录
 │   ├── 详细使用说明.md
+│   ├── WinPE功能包说明.md
 │   ├── 快速参考手册.md
 │   ├── 配置说明.md
 │   └── 常见问题.md
 │
 ├── examples/                     # 💡 示例配置（可选）
+│   └── config_example.py
 │
 ├── 外置程序/                    # 🚫 外部工具（不上传）
 │   └── SDIO_Update/             # SDIO 驱动包
@@ -145,7 +155,7 @@ python WinPE_Customizer_GUI.py
 
 ```python
 # 启动驱动提取工具
-python extract_sdio_drivers_gui.py
+python tools/extract_sdio_drivers_gui.py
 
 # 设置源目录和输出目录
 # 点击开始提取
@@ -185,6 +195,7 @@ ENABLE_MAKE_ISO = False          # 生成 ISO
 
 - [快速参考手册](docs/快速参考手册.md) - 常用操作速查
 - [详细使用说明](docs/详细使用说明.md) - 完整功能说明
+- [WinPE功能包说明](docs/WinPE功能包说明.md) - 组件详解
 - [配置说明](docs/config配置说明.md) - 参数详解
 - [常见问题](docs/常见问题.md) - 问题排查
 - [驱动管理](docs/推荐驱动清单.md) - 驱动集成指南
@@ -208,11 +219,19 @@ ENABLE_MAKE_ISO = False          # 生成 ISO
 - 🏷️ 驱动分类整理
 - ⚡ 批量处理 7z 压缩包
 
+### 外置程序管理
+
+- 📋 扫描外置程序目录
+- 🎯 配置程序放置位置（桌面/开始菜单/PATH）
+- 💾 保存配置为 JSON
+- 📝 生成 config.py 代码
+
 ### 图形界面
 
 - 📋 主控制面板 - 一键操作
 - 🔧 分步执行 - 精细控制
 - ⚙️ 配置管理 - 参数设置
+- 📦 功能包说明 - 组件介绍
 - 📝 实时日志 - 过程监控
 - 💾 快捷操作 - 挂载/卸载/清理
 
@@ -237,7 +256,7 @@ ENABLE_MAKE_ISO = False          # 生成 ISO
 **Q: 提示 "WIM 需要重新挂载"？**
 ```bash
 # 运行清理工具
-cleanup.bat
+scripts\cleanup.bat
 # 或使用界面中的 "清理 WIM" 按钮
 ```
 
@@ -251,6 +270,14 @@ cleanup.bat
 - 确认驱动目录包含有效的 .inf 文件
 - 查看日志了解具体错误
 
+**Q: 程序没有图标？**
+```bash
+# 生成图标文件
+python tools/create_icon.py
+# 或
+generate_icon.bat
+```
+
 更多问题请查看: [docs/常见问题.md](docs/常见问题.md)
 
 ## 📝 更新日志
@@ -261,8 +288,12 @@ cleanup.bat
 - ✨ 集成 SDIO 驱动提取工具
 - ✨ 添加快捷操作按钮（挂载/卸载/清理）
 - ✨ 内置帮助文档和使用说明
+- ✨ 新增外置程序管理器
+- ✨ 添加WinPE功能包详细说明
+- ✨ 支持自定义程序图标
 - 🔧 优化日志输出和颜色显示
 - 🔧 改进错误处理和异常捕获
+- 📁 重新整理项目文件结构
 
 查看完整更新: [docs/更新说明.md](docs/更新说明.md)
 
@@ -296,6 +327,9 @@ WinPE Customizer is a professional Windows PE customization tool suite with both
 # Install dependencies
 pip install -r requirements.txt
 
+# Generate icon (optional)
+python tools/create_icon.py
+
 # Launch GUI
 python WinPE_Customizer_GUI.py
 
@@ -322,8 +356,10 @@ Edit `config.py` to customize settings:
 - ✅ Step-by-step execution mode
 - ✅ Driver integration (RAID/Storage/Network)
 - ✅ Chinese localization
+- ✅ External apps manager
 - ✅ Custom program integration
 - ✅ ISO generation
+- ✅ Custom icon support
 
 ### ⚠️ Requirements
 
@@ -331,6 +367,7 @@ Edit `config.py` to customize settings:
 2. **Windows ADK** - Required for DISM and WinPE components
 3. **Disk Space** - Minimum 10GB recommended
 4. **Python** - Version 3.8 or higher
+5. **Pillow** - For icon generation (optional)
 
 ### 📧 Support
 

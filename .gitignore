@@ -74,4 +74,9 @@ s.bat
 scripts/s.bat
 launch.bat
 start.bat
+generate_icon.bat
+
+# 生成的图标文件（可选上传）
+# winpe_customizer.ico
+# winpe_simple.ico
 

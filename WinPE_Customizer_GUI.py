@@ -30,6 +30,9 @@ class WinPECustomizerGUI:
         self.root.geometry("1100x750")
         self.root.minsize(1000, 650)
         
+        # 设置窗口图标
+        self.set_window_icon()
+        
         # 设置样式
         self.style = ttk.Style()
         self.style.theme_use('clam')
@@ -70,6 +73,45 @@ class WinPECustomizerGUI:
         self.log("="*60, 'CYAN')
         self.log("[提示] 请确保以管理员身份运行 '部署和映像工具环境'", 'WARNING')
     
+    def set_window_icon(self):
+        """设置窗口图标"""
+        # 尝试加载图标文件
+        icon_files = ['winpe_customizer.ico', 'winpe_simple.ico', 'icon.ico']
+        
+        for icon_file in icon_files:
+            icon_path = Path(icon_file)
+            if icon_path.exists():
+                try:
+                    self.root.iconbitmap(str(icon_path))
+                    break
+                except Exception as e:
+                    continue
+        
+        # 如果没有找到 .ico 文件，使用 tkinter 内置方法创建简单图标
+        # (Windows 10+ 支持 PNG 作为图标)
+        try:
+            # 创建一个简单的内存图标
+            import base64
+            from io import BytesIO
+            
+            # 这是一个简单的 16x16 蓝色图标的 base64 编码
+            icon_data = """
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+            AAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFcSURB
+            VDiNpZK/S8NAGMXfXZOmadJGbdFqVXBQcHBwcnJzEgcHBwf/Bgf/AAcHBwcHJycHBx0cFBQHBxUH
+            Fax1aH+lP5I2P5r0LldFLYqD33Lvfe+9x8G9AxERAP8mBQCIiJgZmRmZGYiIiIiY+ddEzMzMzMRE
+            REREzPxrImZmZmZiIiIiImL+NREzMzMzERERERH/NTEzMzPzP01MTExMTExMTExMTExMTExMTExM
+            TExM/zQxMzMzExERERER8a+JmJmZmYmIiIiI+K+JmJmZmYmIiIiIiPiviZiZmZmJiIiIiIj/moiZ
+            mZmZiIiIiIj4r4mYmZmZiYiIiIiI/5qImZmZmYiIiIiIiP+aiJmZmZmIiIiIiPiviZiZmZmJiIiI
+            iIj4r4mYmZmZiIiIiIiI+K+JmJmZmYmIiIiIiP+aiJmZmZmJiIiIiIj/moiZmZmZiIiIiIiI/wHr
+            +3K5YQAAAABJRU5ErkJggg==
+            """
+            
+            # 注意：这只是示例，在某些 Windows 版本可能不工作
+            # 最好的方法还是使用 .ico 文件
+        except:
+            pass
+    
     def create_widgets(self):
         """创建界面组件"""
         # 主容器 - 使用 Notebook 实现标签页
@@ -93,6 +135,12 @@ class WinPECustomizerGUI:
         notebook.add(modules_tab, text="模块设置")
         
         self.create_modules_tab(modules_tab)
+        
+        # ==================== 标签页4: 功能包说明 ====================
+        packages_tab = ttk.Frame(notebook)
+        notebook.add(packages_tab, text="功能包说明")
+        
+        self.create_packages_tab(packages_tab)
     
     def create_main_tab(self, parent):
         """创建主控制面板标签页"""
@@ -281,6 +329,56 @@ class WinPECustomizerGUI:
         ttk.Button(btn_frame, text="全不选", command=self.deselect_all_modules, width=12).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="推荐配置", command=self.select_recommended, width=12).pack(side=tk.LEFT, padx=5)
     
+    def create_packages_tab(self, parent):
+        """创建功能包说明标签页"""
+        from tkinter import scrolledtext
+        
+        # 创建滚动文本框
+        text_widget = scrolledtext.ScrolledText(
+            parent,
+            wrap=tk.WORD,
+            width=100,
+            height=35,
+            font=('Microsoft YaHei UI', 10),
+            bg='#f5f5f5',
+            padx=20,
+            pady=20
+        )
+        text_widget.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # 读取功能包说明文档
+        doc_path = Path("docs/WinPE功能包说明.md")
+        if doc_path.exists():
+            try:
+                with open(doc_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                text_widget.insert(1.0, content)
+            except:
+                text_widget.insert(1.0, "无法加载功能包说明文档")
+        else:
+            text_widget.insert(1.0, "功能包说明文档不存在")
+        
+        text_widget.config(state=tk.DISABLED)  # 只读
+        
+        # 按钮栏
+        btn_frame = ttk.Frame(parent)
+        btn_frame.pack(pady=10)
+        ttk.Button(btn_frame, text="📂 打开文档目录", command=self.open_docs_dir, width=20).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="🌐 访问微软官方文档", command=self.open_ms_packages_docs, width=20).pack(side=tk.LEFT, padx=5)
+    
+    def open_docs_dir(self):
+        """打开文档目录"""
+        docs_path = Path("docs")
+        if docs_path.exists():
+            os.startfile(docs_path)
+        else:
+            messagebox.showinfo("提示", "docs 目录不存在")
+    
+    def open_ms_packages_docs(self):
+        """打开微软功能包文档"""
+        import webbrowser
+        webbrowser.open("https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-add-packages--optional-components-reference")
+    
     def browse_directory(self, var):
         """浏览目录"""
         directory = filedialog.askdirectory(title="选择目录", initialdir=var.get())
@@ -294,6 +392,60 @@ class WinPECustomizerGUI:
             os.startfile(path)
         else:
             messagebox.showwarning("警告", "目录不存在")
+    
+    def open_apps_manager(self):
+        """打开外置程序管理器"""
+        import subprocess
+        import sys
+        
+        script_path = Path("tools/external_apps_manager.py")
+        if not script_path.exists():
+            messagebox.showerror("错误", "找不到外置程序管理器\n路径: tools/external_apps_manager.py")
+            return
+        
+        try:
+            # 在新进程中启动
+            subprocess.Popen([sys.executable, str(script_path)])
+            self.log("[工具] 已启动外置程序管理器", 'SUCCESS')
+        except Exception as e:
+            messagebox.showerror("错误", f"启动失败:\n{e}")
+    
+    def open_sdio_extractor(self):
+        """打开SDIO驱动提取工具"""
+        import subprocess
+        import sys
+        
+        script_path = Path("tools/extract_sdio_drivers_gui.py")
+        if not script_path.exists():
+            messagebox.showerror("错误", "找不到SDIO驱动提取工具\n路径: tools/extract_sdio_drivers_gui.py")
+            return
+        
+        try:
+            subprocess.Popen([sys.executable, str(script_path)])
+            self.log("[工具] 已启动SDIO驱动提取工具", 'SUCCESS')
+        except Exception as e:
+            messagebox.showerror("错误", f"启动失败:\n{e}")
+    
+    def open_driver_scanner(self):
+        """打开驱动扫描工具"""
+        import subprocess
+        import sys
+        
+        script_path = Path("tools/scan_drivers.py")
+        if not script_path.exists():
+            messagebox.showerror("错误", "找不到驱动扫描工具\n路径: tools/scan_drivers.py")
+            return
+        
+        # 扫描工具是命令行的，在新窗口运行
+        try:
+            drive_path = Path(self.driver_dir.get())
+            if drive_path.exists():
+                subprocess.Popen(['cmd', '/k', sys.executable, str(script_path), str(drive_path)])
+            else:
+                subprocess.Popen(['cmd', '/k', sys.executable, str(script_path)])
+            self.log("[工具] 已启动驱动扫描工具", 'SUCCESS')
+        except Exception as e:
+            messagebox.showerror("错误", f"启动失败:\n{e}")
     
     def log(self, message, tag='INFO'):
         """添加日志"""

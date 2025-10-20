@@ -23,6 +23,9 @@ class SDIODriverExtractorGUI:
         self.root.geometry("900x700")
         self.root.minsize(800, 600)
         
+        # 设置图标
+        self.set_icon()
+        
         # 设置样式
         self.style = ttk.Style()
         self.style.theme_use('clam')
