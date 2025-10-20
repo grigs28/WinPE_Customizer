@@ -239,23 +239,25 @@ class WinPECustomizerGUI:
         dir_frame.pack(fill=tk.X, pady=5)
         ttk.Label(dir_frame, text="WinPE 目录:").pack(side=tk.LEFT, padx=5)
         ttk.Entry(dir_frame, textvariable=self.winpe_dir, width=60).pack(side=tk.LEFT, padx=5, fill=tk.X, expand=True)
-        ttk.Button(dir_frame, text="浏览...", command=lambda: self.browse_directory(self.winpe_dir), width=10).pack(side=tk.LEFT, padx=2)
-        ttk.Button(dir_frame, text="📁 打开", command=self.open_winpe_dir, width=10).pack(side=tk.LEFT, padx=2)
+        ttk.Button(dir_frame, text="浏览...", command=lambda: self.browse_directory(self.winpe_dir), width=12).pack(side=tk.LEFT, padx=2)
+        ttk.Button(dir_frame, text="📁 打开", command=self.open_winpe_dir, width=12).pack(side=tk.LEFT, padx=2)
         
         # ==================== 主控制按钮 ====================
         control_frame = ttk.Frame(parent)
         control_frame.grid(row=1, column=0, pady=10)
         
-        self.start_btn = ttk.Button(control_frame, text="▶ 开始定制", command=self.start_customization, width=20, style='Accent.TButton')
+        control_btn_width = 20  # 控制按钮宽度
+        
+        self.start_btn = ttk.Button(control_frame, text="▶ 开始定制", command=self.start_customization, width=control_btn_width, style='Accent.TButton')
         self.start_btn.pack(side=tk.LEFT, padx=5)
         
-        self.stop_btn = ttk.Button(control_frame, text="⬛ 停止", command=self.stop_customization, state=tk.DISABLED, width=16)
+        self.stop_btn = ttk.Button(control_frame, text="⬛ 停止", command=self.stop_customization, state=tk.DISABLED, width=control_btn_width)
         self.stop_btn.pack(side=tk.LEFT, padx=5)
         
-        self.clear_btn = ttk.Button(control_frame, text="🗑 清空日志", command=self.clear_log, width=16)
+        self.clear_btn = ttk.Button(control_frame, text="🗑️ 清空日志", command=self.clear_log, width=control_btn_width)
         self.clear_btn.pack(side=tk.LEFT, padx=5)
         
-        self.save_log_btn = ttk.Button(control_frame, text="💾 保存日志", command=self.save_log, width=16)
+        self.save_log_btn = ttk.Button(control_frame, text="💾 保存日志", command=self.save_log, width=control_btn_width)
         self.save_log_btn.pack(side=tk.LEFT, padx=5)
         
         # ==================== 输出日志 ====================
