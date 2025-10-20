@@ -621,6 +621,57 @@ class WinPECustomizerGUI:
         time.sleep(2)  # 等待卸载完成
         self._do_make_iso()
     
+    def cleanup_temp(self):
+        """清理临时文件"""
+        self.log("开始清理临时文件...", "INFO")
+        
+        # 清理项目
+        cleanup_items = [
+            ("temp_7zip_menu.reg", "7-Zip注册表临时文件"),
+            ("temp_7zip_menu_modified.reg", "7-Zip注册表修改文件"),
+            ("temp_extract", "驱动提取临时目录"),
+        ]
+        
+        cleaned_count = 0
+        
+        try:
+            for item, desc in cleanup_items:
+                path = self.work_dir / item
+                if path.exists():
+                    try:
+                        if path.is_file():
+                            path.unlink()
+                            self.log(f"删除: {desc}", "INFO")
+                            cleaned_count += 1
+                        elif path.is_dir():
+                            import shutil
+                            shutil.rmtree(path)
+                            self.log(f"删除: {desc}", "INFO")
+                            cleaned_count += 1
+                    except Exception as e:
+                        self.log(f"删除失败 {desc}: {e}", "WARNING")
+            
+            # 清理Python缓存
+            for pycache in self.work_dir.glob("**/__pycache__"):
+                try:
+                    import shutil
+                    shutil.rmtree(pycache)
+                    self.log(f"删除: Python缓存 {pycache.name}", "INFO")
+                    cleaned_count += 1
+                except:
+                    pass
+            
+            if cleaned_count > 0:
+                self.log(f"清理完成，共删除 {cleaned_count} 项", "SUCCESS")
+                messagebox.showinfo("完成", f"临时文件清理完成！\n\n共清理 {cleaned_count} 项")
+            else:
+                self.log("没有需要清理的临时文件", "INFO")
+                messagebox.showinfo("提示", "没有需要清理的临时文件")
+                
+        except Exception as e:
+            self.log(f"清理临时文件时出错: {e}", "ERROR")
+            messagebox.showerror("错误", f"清理失败: {e}")
+    
     def make_usb_disk(self):
         """制作 USB 启动盘"""
         if self.is_running:
