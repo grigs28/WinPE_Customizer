@@ -201,13 +201,15 @@ class WinPECustomizerGUI:
         
         ttk.Label(mount_frame, text="映像管理:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
         
-        self.mount_btn = ttk.Button(mount_frame, text="📦 挂载 WIM", command=self.mount_wim, width=16)
+        btn_width = 20  # 统一按钮宽度
+        
+        self.mount_btn = ttk.Button(mount_frame, text="📦 挂载 WIM", command=self.mount_wim, width=btn_width)
         self.mount_btn.pack(side=tk.LEFT, padx=3)
         
-        self.umount_btn = ttk.Button(mount_frame, text="💾 卸载并保存", command=self.umount_wim, width=16)
+        self.umount_btn = ttk.Button(mount_frame, text="💾 卸载并保存", command=self.umount_wim, width=btn_width)
         self.umount_btn.pack(side=tk.LEFT, padx=3)
         
-        self.umount_discard_btn = ttk.Button(mount_frame, text="🗑 卸载不保存", command=self.umount_wim_discard, width=16)
+        self.umount_discard_btn = ttk.Button(mount_frame, text="🗑️ 卸载不保存", command=self.umount_wim_discard, width=btn_width)
         self.umount_discard_btn.pack(side=tk.LEFT, padx=3)
         
         # 第二行：工具管理
@@ -216,10 +218,10 @@ class WinPECustomizerGUI:
         
         ttk.Label(tools_frame, text="工具管理:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
         
-        ttk.Button(tools_frame, text="📦 外置程序管理器", command=self.open_apps_manager, width=18).pack(side=tk.LEFT, padx=3)
-        ttk.Button(tools_frame, text="🛠️ WinPE工具包", command=self.open_tools_manager, width=16).pack(side=tk.LEFT, padx=3)
-        ttk.Button(tools_frame, text="🔧 SDIO驱动提取", command=self.open_sdio_extractor, width=16).pack(side=tk.LEFT, padx=3)
-        ttk.Button(tools_frame, text="🔍 驱动扫描", command=self.open_driver_scanner, width=14).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="📦 外置程序管理器", command=self.open_apps_manager, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="🛠️ WinPE 工具包", command=self.open_tools_manager, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="🔧 SDIO 驱动提取", command=self.open_sdio_extractor, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(tools_frame, text="🔍 驱动扫描", command=self.open_driver_scanner, width=btn_width).pack(side=tk.LEFT, padx=3)
         
         # 第四行：制作工具
         make_frame = ttk.Frame(quick_frame)
@@ -227,10 +229,10 @@ class WinPECustomizerGUI:
         
         ttk.Label(make_frame, text="制作工具:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=5)
         
-        ttk.Button(make_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=18).pack(side=tk.LEFT, padx=3)
-        ttk.Button(make_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=18).pack(side=tk.LEFT, padx=3)
-        ttk.Button(make_frame, text="🧹 清理临时文件", command=self.cleanup_temp, width=16).pack(side=tk.LEFT, padx=3)
-        ttk.Button(make_frame, text="🔧 清理 WIM", command=self.cleanup_wim, width=14).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="💿 生成 ISO 镜像", command=self.make_iso_image, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="💾 制作 USB 启动盘", command=self.make_usb_disk, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="🧹 清理临时文件", command=self.cleanup_temp, width=btn_width).pack(side=tk.LEFT, padx=3)
+        ttk.Button(make_frame, text="🔧 清理 WIM", command=self.cleanup_wim, width=btn_width).pack(side=tk.LEFT, padx=3)
         
         ttk.Separator(quick_frame, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
         
