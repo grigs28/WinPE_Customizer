@@ -12,6 +12,8 @@ import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
 import urllib.request
 import zipfile
+import requests
+import shutil
 
 
 class DownloadDialog:
@@ -115,9 +117,9 @@ class DownloadDialog:
             return
         
         try:
-            # 创建保存目录
-            external_dir = Path("../外置程序") if Path("../外置程序").exists() else Path("外置程序")
-            tool_dir = external_dir / "Tools" / tool['name']
+            # 创建保存目录 - 下载到 tools 目录
+            tools_dir = Path("tools")
+            tool_dir = tools_dir / tool['name']
             tool_dir.mkdir(parents=True, exist_ok=True)
             
             # 下载文件
@@ -130,31 +132,49 @@ class DownloadDialog:
             
             self.dialog.after(0, lambda: self.status_label.config(text="正在下载..."))
             
-            # 下载进度回调
-            def progress_hook(block_num, block_size, total_size):
-                if total_size > 0:
-                    percent = int((block_num * block_size / total_size) * 100)
-                    if percent > 100:
-                        percent = 100
-                    self.dialog.after(0, lambda: self.progress['value'] = percent)
-                    self.dialog.after(0, lambda: self.percent_label.config(text=f"{percent}%"))
+            # 使用requests下载文件，支持进度显示
+            response = requests.get(download_url, stream=True)
+            response.raise_for_status()
             
-            urllib.request.urlretrieve(download_url, save_path, progress_hook)
+            total_size = int(response.headers.get('content-length', 0))
+            downloaded = 0
+            
+            with open(save_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        if total_size > 0:
+                            percent = int((downloaded / total_size) * 100)
+                            if percent > 100:
+                                percent = 100
+                            self.dialog.after(0, lambda p=percent: self.progress.config(value=p))
+                            self.dialog.after(0, lambda p=percent: self.percent_label.config(text=f"{p}%"))
             
             self.log(f"  ✅ 下载完成: {save_path.name}")
             
             # 如果是压缩包，尝试解压
-            if save_path.suffix.lower() in ['.zip', '.7z', '.rar']:
+            if save_path.suffix.lower() in ['.zip', '.7z', '.rar', '.tar', '.gz']:
                 self.log(f"  📦 检测到压缩包，准备解压...")
                 self.dialog.after(0, lambda: self.status_label.config(text="正在解压..."))
                 
-                if save_path.suffix.lower() == '.zip':
-                    with zipfile.ZipFile(save_path, 'r') as zip_ref:
-                        zip_ref.extractall(tool_dir)
-                    self.log(f"  ✅ 解压完成")
-                    save_path.unlink()  # 删除压缩包
-                else:
-                    self.log(f"  ⚠️ {save_path.suffix} 格式需要手动解压")
+                try:
+                    if save_path.suffix.lower() == '.zip':
+                        with zipfile.ZipFile(save_path, 'r') as zip_ref:
+                            zip_ref.extractall(tool_dir)
+                        self.log(f"  ✅ ZIP解压完成")
+                        save_path.unlink()  # 删除压缩包
+                    elif save_path.suffix.lower() in ['.tar', '.gz']:
+                        import tarfile
+                        with tarfile.open(save_path, 'r:*') as tar_ref:
+                            tar_ref.extractall(tool_dir)
+                        self.log(f"  ✅ TAR解压完成")
+                        save_path.unlink()  # 删除压缩包
+                    else:
+                        self.log(f"  ⚠️ {save_path.suffix} 格式需要手动解压")
+                except Exception as e:
+                    self.log(f"  ❌ 解压失败: {e}")
+                    self.log(f"  💡 请手动解压: {save_path}")
             
             self.dialog.after(0, lambda: self.status_label.config(text="完成"))
             

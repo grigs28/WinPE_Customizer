@@ -42,7 +42,9 @@ class WinPEToolsManager:
             'name': 'Dism++',
             'desc': '强大的 Windows 映像管理工具',
             'url': 'https://github.com/Chuyu-Team/Dism-Multi-language',
+            'download_url': 'https://github.com/Chuyu-Team/Dism-Multi-language/releases/download/v10.1.1002.2/Dism++10.1.1002.1B.zip',
             'exe': 'Dism++x64.exe',
+            'shortcut_name': 'Dism++',
             'recommended': True,
             'context_menu': False,
             'category': 'system'
@@ -52,6 +54,7 @@ class WinPEToolsManager:
             'desc': '磁盘分区和数据恢复工具',
             'url': 'https://www.diskgenius.cn/',
             'exe': 'DiskGenius.exe',
+            'shortcut_name': 'DiskGenius',
             'recommended': True,
             'context_menu': False,
             'category': 'disk'
@@ -105,7 +108,9 @@ class WinPEToolsManager:
             'name': '7-Zip',
             'desc': '压缩解压工具（支持右键菜单）',
             'url': 'https://www.7-zip.org/',
+            'download_url': 'https://www.7-zip.org/a/7z2301-x64.exe',
             'exe': '7zFM.exe',
+            'shortcut_name': '7-Zip',
             'recommended': True,
             'context_menu': True,
             'category': 'compress'
@@ -114,6 +119,7 @@ class WinPEToolsManager:
             'name': 'SumatraPDF',
             'desc': 'PDF阅读器（支持右键菜单，轻量开源）',
             'url': 'https://www.sumatrapdfreader.org/',
+            'download_url': 'https://www.sumatrapdfreader.org/files/SumatraPDF-3.5.2-64.zip',
             'exe': 'SumatraPDF.exe',
             'recommended': True,
             'context_menu': True,
@@ -142,8 +148,20 @@ class WinPEToolsManager:
             'desc': 'Visual Studio Code 便携版',
             'url': 'https://code.visualstudio.com/docs/editor/portable',
             'exe': 'Code.exe',
+            'shortcut_name': 'VSCode',
             'recommended': False,
-            'context_menu': False,
+            'context_menu': True,
+            'category': 'editor'
+        },
+        {
+            'name': 'HxD',
+            'desc': '十六进制编辑器（二进制文件编辑）',
+            'url': 'https://mh-nexus.de/en/hxd/',
+            'download_url': 'https://mh-nexus.de/en/hxd/download/HxDSetup.zip',
+            'exe': 'HxD.exe',
+            'shortcut_name': 'HxD',
+            'recommended': False,
+            'context_menu': True,
             'category': 'editor'
         },
         {
@@ -349,36 +367,52 @@ class WinPEToolsManager:
         
         ttk.Label(header_frame, text="WinPE 常用工具推荐", font=('Arial', 12, 'bold')).pack(anchor=tk.W, pady=(0, 5))
         
-        # 使用说明
-        info_frame = ttk.Frame(header_frame, relief=tk.SOLID, borderwidth=1, padding="10")
-        info_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        ttk.Label(info_frame, text="📋 使用步骤：", font=('Arial', 9, 'bold'), foreground='blue').pack(anchor=tk.W)
-        ttk.Label(info_frame, text="1️⃣ 勾选要集成的工具（推荐工具已预选）", foreground="gray").pack(anchor=tk.W, padx=20)
-        ttk.Label(info_frame, text="2️⃣ 点击蓝色'点击下载'链接，下载工具程序", foreground="gray").pack(anchor=tk.W, padx=20)
-        ttk.Label(info_frame, text="3️⃣ 下载后放到：外置程序/Tools/[工具名]/ 目录", foreground="orange", font=('Arial', 9, 'bold')).pack(anchor=tk.W, padx=20)
-        ttk.Label(info_frame, text="   例如：外置程序/Tools/Dism++/Dism++x64.exe", foreground="gray", font=('Consolas', 8)).pack(anchor=tk.W, padx=40)
-        ttk.Label(info_frame, text="4️⃣ 切换到'配置代码'标签页 → 点击'💾 直接保存到config.py'", foreground="gray").pack(anchor=tk.W, padx=20)
-        ttk.Label(info_frame, text="5️⃣ 在主程序中启用'复制外置程序'模块并运行", foreground="gray").pack(anchor=tk.W, padx=20)
-        
-        # 空白分隔
-        ttk.Frame(info_frame, height=10).pack()
-        ttk.Label(info_frame, text="💡 支持自动下载和手动下载两种方式", 
-                 foreground="green", font=('Arial', 9, 'bold')).pack(anchor=tk.W)
-        
         # 快速操作按钮
         quick_btn_frame = ttk.Frame(header_frame)
-        quick_btn_frame.pack(fill=tk.X, pady=(10, 0))
+        quick_btn_frame.pack(fill=tk.X, pady=(0, 10))
         
         ttk.Button(quick_btn_frame, text="✅ 全选推荐", command=self.select_recommended_tools, width=16).pack(side=tk.LEFT, padx=5)
+        ttk.Button(quick_btn_frame, text="✅ 全选", command=self.select_all_tools, width=16).pack(side=tk.LEFT, padx=5)
         ttk.Button(quick_btn_frame, text="❌ 全不选", command=self.deselect_all_tools, width=16).pack(side=tk.LEFT, padx=5)
         ttk.Separator(quick_btn_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
         ttk.Button(quick_btn_frame, text="⬇️ 批量自动下载", command=self.batch_download, width=18, style='Accent.TButton').pack(side=tk.LEFT, padx=5)
         ttk.Button(quick_btn_frame, text="📂 打开外置程序目录", command=self.open_external_dir, width=20).pack(side=tk.LEFT, padx=5)
         
-        # 滚动区域
-        scroll_container = ttk.Frame(parent)
-        scroll_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=(0, 10))
+        # 主内容区域 - 左右分栏布局
+        main_content = ttk.Frame(parent)
+        main_content.pack(fill=tk.BOTH, expand=True, padx=10, pady=(0, 10))
+        
+        # 左侧：工具列表
+        left_frame = ttk.Frame(main_content)
+        left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
+        
+        # 右侧：使用说明
+        right_frame = ttk.Frame(main_content, width=300)
+        right_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=(5, 0))
+        right_frame.pack_propagate(False)  # 固定宽度
+        
+        # 使用说明面板
+        info_frame = ttk.LabelFrame(right_frame, text="📋 使用步骤", padding="10", relief=tk.GROOVE)
+        info_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(info_frame, text="1️⃣ 勾选要集成的工具", foreground="gray", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        ttk.Label(info_frame, text="2️⃣ 点击蓝色下载链接", foreground="gray", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        ttk.Label(info_frame, text="3️⃣ 下载到指定目录", foreground="orange", font=('Arial', 9, 'bold')).pack(anchor=tk.W, pady=2)
+        ttk.Label(info_frame, text="   外置程序/Tools/[工具名]/", foreground="gray", font=('Consolas', 8)).pack(anchor=tk.W, padx=10)
+        ttk.Label(info_frame, text="4️⃣ 保存配置到config.py", foreground="gray", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        ttk.Label(info_frame, text="5️⃣ 启用外置程序模块", foreground="gray", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        
+        # 提示信息
+        tip_frame = ttk.LabelFrame(right_frame, text="💡 提示", padding="10", relief=tk.GROOVE)
+        tip_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(tip_frame, text="• 支持自动下载和手动下载", foreground="green", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        ttk.Label(tip_frame, text="• 推荐工具已预选", foreground="blue", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        ttk.Label(tip_frame, text="• 可添加到桌面快捷方式", foreground="purple", font=('Arial', 9)).pack(anchor=tk.W, pady=2)
+        
+        # 滚动区域（只占左侧）
+        scroll_container = ttk.Frame(left_frame)
+        scroll_container.pack(fill=tk.BOTH, expand=True)
         
         canvas = tk.Canvas(scroll_container, bg='white')
         scrollbar = ttk.Scrollbar(scroll_container, orient="vertical", command=canvas.yview)
@@ -403,6 +437,7 @@ class WinPEToolsManager:
         # 按分类组织工具
         self.tool_vars = {}
         self.desktop_vars = {}
+        self.pe_context_vars = {}
         
         # 按分类分组
         tools_by_category = {}
@@ -485,12 +520,23 @@ class WinPEToolsManager:
         cb = ttk.Checkbutton(option_frame, text="✓ 集成此工具", variable=var)
         cb.pack(side=tk.LEFT)
         
+        # 绑定右键菜单
+        cb.bind("<Button-3>", lambda e, t=tool: self.show_tool_context_menu(e, t))
+        
         # 桌面选项
         desktop_var = tk.BooleanVar(value=tool['recommended'])
         self.desktop_vars[tool['name']] = desktop_var
         
         desktop_cb = ttk.Checkbutton(option_frame, text="📌 添加到桌面", variable=desktop_var)
         desktop_cb.pack(side=tk.LEFT, padx=(20, 0))
+        
+        # PE右键菜单选项（仅对支持右键菜单的工具显示）
+        if tool.get('context_menu', False):
+            pe_context_var = tk.BooleanVar(value=False)
+            self.pe_context_vars[tool['name']] = pe_context_var
+            
+            pe_context_cb = ttk.Checkbutton(option_frame, text="🖱️ PE右键菜单", variable=pe_context_var)
+            pe_context_cb.pack(side=tk.LEFT, padx=(20, 0))
         
         # 说明
         ttk.Label(tool_frame, text=f"📝 {tool['desc']}", 
@@ -611,6 +657,11 @@ class WinPEToolsManager:
             if tool['recommended']:
                 self.tool_vars[tool['name']].set(True)
     
+    def select_all_tools(self):
+        """全选所有工具"""
+        for var in self.tool_vars.values():
+            var.set(True)
+    
     def deselect_all_tools(self):
         """全不选"""
         for var in self.tool_vars.values():
@@ -719,6 +770,14 @@ class WinPEToolsManager:
             # 检查是否选择了7-Zip
             sevenzip_selected = self.tool_vars.get('7-Zip', tk.BooleanVar()).get()
             
+            # 检查PE右键菜单选择
+            pe_context_tools = []
+            for tool in self.COMMON_TOOLS:
+                if (tool.get('context_menu', False) and 
+                    tool['name'] in self.pe_context_vars and 
+                    self.pe_context_vars[tool['name']].get()):
+                    pe_context_tools.append(tool['name'])
+            
             # 读取现有配置
             with open(config_file, 'r', encoding='utf-8') as f:
                 lines = f.readlines()
@@ -787,12 +846,18 @@ class WinPEToolsManager:
             with open(config_file, 'w', encoding='utf-8') as f:
                 f.writelines(new_lines)
             
-            msg = "工具配置已保存到 core/config.py！\n\n"
+            msg = "工具配置已保存到 config.py！\n\n"
             msg += f"已配置 {len([t for t in self.COMMON_TOOLS if self.tool_vars[t['name']].get()])} 个工具\n"
             if sevenzip_selected:
                 msg += "\n✓ 7-Zip 右键菜单已启用"
             else:
                 msg += "\n✗ 7-Zip 右键菜单已禁用"
+            
+            if pe_context_tools:
+                msg += f"\n✓ PE右键菜单已启用: {', '.join(pe_context_tools)}"
+            else:
+                msg += "\n✗ 未选择PE右键菜单工具"
+            
             msg += "\n\n请确保将工具文件放到对应的目录中。"
             
             messagebox.showinfo("成功", msg)
@@ -848,6 +913,56 @@ class WinPEToolsManager:
         else:
             messagebox.showinfo("提示", f"外置程序目录不存在\n\n建议创建：{external_dir.absolute()}")
     
+    def show_tool_context_menu(self, event, tool):
+        """显示工具右键菜单"""
+        context_menu = tk.Menu(self.root, tearoff=0)
+        
+        # 基本操作
+        context_menu.add_command(label=f"📥 下载 {tool['name']}", 
+                               command=lambda: self.auto_download_tool(tool))
+        context_menu.add_command(label=f"🌐 访问官网", 
+                               command=lambda: self.open_url(tool['url']))
+        context_menu.add_separator()
+        
+        # 选择操作
+        context_menu.add_command(label="✅ 选择此工具", 
+                               command=lambda: self.tool_vars[tool['name']].set(True))
+        context_menu.add_command(label="❌ 取消选择", 
+                               command=lambda: self.tool_vars[tool['name']].set(False))
+        context_menu.add_separator()
+        
+        # 桌面快捷方式
+        context_menu.add_command(label="📌 添加到桌面", 
+                               command=lambda: self.desktop_vars[tool['name']].set(True))
+        context_menu.add_command(label="📌 从桌面移除", 
+                               command=lambda: self.desktop_vars[tool['name']].set(False))
+        context_menu.add_separator()
+        
+        # 工具信息
+        context_menu.add_command(label=f"ℹ️ 查看详情", 
+                               command=lambda: self.show_tool_info(tool))
+        
+        # 显示菜单
+        try:
+            context_menu.tk_popup(event.x_root, event.y_root)
+        finally:
+            context_menu.grab_release()
+    
+    def show_tool_info(self, tool):
+        """显示工具详细信息"""
+        info = f"工具名称: {tool['name']}\n"
+        info += f"描述: {tool['desc']}\n"
+        info += f"可执行文件: {tool['exe']}\n"
+        info += f"官网: {tool['url']}\n"
+        if 'download_url' in tool and tool['download_url']:
+            info += f"下载链接: {tool['download_url']}\n"
+        info += f"推荐: {'是' if tool.get('recommended', False) else '否'}\n"
+        info += f"右键菜单: {'是' if tool.get('context_menu', False) else '否'}\n"
+        info += f"体积: {tool.get('size', '未知')}\n"
+        info += f"授权: {tool.get('license', '未知')}"
+        
+        messagebox.showinfo(f"{tool['name']} - 详细信息", info)
+    
     def batch_download(self):
         """批量自动下载选中的工具"""
         # 获取勾选的工具
@@ -867,9 +982,10 @@ class WinPEToolsManager:
                               "\n".join([f"• {t['name']}: {t['url']}" for t in selected_tools]))
             return
         
-        msg = f"将自动下载以下工具：\n\n"
+        msg = f"将自动下载以下工具到 tools 目录：\n\n"
         msg += "\n".join([f"• {t['name']}" for t in downloadable])
-        msg += f"\n\n共 {len(downloadable)} 个工具"
+        msg += f"\n\n共 {len(downloadable)} 个工具\n"
+        msg += "下载完成后会自动解压到对应目录"
         
         if messagebox.askyesno("确认下载", msg):
             self.start_batch_download(downloadable)
@@ -877,6 +993,7 @@ class WinPEToolsManager:
     def start_batch_download(self, tools):
         """开始批量下载"""
         # 创建下载对话框
+        from download_dialog import DownloadDialog
         DownloadDialog(self.root, tools)
     
     def auto_download_tool(self, tool):
@@ -891,32 +1008,6 @@ class WinPEToolsManager:
         from download_dialog import DownloadDialog
         DownloadDialog(self.root, [tool])
     
-    def batch_download(self):
-        """批量下载工具"""
-        # 获取勾选的工具
-        selected_tools = [tool for tool in self.COMMON_TOOLS if self.tool_vars[tool['name']].get()]
-        
-        if not selected_tools:
-            messagebox.showwarning("提示", "请先勾选要下载的工具")
-            return
-        
-        # 提示
-        msg = f"⚠️ 自动下载功能说明：\n\n"
-        msg += "由于大多数工具没有直接下载链接，\n"
-        msg += "程序会打开每个工具的官网，请手动下载。\n\n"
-        msg += f"已勾选 {len(selected_tools)} 个工具：\n\n"
-        msg += "\n".join([f"• {t['name']}" for t in selected_tools[:5]])
-        if len(selected_tools) > 5:
-            msg += f"\n... 等 {len(selected_tools)} 个工具"
-        msg += "\n\n建议使用浏览器批量下载后，放到对应目录。"
-        
-        if messagebox.askyesno("批量下载", msg):
-            # 依次打开官网
-            for tool in selected_tools:
-                self.open_url(tool['url'])
-            
-            # 打开目标目录
-            self.open_external_dir()
 
 
 def main():

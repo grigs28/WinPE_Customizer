@@ -202,6 +202,36 @@ SUMATRAPDF_CONTEXT_MENU = {
     ]
 }
 
+# VSCode 右键菜单配置
+VSCODE_CONTEXT_MENU = {
+    "enabled": False,  # 默认禁用，需要在工具管理器中启用
+    "install_path": "X:\\Program Files\\VSCode",
+    "menu_items": [
+        {
+            "name": "VSCode",
+            "items": [
+                ("用 VSCode 打开", "open", '"{install_path}\\Code.exe" "%1"'),
+                ("用 VSCode 打开文件夹", "folder", '"{install_path}\\Code.exe" "%1"'),
+            ]
+        }
+    ]
+}
+
+# HxD 十六进制编辑器右键菜单配置
+HXD_CONTEXT_MENU = {
+    "enabled": False,  # 默认禁用，需要在工具管理器中启用
+    "install_path": "X:\\Program Files\\HxD",
+    "menu_items": [
+        {
+            "name": "HxD",
+            "items": [
+                ("用 HxD 十六进制编辑", "hex", '"{install_path}\\HxD.exe" "%1"'),
+                ("用 HxD 打开（只读）", "readonly", '"{install_path}\\HxD.exe" /readonly "%1"'),
+            ]
+        }
+    ]
+}
+
 # ============================================================================
 # 高级选项
 # ============================================================================

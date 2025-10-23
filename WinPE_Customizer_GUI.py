@@ -83,7 +83,6 @@ class WinPECustomizerGUI:
         
         # 首先检查ico目录
         ico_dir = Path("ico")
-        random_icon = None
         
         if ico_dir.exists():
             # 扫描ico目录中的所有图片
@@ -94,15 +93,16 @@ class WinPECustomizerGUI:
             if image_files:
                 # 随机选择一个
                 random_image = random.choice(image_files)
+                print(f"[图标] 随机选择图标: {random_image.name}")
                 
                 # 如果是ico文件，直接使用
                 if random_image.suffix.lower() == '.ico':
                     try:
                         self.root.iconbitmap(str(random_image))
-                        self.log(f"[图标] 使用随机图标: {random_image.name}", 'INFO')
+                        print(f"[图标] 使用ICO图标: {random_image.name}")
                         return
-                    except:
-                        pass
+                    except Exception as e:
+                        print(f"[图标] ICO图标加载失败: {e}")
                 else:
                     # 如果是其他图片格式，转换为ico
                     try:
@@ -114,10 +114,10 @@ class WinPECustomizerGUI:
                         temp_ico = Path("temp_icon.ico")
                         img.save(temp_ico, format='ICO')
                         self.root.iconbitmap(str(temp_ico))
-                        self.log(f"[图标] 使用随机图标: {random_image.name}", 'INFO')
+                        print(f"[图标] 转换并使用图标: {random_image.name}")
                         return
-                    except:
-                        pass
+                    except Exception as e:
+                        print(f"[图标] 图标转换失败: {e}")
         
         # 如果ico目录没有图片，使用默认图标
         icon_files = ['ico/winpe_customizer.ico', 'ico/winpe_simple.ico', 'winpe_customizer.ico', 'icon.ico']
@@ -716,6 +716,21 @@ class WinPECustomizerGUI:
         if self.is_running:
             messagebox.showwarning("警告", "有任务正在运行，请等待完成")
             return
+        
+        # 检查管理员权限
+        import ctypes
+        try:
+            is_admin = ctypes.windll.shell32.IsUserAnAdmin()
+            if not is_admin:
+                messagebox.showwarning(
+                    "管理员权限",
+                    "制作USB启动盘需要管理员权限！\n\n请以管理员身份运行程序。",
+                    icon='warning'
+                )
+                self.log("[警告] 需要管理员权限才能制作USB启动盘", "WARNING")
+                return
+        except:
+            pass
         
         winpe_dir = Path(self.winpe_dir.get())
         
